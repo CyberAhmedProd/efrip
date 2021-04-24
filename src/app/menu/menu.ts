@@ -389,7 +389,8 @@ export const menu: CoreMenu[] = [
             translate: 'MENU.APPS.ECOMMERCE.SHOP',
             type: 'item',
             icon: 'circle',
-            url: 'apps/e-commerce/shop'
+            url: 'apps/e-commerce/shop',
+            openInNewTab: true
           },
           {
             id: 'details',
@@ -397,7 +398,8 @@ export const menu: CoreMenu[] = [
             translate: 'MENU.APPS.ECOMMERCE.DETAIL',
             type: 'item',
             icon: 'circle',
-            url: 'apps/e-commerce/details'
+            url: 'apps/e-commerce/details',
+            openInNewTab: true
           },
           {
             id: 'wishList',
@@ -405,7 +407,8 @@ export const menu: CoreMenu[] = [
             translate: 'MENU.APPS.ECOMMERCE.WISHLIST',
             type: 'item',
             icon: 'circle',
-            url: 'apps/e-commerce/wishlist'
+            url: 'apps/e-commerce/wishlist',
+            openInNewTab: true
           },
           {
             id: 'checkout',
@@ -413,7 +416,8 @@ export const menu: CoreMenu[] = [
             translate: 'MENU.APPS.ECOMMERCE.CHECKOUT',
             type: 'item',
             icon: 'circle',
-            url: 'apps/e-commerce/checkout'
+            url: 'apps/e-commerce/checkout',
+            openInNewTab: true
           }
         ]
       },
