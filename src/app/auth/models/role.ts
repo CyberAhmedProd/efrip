@@ -1,5 +1,4 @@
-﻿export enum Role {
-  Admin = 'Admin',
-  Client = 'Client',
-  User = 'User'
+﻿export class Role {
+  id : String;
+  role : String
 }

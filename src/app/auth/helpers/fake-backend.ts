@@ -29,7 +29,12 @@ const users: User[] = [
     firstName: 'John',
     lastName: 'Doe',
     avatar: 'avatar-s-11.jpg',
-    role: Role.Admin
+    roles: [
+      {
+      id: '1',
+      role : 'aa'
+      }
+  ]
   },
   {
     id: 2,
@@ -38,7 +43,12 @@ const users: User[] = [
     firstName: 'Nataly',
     lastName: 'Doe',
     avatar: 'avatar-s-2.jpg',
-    role: Role.Client
+    roles: [
+      {
+      id: '1',
+      role : 'aa'
+      }
+  ]
   },
   {
     id: 3,
@@ -47,7 +57,12 @@ const users: User[] = [
     firstName: 'Rose',
     lastName: 'Doe',
     avatar: 'avatar-s-3.jpg',
-    role: Role.User
+    roles: [
+      {
+      id: '1',
+      role : 'aa'
+      }
+  ]
   }
 ];
 
@@ -88,7 +103,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         firstName: user.firstName,
         lastName: user.lastName,
         avatar: user.avatar,
-        role: user.role,
+        role: user.roles[0].role,
         token: `fake-jwt-token.${user.id}`
       });
     }
@@ -128,7 +143,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }
 
     function isAdmin() {
-      return isLoggedIn() && currentUser().role === Role.Admin;
+      return isLoggedIn() && currentUser().roles[0].role === 'Admin';
     }
 
     function currentUser() {

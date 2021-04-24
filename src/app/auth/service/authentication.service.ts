@@ -34,14 +34,14 @@ export class AuthenticationService {
    *  Confirms if user is admin
    */
   get isAdmin() {
-    return this.currentUser && this.currentUserSubject.value.role === Role.Admin;
+    return this.currentUser && this.currentUserSubject.value.roles[0].role === "Admin"
   }
 
   /**
    *  Confirms if user is client
    */
   get isClient() {
-    return this.currentUser && this.currentUserSubject.value.role === Role.Client;
+    return this.currentUser && this.currentUserSubject.value.roles[0].role === "Client";
   }
 
   /**
@@ -53,7 +53,7 @@ export class AuthenticationService {
    */
   login(email: string, password: string) {
     return this._http
-      .post<any>(`${environment.apiUrl}/users/authenticate`, { email, password })
+      .post<any>(`${environment.apiDistant}/api/auth/login`, { email, password })
       .pipe(
         map(user => {
           // login successful if there's a jwt token in the response
@@ -65,12 +65,12 @@ export class AuthenticationService {
             setTimeout(() => {
               this._toastrService.success(
                 'You have successfully logged in as an ' +
-                  user.role +
+                  user.roles[0].role +
                   ' user to Vuexy. Now you can start to explore. Enjoy! 🎉',
-                '👋 Welcome, ' + user.firstName + '!',
+                '👋 Welcome, ' + user.firstName + ' '+ user.lastName +'!',
                 { toastClass: 'toast ngx-toastr', closeButton: true }
               );
-            }, 2500);
+            }, 5000);
 
             // notify
             this.currentUserSubject.next(user);
