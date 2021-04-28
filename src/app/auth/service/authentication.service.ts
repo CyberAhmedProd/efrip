@@ -84,7 +84,7 @@ export class AuthenticationService {
                 "You have successfully logged in as an " +
                   user.roles[0].role +
                   " user to Vuexy. Now you can start to explore. Enjoy! 🎉",
-                "👋 Welcome, " + user.firstName + " " + user.lastName + "!",
+                "👋 Welcome, " + user.username+ "!",
                 { toastClass: "toast ngx-toastr", closeButton: true }
               );
             }, 5000);

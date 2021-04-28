@@ -63,11 +63,14 @@
     <!-- Notification -->
     <app-navbar-notification></app-navbar-notification>
     <!--/ Notification -->
+    <ng-container *ngIf!="this.currentUser">
+    
     <li class="nav-item d-none d-lg-block">
       <a type="button" class="nav-link nav-link-style btn" (click)="login()">
         <span>login</span>
       </a>
     </li>
+  </ng-container>
     <!-- User Dropdown -->
     <li ngbDropdown class="nav-item dropdown-user">
       <a
@@ -81,7 +84,7 @@
         <ng-container *ngIf="this.currentUser">
           <div class="user-nav d-sm-flex d-none">
             <span class="user-name font-weight-bolder"
-              >{{ this.currentUser.firstName }} {{ this.currentUser.lastName }}</span
+              >{{ this.currentUser.username }}</span
             ><span class="user-status">{{ this.currentUser.roles[0].role }}</span>
           </div>
           <span class="avatar"
