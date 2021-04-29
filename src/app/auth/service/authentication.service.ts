@@ -76,27 +76,16 @@ export class AuthenticationService {
           // login successful if there's a jwt token in the response
           if (user && user.token) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-<<<<<<< HEAD
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            localStorage.setItem('image',JSON.stringify(user.avatar.image.data))
-=======
             localStorage.setItem("currentUser", JSON.stringify(user));
 
->>>>>>> 1f9efbbfc12f20cf6a16c7fd8ba1342d26b7cc12
             // Display welcome toast!
             setTimeout(() => {
               this._toastrService.success(
                 "You have successfully logged in as an " +
                   user.roles[0].role +
-<<<<<<< HEAD
-                  ' user to EFrip. Now you can start to explore. Enjoy! 🎉',
-                '👋 Welcome, ' + user.firstName + ' '+ user.lastName +'!',
-                { toastClass: 'toast ngx-toastr', closeButton: true }
-=======
                   " user to Vuexy. Now you can start to explore. Enjoy! 🎉",
                 "👋 Welcome, " + user.username+ "!",
                 { toastClass: "toast ngx-toastr", closeButton: true }
->>>>>>> 1f9efbbfc12f20cf6a16c7fd8ba1342d26b7cc12
               );
             }, 5000);
 
@@ -119,17 +108,6 @@ export class AuthenticationService {
     // notify
     this.currentUserSubject.next(null);
   }
-<<<<<<< HEAD
-  getImageById(id : Number){
-    return this._http
-      .get<any>(`${environment.apiDistant}/api/photos/${id}`)
-      .pipe(
-        map(photo =>{
-          console.log(photo)
-          return photo.image
-        })
-      )
-=======
 
   register(username, email, password) {
     return this._http.post<MyData>(`${environment.apiDistant}/api/auth/register`,
@@ -149,6 +127,5 @@ export class AuthenticationService {
                       }
                     ]
                   });
->>>>>>> 1f9efbbfc12f20cf6a16c7fd8ba1342d26b7cc12
   }
 }
