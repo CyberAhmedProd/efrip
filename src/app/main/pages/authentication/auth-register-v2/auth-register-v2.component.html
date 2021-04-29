@@ -25,65 +25,56 @@
       <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
         <h2 class="card-title font-weight-bold mb-1">Adventure starts here 🚀</h2>
         <p class="card-text mb-2">Make your app management easy and fun!</p>
-        <form class="auth-register-form mt-2" (ngSubmit)="(authForm.form.valid)" #authForm="ngForm">
+        <form class="auth-register-form mt-2" (ngSubmit)="onSubmit($event)" [formGroup]="registerForm">
           <div class="form-group">
-            <label class="form-label" for="register-username">Username</label>
+            <label class="form-label" for="register_username">Username</label>
             <input
               class="form-control"
-              id="register-username"
+              id="register_username"
               type="text"
-              name="register-username"
+              name="register_username"
               placeholder="johndoe"
-              aria-describedby="register-username"
+              aria-describedby="register_username"
               autofocus=""
               tabindex="1"
-              [class.error]="authForm.submitted && userNameRef.invalid"
-              [(ngModel)]="userNameVar"
-              #userNameRef="ngModel"
-              required
+              [ngClass]="{ 'is-invalid': submitted && form.username.errors }"
+              formControlName="username"
             />
-            <span *ngIf="authForm.submitted && userNameRef.invalid" class="invalid-form">
-              <small class="form-text text-danger" *ngIf="userNameRef.errors.required">This field is required!</small>
+            <span *ngIf="submitted && form.username.errors" class="invalid-form">
+              <small class="form-text text-danger" *ngIf="form.username.errors.required">This field is required!</small>
             </span>
           </div>
           <div class="form-group">
-            <label class="form-label" for="register-email">Email</label>
+            <label class="form-label" for="register_email">Email</label>
             <input
               class="form-control"
-              id="register-email"
+              id="register_email"
               type="text"
-              name="register-email"
+              name="register_email"
               placeholder="john@example.com"
-              aria-describedby="register-email"
+              aria-describedby="register_email"
               tabindex="2"
-              [class.error]="authForm.submitted && emailRef.invalid"
-              [(ngModel)]="emailVar"
-              #emailRef="ngModel"
-              required
-              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+              [ngClass]="{ 'is-invalid': submitted && form.email.errors }"
+              formControlName="email"
             />
-            <span *ngIf="authForm.submitted && emailRef.invalid" class="invalid-form">
-              <small class="form-text text-danger" *ngIf="emailRef.errors.required">This field is required!</small>
-            </span>
-
-            <span *ngIf="emailRef.errors && (emailRef.touched || emailRef.dirty)" class="invalid-form">
-              <small class="form-text text-danger" [hidden]="!emailRef.errors?.pattern"> Invalid email </small>
-            </span>
+            <div *ngIf="submitted && form.email.errors" class="invalid-feedback">
+              <div *ngIf="form.email.errors.required">Email is required</div>
+              <div *ngIf="form.email.errors.email">Email must be a valid email address</div>
+            </div>
           </div>
           <div class="form-group">
-            <label class="form-label" for="register-password">Password</label>
+            <label class="form-label" for="register_password">Password</label>
             <div class="input-group input-group-merge form-password-toggle">
               <input
                 class="form-control form-control-merge"
-                id="register-password"
+                id="register_password"
                 [type]="passwordTextType ? 'text' : 'password'"
-                name="register-password"
+                name="register_password"
                 placeholder="············"
-                aria-describedby="register-password"
+                aria-describedby="register_password"
                 tabindex="3"
-                [(ngModel)]="passwordVar"
-                #passwordRef="ngModel"
-                [class.error]="authForm.submitted && passwordRef.invalid"
+                formControlName="password"
+                [ngClass]="{ 'is-invalid error': submitted && form.password.errors }"
                 required
               />
               <div class="input-group-append">
@@ -99,8 +90,8 @@
                 ></span>
               </div>
             </div>
-            <span *ngIf="authForm.submitted && passwordRef.invalid" class="invalid-form">
-              <small class="form-text text-danger" *ngIf="passwordRef.errors.required">This field is required!</small>
+            <span *ngIf="submitted && form.password.errors" class="invalid-form">
+              <small class="form-text text-danger" *ngIf="form.password.errors.required">This field is required!</small>
             </span>
           </div>
           <div class="form-group">
@@ -111,8 +102,15 @@
               >
             </div>
           </div>
-          <button class="btn btn-primary btn-block" tabindex="5" rippleEffect>Sign up</button>
+          <button [disabled]="loading" class="btn btn-primary btn-block" tabindex="4" rippleEffect>
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Sign up
+          </button>
         </form>
+        <ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="error">
+          <div class="alert-body">
+            <p>{{ error }}</p>
+          </div>
+        </ngb-alert>
         <p class="text-center mt-2">
           <span>Already have an account?</span
           ><a routerLink="/pages/authentication/login-v2"><span>&nbsp;Sign in instead</span></a>
