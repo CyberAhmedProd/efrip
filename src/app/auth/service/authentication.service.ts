@@ -83,7 +83,7 @@ export class AuthenticationService {
                 "You have successfully logged in as an " +
                   user.roles[0].role +
                   " user to Vuexy. Now you can start to explore. Enjoy! 🎉",
-                "👋 Welcome, " + user.username+ "!",
+                "👋 Welcome, " + user.username + "!",
                 { toastClass: "toast ngx-toastr", closeButton: true }
               );
             }, 5000);
@@ -109,22 +109,24 @@ export class AuthenticationService {
   }
 
   register(username, email, password) {
-    return this._http.post<MyData>(`${environment.apiDistant}/api/auth/register`,
-                  {
-                    username,
-                    email,
-                    password,
-                    'firstName': null,
-                    'lastName': null,
-                    'avatar': null,
-                    'address': {},
-                    'Userstate': 'New',
-                    'status': 'pending',
-                    'roles': [
-                      {
-                        'id':'608878bfd02c579ab9cc5204'
-                      }
-                    ]
-                  });
+    return this._http.post<MyData>(
+      `${environment.apiDistant}/api/auth/register`,
+      {
+        username,
+        email,
+        password,
+        firstName: null,
+        lastName: null,
+        avatar: null,
+        address: {},
+        Userstate: "New",
+        status: "pending",
+        roles: [
+          {
+            id: "608878bfd02c579ab9cc5204",
+          },
+        ],
+      }
+    );
   }
 }
