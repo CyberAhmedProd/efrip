@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, HostBinding, HostListener, ViewEncapsulat
 import { MediaObserver } from '@angular/flex-layout';
 
 import * as _ from 'lodash';
-import { Subject } from 'rxjs';
+import { Observable, Observer, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -15,6 +15,9 @@ import { User } from 'app/auth/models';
 
 import { coreConfig } from 'app/app-config';
 import { Router } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-navbar',
@@ -23,6 +26,10 @@ import { Router } from '@angular/router';
   encapsulation: ViewEncapsulation.None
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+  imageData: string;
+  base64DefaultURL: string;
+  generatedImage: any;
+
   public horizontalMenu: boolean;
   public hiddenMenu: boolean;
 
@@ -41,6 +48,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   @HostBinding('class.navbar-static-style-on-scroll')
   public windowScrolled = false;
+  imageSource: String;
 
   // Add .navbar-static-style-on-scroll on scroll using HostListener & HostBinding
   @HostListener('window:scroll', [])
@@ -80,10 +88,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private _coreMediaService: CoreMediaService,
     private _coreSidebarService: CoreSidebarService,
     private _mediaObserver: MediaObserver,
-    public _translateService: TranslateService
+    public _translateService: TranslateService,
+    private domSanitizer: DomSanitizer
   ) {
     this._authenticationService.currentUser.subscribe(x => (this.currentUser = x));
-
     this.languageOptions = {
       en: {
         title: 'English',
@@ -178,7 +186,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // get the currentUser details from localStorage
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
+    this.imageData= JSON.parse(localStorage.getItem('image'));
+    this.imageSource = "data:image/png;base64,"+this.imageData;
     // Subscribe to the config changes
     this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
       this.coreConfig = config;
@@ -223,4 +232,52 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }
+
+
+
+
+  sanatizeUrl(generatedImageUrl): SafeResourceUrl {
+    return this.domSanitizer.bypassSecurityTrustResourceUrl(generatedImageUrl);
+  }
+
+  /* Method to fetch image from Url */
+  getBase64ImageFromURL(url: string): Observable<string> {
+    return Observable.create((observer: Observer<string>) => {
+      // create an image object
+      let img = new Image();
+      img.crossOrigin = "Anonymous";
+      img.src = url;
+      if (!img.complete) {
+        // This will call another method that will create image from url
+        img.onload = () => {
+          observer.next(this.getBase64Image(img));
+          observer.complete();
+        };
+        img.onerror = err => {
+          observer.error(err);
+        };
+      } else {
+        observer.next(this.getBase64Image(img));
+        observer.complete();
+      }
+    });
+  }
+
+  /* Method to create base64Data Url from fetched image */
+  getBase64Image(img: HTMLImageElement): string {
+    // We create a HTML canvas object that will create a 2d image
+    var canvas: HTMLCanvasElement = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    let ctx: CanvasRenderingContext2D = canvas.getContext("2d");
+    // This will draw image
+    ctx.drawImage(img, 0, 0);
+    // Convert the drawn image to Data URL
+    let dataURL: string = canvas.toDataURL("image/png");
+    this.base64DefaultURL = dataURL;
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+  }
+
+  
+
 }

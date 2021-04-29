@@ -60,13 +60,13 @@ export class AuthenticationService {
           if (user && user.token) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('currentUser', JSON.stringify(user));
-
+            localStorage.setItem('image',JSON.stringify(user.avatar.image.data))
             // Display welcome toast!
             setTimeout(() => {
               this._toastrService.success(
                 'You have successfully logged in as an ' +
                   user.roles[0].role +
-                  ' user to Vuexy. Now you can start to explore. Enjoy! 🎉',
+                  ' user to EFrip. Now you can start to explore. Enjoy! 🎉',
                 '👋 Welcome, ' + user.firstName + ' '+ user.lastName +'!',
                 { toastClass: 'toast ngx-toastr', closeButton: true }
               );
@@ -90,5 +90,15 @@ export class AuthenticationService {
     localStorage.removeItem('currentUser');
     // notify
     this.currentUserSubject.next(null);
+  }
+  getImageById(id : Number){
+    return this._http
+      .get<any>(`${environment.apiDistant}/api/photos/${id}`)
+      .pipe(
+        map(photo =>{
+          console.log(photo)
+          return photo.image
+        })
+      )
   }
 }

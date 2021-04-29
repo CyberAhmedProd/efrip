@@ -82,7 +82,7 @@
           [footerHeight]="50"
           [scrollbarH]="true"
         >
-          <ngx-datatable-column name="User" prop="fullName" [width]="200">
+          <!--<ngx-datatable-column name="User" prop="fullName" [width]="200">
             <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
               <div class="d-flex align-items-center">
                 <div *ngIf="row.avatar.length > 0; else customAvatar">
@@ -110,30 +110,30 @@
                   <a routerLink="/apps/user/user-view/{{ row.id }}" class="font-medium-1 d-block"
                     ><span class="font-weight-bold">{{ name }}</span></a
                   >
-                  <span class="text-muted font-small-2"> @{{ row.username }}</span>
+                  <span class="text-muted font-small-2"> @{{ row.firstName }}</span>
                 </div>
               </div>
             </ng-template>
-          </ngx-datatable-column>
+          </ngx-datatable-column>-->
           <ngx-datatable-column name="Email" prop="email" [width]="250"></ngx-datatable-column>
-          <ngx-datatable-column name="Role" prop="role" [width]="50">
-            <ng-template let-role="value" ngx-datatable-cell-template>
+          <ngx-datatable-column name="Role" prop="roles" [width]="50">
+            <ng-template let-roles="value" ngx-datatable-cell-template>
               <div>
                 <i
                   class="feather font-medium-3"
                   [ngClass]="{
-                    'icon-edit-2 text-info': role == 'Editor',
-                    'icon-settings text-warning': role == 'Author',
-                    'icon-database text-success': role == 'Maintainer',
-                    'icon-user text-primary': role == 'Subscriber',
-                    'icon-slack text-danger': role == 'Admin'
+                    'icon-edit-2 text-info': roles[0].role == 'Editor',
+                    'icon-settings text-warning': roles[0].role == 'Author',
+                    'icon-database text-success': roles[0].role == 'Maintainer',
+                    'icon-user text-primary': roles[0].role == 'Client',
+                    'icon-slack text-danger': roles[0].role == 'Admin'
                   }"
                 ></i>
-                {{ role }}
+                {{ roles[0].role }}
               </div>
             </ng-template>
           </ngx-datatable-column>
-          <ngx-datatable-column name="Plan" prop="currentPlan" [width]="100"></ngx-datatable-column>
+          <ngx-datatable-column name="UserState" prop="userState" [width]="100"></ngx-datatable-column>
           <ngx-datatable-column name="Status" prop="status" [width]="50">
             <ng-template let-status="value" ngx-datatable-cell-template>
               <div

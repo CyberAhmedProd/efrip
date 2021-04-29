@@ -28,7 +28,7 @@ const users: User[] = [
     password: 'admin',
     firstName: 'John',
     lastName: 'Doe',
-    avatar: 'avatar-s-11.jpg',
+    avatar: null,
     roles: [
       {
       id: '1',
@@ -42,7 +42,7 @@ const users: User[] = [
     password: 'client',
     firstName: 'Nataly',
     lastName: 'Doe',
-    avatar: 'avatar-s-2.jpg',
+    avatar: null,
     roles: [
       {
       id: '1',
@@ -56,7 +56,7 @@ const users: User[] = [
     password: 'user',
     firstName: 'Rose',
     lastName: 'Doe',
-    avatar: 'avatar-s-3.jpg',
+    avatar: null,
     roles: [
       {
       id: '1',

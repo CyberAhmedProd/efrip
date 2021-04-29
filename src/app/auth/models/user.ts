@@ -1,4 +1,5 @@
 ﻿import { Role } from './role';
+import { Image } from './Image'
 
 export class User {
   id: number;
@@ -6,7 +7,7 @@ export class User {
   password: string;
   firstName: string;
   lastName: string;
-  avatar: string;
+  avatar: Image;
   roles: Role[];
   token?: string;
 }
