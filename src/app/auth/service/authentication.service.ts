@@ -115,15 +115,9 @@ export class AuthenticationService {
         username,
         email,
         password,
-        firstName: null,
-        lastName: null,
-        avatar: null,
-        address: {},
-        Userstate: "New",
-        status: "pending",
         roles: [
           {
-            id: "608878bfd02c579ab9cc5204",
+            role: "Client",
           },
         ],
       }
