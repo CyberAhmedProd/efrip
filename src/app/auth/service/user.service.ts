@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from 'environments/environment';
-import { User } from 'app/auth/models';
+import { Profil, User } from 'app/auth/models';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -25,5 +26,15 @@ export class UserService {
   getById(id: number) {
     return this._http.get<User>(`${environment.apiUrl}/users/${id}`);
   }
+
+  getProfil(id : String) :  Promise<Profil> {
+    return new Promise((resolve, reject) => {
+      this._http.get(`${environment.apiDistant}/api/profil/${id}`).subscribe((response: any) => {
+        var data = response;
+        resolve(data);
+      }, reject);
+    });
+  }
+   
+  }
   
-}

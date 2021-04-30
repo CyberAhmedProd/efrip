@@ -3,15 +3,16 @@ import { MediaObserver } from '@angular/flex-layout';
 
 import * as _ from 'lodash';
 import { Observable, Observer, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
-import { AuthenticationService } from 'app/auth/service';
+import { AuthenticationService, UserService } from 'app/auth/service';
 import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.service';
 import { CoreConfigService } from '@core/services/config.service';
 import { CoreMediaService } from '@core/services/media.service';
 
-import { User } from 'app/auth/models';
+import { User,Profil } from 'app/auth/models';
+
 
 import { coreConfig } from 'app/app-config';
 import { Router } from '@angular/router';
@@ -38,6 +39,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public prevSkin: string;
 
   public currentUser: User;
+  private currentUSerProfil : Profil;
+
 
   public languageOptions: any;
   public navigation: any;
@@ -80,10 +83,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
    * @param {CoreMediaService} _coreMediaService
    * @param {MediaObserver} _mediaObserver
    * @param {TranslateService} _translateService
+   * @param {UserService} _userService
    */
   constructor(
     private _router: Router,
     private _authenticationService: AuthenticationService,
+    private _userService : UserService,
     private _coreConfigService: CoreConfigService,
     private _coreMediaService: CoreMediaService,
     private _coreSidebarService: CoreSidebarService,
@@ -183,13 +188,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
   /**
    * On init
    */
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     // get the currentUser details from localStorage
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    if(this.currentUser){
-      this.imageData= this.currentUser.avatar.image.data;
-      this.imageSource = "data:image/png;base64,"+this.imageData;
-    }
+   
+  
     
     // Subscribe to the config changes
     this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
@@ -225,6 +228,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.selectedLanguage = _.find(this.languageOptions, {
       id: this._translateService.currentLang
     });
+
+ 
+      await this._userService.getProfil(this.currentUser.id).then(x => this.currentUSerProfil = x
+        );
+      if(this.currentUSerProfil){
+      this.imageData= this.currentUSerProfil.avatar.image.data;
+      this.imageSource = "data:image/png;base64,"+this.imageData;
+    }
+  
   }
 
   /**

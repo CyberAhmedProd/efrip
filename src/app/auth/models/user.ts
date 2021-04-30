@@ -2,13 +2,11 @@
 import { Image } from './Image'
 
 export class User {
-  id: number;
+  id: string;
   email: string;
   password: string;
   username?: string;
-  firstName: string;
-  lastName: string;
-  avatar: Image;
   roles: Role[];
   token?: string;
+  status : string;
 }

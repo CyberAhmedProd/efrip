@@ -2,7 +2,7 @@ import { Binary } from "@angular/compiler";
 
 
 export class Image {
-  id: number;
+  id: string;
   title: string;
   image: any;
 
