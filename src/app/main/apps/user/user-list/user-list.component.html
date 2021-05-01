@@ -82,13 +82,13 @@
           [footerHeight]="50"
           [scrollbarH]="true"
         >
-          <!--<ngx-datatable-column name="User" prop="fullName" [width]="200">
+          <ngx-datatable-column name="User" prop="row.user" [width]="200">
             <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
               <div class="d-flex align-items-center">
-                <div *ngIf="row.avatar.length > 0; else customAvatar">
+                <div *ngIf="row.avatar.image.data ; else customAvatar">
                   <img
                     class="rounded-circle mr-1"
-                    src="{{ row.avatar }}"
+                    src="data:image/png;base64,{{row.avatar.image.data}}"
                     height="32"
                     width="32"
                     alt="datatable-avatar"
@@ -98,25 +98,29 @@
                   <div
                     class="avatar mr-1 ml-0"
                     [ngClass]="{
-                      'bg-light-success': row.status == 'active',
-                      'bg-light-secondary': row.status == 'inactive',
-                      'bg-light-warning': row.status == 'pending'
+                      'bg-light-success': row.user.status == 'active',
+                      'bg-light-secondary': row.user.status == 'inactive',
+                      'bg-light-warning': row.user.status == 'pending'
                     }"
                   >
-                    <div class="avatar-content">{{ name | initials }}</div>
+                    <div class="avatar-content">{{ row.lastName | initials }}</div>
                   </div>
                 </ng-template>
                 <div class="cell-line-height">
                   <a routerLink="/apps/user/user-view/{{ row.id }}" class="font-medium-1 d-block"
-                    ><span class="font-weight-bold">{{ name }}</span></a
+                    ><span class="font-weight-bold">{{ row.lastName }} {{ row.firstName }}</span></a
                   >
-                  <span class="text-muted font-small-2"> @{{ row.firstName }}</span>
+                  <span class="text-muted font-small-2"> @{{ row.user.username }}</span>
                 </div>
               </div>
             </ng-template>
-          </ngx-datatable-column>-->
-          <ngx-datatable-column name="Email" prop="email" [width]="250"></ngx-datatable-column>
-          <ngx-datatable-column name="Role" prop="roles" [width]="50">
+          </ngx-datatable-column>
+     
+
+
+
+          <ngx-datatable-column name="Email" prop="user.email" [width]="250"></ngx-datatable-column>
+          <ngx-datatable-column name="Role" prop="user.roles" [width]="50">
             <ng-template let-roles="value" ngx-datatable-cell-template>
               <div>
                 <i
@@ -133,8 +137,7 @@
               </div>
             </ng-template>
           </ngx-datatable-column>
-          <ngx-datatable-column name="Username" prop="username" [width]="100"></ngx-datatable-column>
-          <ngx-datatable-column name="Status" prop="status" [width]="50">
+          <ngx-datatable-column name="Status" prop="user.status" [width]="50">
             <ng-template let-status="value" ngx-datatable-cell-template>
               <div
                 class="badge badge-pill"
