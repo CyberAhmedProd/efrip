@@ -41,7 +41,10 @@ export class UserListComponent implements OnInit {
 
   // Public Methods
   // -----------------------------------------------------------------------------------------------------
-
+  deleteUser(id :String){
+    this._userService.deleteUser(id)
+    this.table.offset = 0;
+  }
   /**
    * filterUpdate
    *

@@ -36,6 +36,16 @@ export class UserService {
     });
   }
 
+  deleteUser(id : String) :  Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._http.delete(`${environment.apiDistant}/api/user/${id}`).subscribe((response: any) => {
+        var data = "ok";
+        resolve(data);
+      }, reject);
+    });
+  }
+  
+
   getProfil(id : String) :  Promise<Profil> {
     return new Promise((resolve, reject) => {
       this._http.get(`${environment.apiDistant}/api/profil/${id}`).subscribe((response: any) => {
