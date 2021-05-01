@@ -69,7 +69,7 @@ export class UserListComponent implements OnInit {
   toggleSidebar(name): void {
     this._coreSidebarService.getSidebarRegistry(name).toggleOpen();
   }
-
+ 
   // Lifecycle Hooks
   // -----------------------------------------------------------------------------------------------------
   /**
