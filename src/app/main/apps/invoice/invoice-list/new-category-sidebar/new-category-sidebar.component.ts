@@ -40,12 +40,13 @@ export class NewCategorySidebarComponent {
         console.log('invalid')
     }
   }
+  
 
   private addCategory(){
     this._category = new Category();
     this._category.name=this.name;
     this._invoiceService.addCategory(this._category);
-    this._invoiceService.getDataTableRows();
+    setTimeout(() => {  this._invoiceService.getDataTableRows(); }, 500);
     console.log(this._category.name)
 
   }

@@ -79,4 +79,9 @@ export class InvoiceListComponent implements OnInit {
   toggleSidebar(name): void {
     this._coreSidebarService.getSidebarRegistry(name).toggleOpen();
   }
+  deleteCategory(id) {
+    this._invoiceListService.deleteCategory(id);
+    setTimeout(() => {  this._invoiceListService.getDataTableRows(); }, 500);
+    
+  }
 }

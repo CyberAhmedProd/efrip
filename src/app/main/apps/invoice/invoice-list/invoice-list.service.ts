@@ -60,4 +60,12 @@ export class InvoiceListService implements Resolve<any> {
       console.log(data)
     });
   }
+
+  deleteCategory(id){
+    return this._httpClient.delete(`${environment.apiDistant}/api/category/`+id,{
+        
+    }).subscribe(data => {
+      console.log(data);
+    })
+  }
 }
