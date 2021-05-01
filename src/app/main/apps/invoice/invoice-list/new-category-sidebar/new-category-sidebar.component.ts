@@ -77,6 +77,7 @@ export class NewCategorySidebarComponent {
   }
   updateError(){
     this.error = "";
+
   }
 
 }

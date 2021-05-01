@@ -67,6 +67,7 @@ export class EditCategorySidebarComponent {
     this._category.name = this.name;
     this._invoiceService.editCategory(this._category).subscribe((data) => {
       if (data.success != 1) {
+
         this.success = true;
         this.error = data.message;
       }else {

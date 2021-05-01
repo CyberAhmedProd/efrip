@@ -37,7 +37,9 @@
               name="name"
               (keyup)="updateError()"
               formControlName="name"
+
               required
+
             />
             <span *ngIf="submitted" class="invalid-form">
               <small class="form-text text-danger" *ngIf="this.duplicate"
