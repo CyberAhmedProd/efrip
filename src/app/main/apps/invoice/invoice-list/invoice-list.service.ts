@@ -47,4 +47,17 @@ export class InvoiceListService implements Resolve<any> {
       }, reject);
     });
   }
+  /**
+   * Add Category
+   * @params(
+   * category Category)
+   */
+  addCategory(category) {
+    return this._httpClient.post(`${environment.apiDistant}/api/category`,
+    {
+      name : category.name
+    }).subscribe (data => {
+      console.log(data)
+    });
+  }
 }
