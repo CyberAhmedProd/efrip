@@ -33,6 +33,10 @@
               <span *ngIf="submitted && form.name.invalid" class="invalid-form">
                 <small class="form-text text-danger" *ngIf="form.name.errors.required">This field is required!</small>
               </span>
+              <span *ngIf="submitted" class="invalid-form">
+                <small class="form-text text-danger" *ngIf="error">{{error}}</small>
+              </span>
+              
             </div>
             <button type="submit" class="btn btn-primary mr-1" (click)="submit(_categoryForm)" rippleEffect>Submit</button>
             <button

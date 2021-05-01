@@ -4,7 +4,10 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { environment } from 'environments/environment';
 
 import { BehaviorSubject, Observable } from 'rxjs';
-
+interface MyData {
+  success : number ;
+  message : string;
+}
 @Injectable()
 export class InvoiceListService implements Resolve<any> {
   rows: any;
@@ -53,11 +56,9 @@ export class InvoiceListService implements Resolve<any> {
    * category Category)
    */
   addCategory(category) {
-    return this._httpClient.post(`${environment.apiDistant}/api/category`,
+    return this._httpClient.post<MyData>(`${environment.apiDistant}/api/category`,
     {
       name : category.name
-    }).subscribe (data => {
-      console.log(data)
     });
   }
 
