@@ -1,4 +1,4 @@
 ﻿export class Role {
-  id : String;
+  id? : String;
   role : String
 }

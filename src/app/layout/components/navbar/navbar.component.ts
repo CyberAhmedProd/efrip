@@ -229,13 +229,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
       id: this._translateService.currentLang
     });
 
- 
-      await this._userService.getProfil(this.currentUser.id).then(x => this.currentUSerProfil = x
-        );
-      if(this.currentUSerProfil){
-      this.imageData= this.currentUSerProfil.avatar.image.data;
-      this.imageSource = "data:image/png;base64,"+this.imageData;
-    }
+      if(this.currentUser){
+        await this._userService.getProfil(this.currentUser.id).then(x => this.currentUSerProfil = x
+          );
+        if(this.currentUSerProfil){
+        this.imageData= this.currentUSerProfil.avatar.image.data;
+        this.imageSource = "data:image/png;base64,"+this.imageData;
+       }
+      }
+   
   
   }
 

@@ -27,6 +27,15 @@ export class UserService {
     return this._http.get<User>(`${environment.apiUrl}/users/${id}`);
   }
 
+  addUser(user: User) : Promise<User> {
+    return new Promise((resolve, reject) => {
+      this._http.post(`${environment.apiDistant}/api/user`,user).subscribe((response: any) => {
+        var data = response;
+        resolve(data);
+      }, reject);
+    });
+  }
+
   getProfil(id : String) :  Promise<Profil> {
     return new Promise((resolve, reject) => {
       this._http.get(`${environment.apiDistant}/api/profil/${id}`).subscribe((response: any) => {
@@ -36,5 +45,5 @@ export class UserService {
     });
   }
    
-  }
+}
   

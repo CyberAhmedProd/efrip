@@ -124,7 +124,7 @@
                   [ngClass]="{
                     'icon-edit-2 text-info': roles[0].role == 'Editor',
                     'icon-settings text-warning': roles[0].role == 'Author',
-                    'icon-database text-success': roles[0].role == 'Maintainer',
+                    'icon-database text-success': roles[0].role == 'Shipping',
                     'icon-user text-primary': roles[0].role == 'Client',
                     'icon-slack text-danger': roles[0].role == 'Admin'
                   }"
@@ -133,7 +133,7 @@
               </div>
             </ng-template>
           </ngx-datatable-column>
-          <ngx-datatable-column name="UserState" prop="userState" [width]="100"></ngx-datatable-column>
+          <ngx-datatable-column name="Username" prop="username" [width]="100"></ngx-datatable-column>
           <ngx-datatable-column name="Status" prop="status" [width]="50">
             <ng-template let-status="value" ngx-datatable-cell-template>
               <div
