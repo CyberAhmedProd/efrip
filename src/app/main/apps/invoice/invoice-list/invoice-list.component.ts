@@ -19,6 +19,8 @@ export class InvoiceListComponent implements OnInit {
   public selectedOption = 10;
   public selectedStatusOption = "";
   public ColumnMode = ColumnMode;
+  public temp_id:string;
+  public temp_name:string;
 
   // decorator
   @ViewChild(DatatableComponent) table: DatatableComponent;
@@ -53,7 +55,7 @@ export class InvoiceListComponent implements OnInit {
 
     // filter our data
     const temp = this.tempData.filter(function (d) {
-      return d.client.name.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
 
     // update the rows
@@ -78,10 +80,20 @@ export class InvoiceListComponent implements OnInit {
   }
   toggleSidebar(name): void {
     this._coreSidebarService.getSidebarRegistry(name).toggleOpen();
+    
+  }
+  
+  toggleSidebar2(name,category_id,category_name): void {
+    this._coreSidebarService.getSidebarRegistry(name).toggleOpen();
+    this.temp_id=category_id;
+    this.temp_name=category_name;
+   // console.log(this._coreSidebarService.getSidebarRegistry(name).category_id)
   }
   deleteCategory(id) {
     this._invoiceListService.deleteCategory(id);
-    setTimeout(() => {  this._invoiceListService.getDataTableRows(); }, 500);
-    
+    setTimeout(() => {
+      this._invoiceListService.getDataTableRows();
+    }, 500);
   }
+  
 }

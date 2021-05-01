@@ -107,10 +107,13 @@
                     ></i>
                   </button>
                   <div ngbDropdownMenu>
-                    <a
-                      routerLink="/apps/invoice/edit/{{ row.id }}"
-                      ngbDropdownItem
-                      ><i data-feather="edit" class="mr-1"></i>Edit</a
+                    <a ngbDropdownItem (click)="toggleSidebar2('edit-category-sidebar',row.id,row.name)"
+                      ><i
+                        
+                        data-feather="edit"
+                        class="mr-1"
+                      ></i
+                      >Edit</a
                     ><a (click)="deleteCategory(row.id)" ngbDropdownItem
                       ><i data-feather="trash" class="mr-1"></i>Delete</a
                     >
@@ -127,11 +130,20 @@
   </div>
   <!-- New User Sidebar -->
   <core-sidebar
+    labelForId
+    id="firstbar"
     class="modal modal-slide-in sidebar-todo-modal fade"
     name="new-category-sidebar"
     overlayClass="modal-backdrop"
   >
     <app-new-category-sidebar></app-new-category-sidebar>
+  </core-sidebar>
+  <core-sidebar  labelForId
+    class="modal modal-slide-in sidebar-todo-modal fade"
+    name="edit-category-sidebar"
+    overlayClass="modal-backdrop"
+  >
+    <app-edit-category-sidebar category_id={{this.temp_id}} category_name={{this.temp_name}}  ></app-edit-category-sidebar>
   </core-sidebar>
   <!--/ New User Sidebar -->
 </div>

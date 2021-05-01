@@ -30,7 +30,7 @@ import { InvoicePreviewService } from 'app/main/apps/invoice/invoice-preview/inv
 import { AddPaymentSidebarPreviewComponent } from 'app/main/apps/invoice/invoice-preview/sidebar/add-payment-sidebar-preview/add-payment-sidebar-preview.component';
 import { SendInvoiceSidebarPreviewComponent } from 'app/main/apps/invoice/invoice-preview/sidebar/send-invoice-sidebar-preview/send-invoice-sidebar-preview.component';
 import { NewCategorySidebarComponent } from './invoice-list/new-category-sidebar/new-category-sidebar.component';
-
+import {EditCategorySidebarComponent} from './invoice-list/edit-category-sidebar/edit-category-sidebar-component'
 // routing
 const routes: Routes = [
   {
@@ -85,6 +85,7 @@ const routes: Routes = [
     SendInvoiceSidebarPreviewComponent,
     AddPaymentSidebarPreviewComponent,
     NewCategorySidebarComponent,
+    EditCategorySidebarComponent,
    
   ],
   imports: [

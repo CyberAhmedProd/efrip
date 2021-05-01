@@ -1,0 +1,85 @@
+<div class="slideout-content">
+  <!-- Modal to add edit user starts-->
+  <div
+    class="modalsd modal-slide-in sdfade edit-user-modal"
+    id="modals-slide-in"
+  >
+    <div class="modal-dialog">
+      <form
+        [formGroup]="_categoryForm"
+        class="add-edit-user modal-content pt-0"
+        (ngSubmit)="(_categoryForm.valid)"
+        #editCategoryForm="ngForm"
+      >
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="toggleSidebar('edit-category-sidebar');
+                    this.error ='';"
+        >
+          ×
+        </button>
+        <div class="modal-header mb-1">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
+        </div>
+        <div class="modal-body flex-grow-1">
+          <div class="form-group">
+            <label class="form-label" for="basic-icon-default-uname"
+              >Name</label
+            >
+            <input
+              type="text"
+              id="basic-icon-default-uname2"
+              class="form-control dt-uname"
+              aria-describedby="basic-icon-default-uname"
+              name="name"
+              (keyup)="updateError()"
+              formControlName="name"
+              required
+            />
+            <span *ngIf="submitted" class="invalid-form">
+              <small class="form-text text-danger" *ngIf="this.duplicate"
+                >{{error}}</small
+              >
+            </span>
+            <span
+              *ngIf="submitted && form.name.invalid && !this.duplicate"
+              class="invalid-form"
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="form.name.errors.required"
+                >This field is required!</small
+              >
+            </span>
+            <span *ngIf="submitted && success" class="invalid-form">
+              <small class="form-text text-danger" *ngIf="error"
+                >{{error}}</small
+              >
+            </span>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary mr-1"
+            (click)="submit(_categoryForm)"
+            rippleEffect
+          >
+            Submit
+          </button>
+          <button
+            type="reset"
+            class="btn btn-outline-secondary"
+            (click)="toggleSidebar('edit-category-sidebar');
+                      this.error ='';"
+            rippleEffect
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Modal to add edit user Ends-->
+</div>

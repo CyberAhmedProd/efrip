@@ -28,6 +28,7 @@
                 name="name"
                 formControlName ="name"
                 [class.error]="submitted && form.name.invalid"
+                (keyup)="updateError()"
                 required
               />
               <span *ngIf="submitted && form.name.invalid" class="invalid-form">
