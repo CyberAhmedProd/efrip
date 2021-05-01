@@ -82,7 +82,8 @@ const routes: Routes = [
     SendInvoiceSidebarComponent,
     AddPaymentSidebarComponent,
     SendInvoiceSidebarPreviewComponent,
-    AddPaymentSidebarPreviewComponent
+    AddPaymentSidebarPreviewComponent,
+   
   ],
   imports: [
     CommonModule,

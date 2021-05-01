@@ -1,22 +1,23 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
 
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
+import { ColumnMode, DatatableComponent } from "@swimlane/ngx-datatable";
 
-import { InvoiceListService } from 'app/main/apps/invoice/invoice-list/invoice-list.service';
+import { InvoiceListService } from "app/main/apps/invoice/invoice-list/invoice-list.service";
+import { CoreSidebarService } from "@core/components/core-sidebar/core-sidebar.service";
 
 @Component({
-  selector: 'app-invoice-list',
-  templateUrl: './invoice-list.component.html',
-  styleUrls: ['./invoice-list.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  selector: "app-invoice-list",
+  templateUrl: "./invoice-list.component.html",
+  styleUrls: ["./invoice-list.component.scss"],
+  encapsulation: ViewEncapsulation.None,
 })
 export class InvoiceListComponent implements OnInit {
   // public
   public data: any;
   public selectedOption = 10;
-  public selectedStatusOption = '';
+  public selectedStatusOption = "";
   public ColumnMode = ColumnMode;
 
   // decorator
@@ -32,7 +33,10 @@ export class InvoiceListComponent implements OnInit {
    *
    * @param {InvoiceListService} _invoiceListService
    */
-  constructor(private _invoiceListService: InvoiceListService) {
+  constructor(
+    private _invoiceListService: InvoiceListService,
+    private _coreSidebarService: CoreSidebarService
+  ) {
     this._unsubscribeAll = new Subject();
   }
 
@@ -64,10 +68,15 @@ export class InvoiceListComponent implements OnInit {
    * On init
    */
   ngOnInit(): void {
-    this._invoiceListService.onDatatablessChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe(response => {
-      this.data = response;
-      this.rows = this.data;
-      this.tempData = this.rows;
-    });
+    this._invoiceListService.onDatatablessChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((response) => {
+        this.data = response;
+        this.rows = this.data;
+        this.tempData = this.rows;
+      });
+  }
+  toggleSidebar(name): void {
+    this._coreSidebarService.getSidebarRegistry(name).toggleOpen();
   }
 }
