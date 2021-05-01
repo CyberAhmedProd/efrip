@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { Category } from 'app/auth/models';
+
 import { environment } from 'environments/environment';
 
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -67,6 +69,11 @@ export class InvoiceListService implements Resolve<any> {
         
     }).subscribe(data => {
       console.log(data);
+    })
+  }
+  editCategory(category: Category){
+    return this._httpClient.put<MyData>(`${environment.apiDistant}/api/category/`+category.id,{
+      name: category.name
     })
   }
 }
