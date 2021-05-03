@@ -5,6 +5,9 @@ import { takeUntil } from 'rxjs/operators';
 import { FlatpickrOptions } from 'ng2-flatpickr';
 
 import { AccountSettingsService } from 'app/main/pages/account-settings/account-settings.service';
+import { Image } from 'app/auth/models';
+import { ImageService } from 'app/auth/service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-account-settings',
   templateUrl: './account-settings.component.html',
@@ -21,7 +24,7 @@ export class AccountSettingsComponent implements OnInit {
   public passwordTextTypeOld = false;
   public passwordTextTypeNew = false;
   public passwordTextTypeRetype = false;
-
+  form: FormGroup;
   // private
   private _unsubscribeAll: Subject<any>;
 
@@ -29,9 +32,41 @@ export class AccountSettingsComponent implements OnInit {
    * Constructor
    *
    * @param {AccountSettingsService} _accountSettingsService
+   * @param {ImageService} _imageService
    */
-  constructor(private _accountSettingsService: AccountSettingsService) {
+  constructor(private _accountSettingsService: AccountSettingsService , private _imageService : ImageService,private fb: FormBuilder) {
     this._unsubscribeAll = new Subject();
+    this.form = this.fb.group({
+      img: [null]
+    })
+  }
+  currentInput:any;
+  currentOutput : any
+  _imgData : Image
+  onFileSelected(event) {
+    console.log(event.target.files);
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.onload = (event: any) => {
+          this.currentInput = event.target.result;
+          this.currentOutput = event.target.files[0];
+      }
+      reader.readAsDataURL(event.target.files[0]);
+
+      const file = (event.target as HTMLInputElement).files[0];
+    this.form.patchValue({
+      img: file
+    });
+    this.form.get('img').updateValueAndValidity()
+    }
+  }
+
+   async uploadImg(){
+    this._imgData = new Image();
+    this._imgData.image = this.form.get('img').value;
+    this._imgData.title = this.form.get('img').value.type
+    console.log(this._imageService.addImage(this._imgData))
+    
   }
 
   // Public Methods

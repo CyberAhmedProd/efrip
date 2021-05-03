@@ -25,22 +25,26 @@
                   <div class="card-body">
                     <!-- header media -->
                     <div class="media">
-                      <a href="javascript:void(0);" class="mr-25">
+                      <label for="account-upload">
                         <img
-                          [src]="data.accountSetting.general.avatar"
+                          src= "{{ this.currentInput || 'data:image/png;base64,'+data.avatar.image.data}}"
                           class="rounded mr-50"
                           alt="profile image"
                           height="76"
                           width="80"
                         />
-                      </a>
+                      </label>
+                      <input type="file" id="account-upload"
+                      name = "currentInput"
+                      [(ngModel)]="currentInput"
+                      (change)="onFileSelected($event)" hidden accept="image/*" />
                       <!-- upload and reset button -->
                       <div class="media-body mt-75 ml-1">
-                        <button for="account-upload" class="btn btn-sm btn-primary mb-75 mr-75" rippleEffect>
+                        <button (click)="uploadImg()" for="account-upload" class="btn btn-sm btn-primary mb-75 mr-75" rippleEffect>
                           Upload
                         </button>
-                        <input type="file" id="account-upload" hidden accept="image/*" />
                         <button class="btn btn-sm btn-outline-secondary mb-75" rippleEffect>Reset</button>
+                       
                         <p>Allowed JPG, GIF or PNG. Max size of 800kB</p>
                       </div>
                       <!--/ upload and reset button -->
@@ -55,7 +59,7 @@
                             <label for="account-username">Username</label>
                             <input
                               type="text"
-                              [(ngModel)]="data.accountSetting.general.username"
+                              [(ngModel)]="data.user.username"
                               class="form-control"
                               id="account-username"
                               name="username"
@@ -65,10 +69,10 @@
                         </div>
                         <div class="col-12 col-sm-6">
                           <div class="form-group">
-                            <label for="account-name">Name</label>
+                            <label for="account-name">FirstName</label>
                             <input
                               type="text"
-                              [(ngModel)]="data.accountSetting.general.fullName"
+                              [(ngModel)]="data.firstName"
                               class="form-control"
                               id="account-name"
                               name="name"
@@ -81,7 +85,7 @@
                             <label for="account-e-mail">E-mail</label>
                             <input
                               type="email"
-                              [(ngModel)]="data.accountSetting.general.email"
+                              [(ngModel)]="data.user.email"
                               class="form-control"
                               id="account-e-mail"
                               name="email"
@@ -91,10 +95,10 @@
                         </div>
                         <div class="col-12 col-sm-6">
                           <div class="form-group">
-                            <label for="account-company">Company</label>
+                            <label for="account-company">LastName</label>
                             <input
                               type="text"
-                              [(ngModel)]="data.accountSetting.general.company"
+                              [(ngModel)]="data.lastName"
                               class="form-control"
                               id="account-company"
                               name="company"
@@ -250,9 +254,9 @@
                       <div class="row">
                         <div class="col-12">
                           <div class="form-group">
-                            <label for="accountTextarea">Bio</label>
+                            <label for="accountTextarea">Street</label>
                             <textarea
-                              [(ngModel)]="data.accountSetting.info.bio"
+                              [(ngModel)]="data.address.street"
                               class="form-control"
                               id="accountTextarea"
                               name="accountTextarea"
@@ -263,9 +267,9 @@
                         </div>
                         <div class="col-12 col-sm-6">
                           <div class="form-group">
-                            <label for="account-birth-date">Birth date</label>
+                            <label for="account-birth-date">City</label>
                             <input
-                              [(ngModel)]="data.accountSetting.info.dob"
+                              [(ngModel)]="data.address.city"
                               type="text"
                               class="form-control flatpickr"
                               placeholder="Birth date"
@@ -279,7 +283,7 @@
                             <label for="accountSelect">Country</label>
                             <select
                               class="form-control"
-                              [(ngModel)]="data.accountSetting.info.country"
+                              [(ngModel)]="data.address.country"
                               id="accountSelect"
                               name="accountSelect"
                             >
@@ -291,10 +295,10 @@
                         </div>
                         <div class="col-12 col-sm-6">
                           <div class="form-group">
-                            <label for="account-website">Website</label>
+                            <label for="account-website">CodePostal</label>
                             <input
                               type="text"
-                              [(ngModel)]="data.accountSetting.info.website"
+                              [(ngModel)]="data.address.codePostal"
                               class="form-control"
                               name="website"
                               id="account-website"
@@ -302,19 +306,7 @@
                             />
                           </div>
                         </div>
-                        <div class="col-12 col-sm-6">
-                          <div class="form-group">
-                            <label for="account-phone">Phone</label>
-                            <input
-                              type="text"
-                              [(ngModel)]="data.accountSetting.info.phone"
-                              class="form-control"
-                              id="account-phone"
-                              placeholder="Phone number"
-                              name="phone"
-                            />
-                          </div>
-                        </div>
+                        
                         <div class="col-12">
                           <button type="submit" class="btn btn-primary mt-1 mr-1" rippleEffect>Save changes</button>
                           <button type="reset" class="btn btn-outline-secondary mt-1" rippleEffect>Cancel</button>
