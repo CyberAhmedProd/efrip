@@ -37,5 +37,15 @@ export class ImageService {
     );
     
   }
+  updateImage(image : Image){
+    var fd = new FormData();
+    fd.append('image', image.image);
+    fd.append('title',image.title);
+    return this._http.put<any>(`${environment.apiDistant}/api/photos/${image.id}`, fd).subscribe(
+      (res) => console.log(res),
+      (err) => console.log(err)
+    );
+    
+  }
 }
   

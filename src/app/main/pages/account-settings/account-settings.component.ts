@@ -63,9 +63,10 @@ export class AccountSettingsComponent implements OnInit {
 
    async uploadImg(){
     this._imgData = new Image();
+    this._imgData.id = this.data.avatar.id;
     this._imgData.image = this.form.get('img').value;
     this._imgData.title = this.form.get('img').value.type
-    console.log(this._imageService.addImage(this._imgData))
+    console.log(this._imageService.updateImage(this._imgData))
     
   }
 
