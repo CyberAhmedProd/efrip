@@ -66,14 +66,14 @@ export class ProductListService implements Resolve<any> {
   }
 
   deleteProduct(id){
-    return this._httpClient.delete(`${environment.apiDistant}/api/product/`+id,{
+    return this._httpClient.delete(`${environment.apiDistant}/api/product/delete/`+id,{
         
     }).subscribe(data => {
       console.log(data);
     })
   }
   editProduct(product: Product){
-    return this._httpClient.put<MyData>(`${environment.apiDistant}/api/product/`+product.id,{
+    return this._httpClient.put<MyData>(`${environment.apiDistant}/api/product/update/`+product.id,{
       name: product.name
     })
   }

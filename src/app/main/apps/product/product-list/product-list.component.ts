@@ -64,6 +64,12 @@ export class ProductListComponent implements OnInit {
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
   }
+  toggleSidebar(test){
+
+  }
+  toggleSidebar2(test){
+
+  }
 
   // Lifecycle Hooks
   // -----------------------------------------------------------------------------------------------------
@@ -71,6 +77,20 @@ export class ProductListComponent implements OnInit {
    * On init
    */
   ngOnInit(): void {
+    this._productListService.onDatatablessChanged
+    .pipe(takeUntil(this._unsubscribeAll))
+    .subscribe((response) => {
+      this.data = response;
+      this.rows = this.data;
+      this.tempData = this.rows;
+    });
+  }
+
+  deleteProduct(id) {
+    this._productListService.deleteProduct(id);
+    setTimeout(() => {
+      this._productListService.getDataTableRows();
+    }, 500);
   }
   
 }
