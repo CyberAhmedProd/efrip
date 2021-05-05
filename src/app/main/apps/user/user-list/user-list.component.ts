@@ -37,6 +37,7 @@ export class UserListComponent implements OnInit {
    */
   constructor(private _userListService: UserListService, private _coreSidebarService: CoreSidebarService, private _userService : UserService) {
     this._unsubscribeAll = new Subject();
+    this.tempData = this.rows;
   }
 
   // Public Methods

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 
-import { EcommerceService } from 'app/main/apps/ecommerce/ecommerce.service';
+import { EcommerceService } from 'app/main/pages/ecommerce/ecommerce.service';
 
 @Component({
   selector: 'app-ecommerce-checkout-item',

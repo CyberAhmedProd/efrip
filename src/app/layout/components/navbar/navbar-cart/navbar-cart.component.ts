@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { EcommerceService } from 'app/main/apps/ecommerce/ecommerce.service';
+import { EcommerceService } from 'app/main/pages/ecommerce/ecommerce.service';
 
 @Component({
   selector: 'app-navbar-cart',
