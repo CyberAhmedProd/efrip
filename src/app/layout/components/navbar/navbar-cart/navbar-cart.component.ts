@@ -13,6 +13,7 @@ export class NavbarCartComponent implements OnInit {
   // Public
   public products = [];
   public cartList = [];
+  public total = 0;
   public cartListLength;
 
   // Private
@@ -51,7 +52,9 @@ export class NavbarCartComponent implements OnInit {
   ngOnInit(): void {
     // Get Products
     this._ecommerceService.getProducts();
-
+    this.cartList.forEach(product => {
+      this.total += product.price;
+    })
     // Get Cart List
     this._ecommerceService.getCartList();
 
@@ -72,5 +75,6 @@ export class NavbarCartComponent implements OnInit {
         });
       }
     });
+    console.log(this.cartList)
   }
 }

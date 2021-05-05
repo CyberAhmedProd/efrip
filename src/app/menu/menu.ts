@@ -93,6 +93,23 @@ export const menu: CoreMenu[] = [
         ]
       },
       {
+        id: 'product',
+        title: 'product',
+        translate: 'MENU.APPS.PRODUCT.COLLAPSIBLE',
+        type: 'collapsible',
+        icon: 'file-text',
+        children: [
+          {
+            id: 'product-list',
+            title: 'List',
+            translate: 'MENU.APPS.PRODUCT.LIST',
+            type: 'item',
+            icon: 'circle',
+            url: 'apps/product/list'
+          }
+        ]
+      },
+      {
         id: 'users',
         title: 'User',
         translate: 'MENU.APPS.USER.COLLAPSIBLE',
