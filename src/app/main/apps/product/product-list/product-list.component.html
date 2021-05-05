@@ -77,21 +77,7 @@
             <ngx-datatable-column name="name" prop="productName" >
               <ng-template
                 let-row="row"
-                let-invoiceStatus="value"
-                ngx-datatable-cell-template
-              >
-                <!-- <a class="font-weight-bold">{{ invoiceStatus }}</a> -->
-                <div>
-                  <span
-                    class="font-weight-bold d-block text-nowrap font-medium-1"
-                    >{{ row.name }}</span
-                  >
-                </div>
-              </ng-template>
-            </ngx-datatable-column><ngx-datatable-column name="name" prop="productName" [width]="50">
-              <ng-template
-                let-row="row"
-                let-invoiceStatus="value"
+                let-name="value"
                 ngx-datatable-cell-template
               >
                 <!-- <a class="font-weight-bold">{{ invoiceStatus }}</a> -->
@@ -103,10 +89,12 @@
                 </div>
               </ng-template>
             </ngx-datatable-column>
+            
+            
             <ngx-datatable-column name="price" prop="productPrice" [width]='10'>
               <ng-template
                 let-row="row"
-                let-invoiceStatus="value"
+                let-price="value"
                 ngx-datatable-cell-template
               >
                 <!-- <a class="font-weight-bold">{{ invoiceStatus }}</a> -->
@@ -118,10 +106,25 @@
                 </div>
               </ng-template>
             </ngx-datatable-column>
+            <ngx-datatable-column name="quantity" prop="productQuantity" [width]='10'>
+              <ng-template
+                let-row="row"
+                let-quantity="value"
+                ngx-datatable-cell-template
+              >
+                <!-- <a class="font-weight-bold">{{ invoiceStatus }}</a> -->
+                <div>
+                  <span
+                    class="font-weight-bold d-block text-nowrap font-medium-1"
+                    >{{ row.quantity }}</span
+                  >
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
             <ngx-datatable-column name="images" prop="productimages" [sortable]="false" >
               <ng-template
                 let-row="row"
-                let-invoiceStatus="value"
+                
                 ngx-datatable-cell-template
               >
                 <!-- <a class="font-weight-bold">{{ invoiceStatus }}</a> -->
@@ -180,5 +183,14 @@
       <!--/ Invoice List -->
     </div>
     <!-- New User Sidebar -->
+    <core-sidebar
+    labelForId
+    id="firstbar"
+    class="modal modal-slide-in sidebar-todo-modal fade"
+    name="new-product-sidebar"
+    overlayClass="modal-backdrop"
+  >
+    <app-new-product-sidebar></app-new-product-sidebar>
+  </core-sidebar>
   </div>
   

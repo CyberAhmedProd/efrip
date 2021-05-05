@@ -11,6 +11,7 @@ export class Product {
     category:Category;
     details:string;
     price:number;
+    quantity:number;
     description:string;
     featured:boolean;
     images:[Image];

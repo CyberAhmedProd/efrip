@@ -64,11 +64,16 @@ export class ProductListComponent implements OnInit {
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
   }
-  toggleSidebar(test){
-
+  toggleSidebar(name): void {
+    this._coreSidebarService.getSidebarRegistry(name).toggleOpen();
+    
   }
-  toggleSidebar2(test){
-
+  
+  toggleSidebar2(name,category_id,category_name): void {
+    this._coreSidebarService.getSidebarRegistry(name).toggleOpen();
+    this.temp_id=category_id;
+    this.temp_name=category_name;
+   // console.log(this._coreSidebarService.getSidebarRegistry(name).category_id)
   }
 
   // Lifecycle Hooks

@@ -16,7 +16,8 @@ import { CoreSidebarModule } from '@core/components';
 import { ProductListComponent } from 'app/main/apps/product/product-list/product-list.component';
 import { ProductListService } from 'app/main/apps/product/product-list/product-list.service';
 
-
+import { NewProductSidebarComponent } from './product-list/new-product-sidebar/new-product-sidebar.component';
+//import {EditProductSidebarComponent} from './product-list/edit-product-sidebar/edit-product-sidebar-component'
 // routing
 const routes: Routes = [
   {
@@ -40,6 +41,7 @@ const routes: Routes = [
   declarations: [
     
     ProductListComponent,
+    NewProductSidebarComponent,
     
     
    
@@ -55,7 +57,8 @@ const routes: Routes = [
     CorePipesModule,
     NgbModule,
     NgSelectModule,
-    CoreSidebarModule
+    CoreSidebarModule,
+    
   ],
   providers: [ProductListService],
   exports: [ProductListComponent]
