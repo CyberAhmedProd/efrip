@@ -17,6 +17,7 @@ import { ProductListComponent } from 'app/main/apps/product/product-list/product
 import { ProductListService } from 'app/main/apps/product/product-list/product-list.service';
 
 import { NewProductSidebarComponent } from './product-list/new-product-sidebar/new-product-sidebar.component';
+import {NewProductComponent} from 'app/main/apps/product/product-list/new-product/new-product.component'
 //import {EditProductSidebarComponent} from './product-list/edit-product-sidebar/edit-product-sidebar-component'
 // routing
 const routes: Routes = [
@@ -42,6 +43,7 @@ const routes: Routes = [
     
     ProductListComponent,
     NewProductSidebarComponent,
+    NewProductComponent,
     
     
    

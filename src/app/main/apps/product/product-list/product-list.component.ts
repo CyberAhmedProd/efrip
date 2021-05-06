@@ -7,6 +7,8 @@ import { ColumnMode, DatatableComponent } from "@swimlane/ngx-datatable";
 
 import { CoreSidebarService } from "@core/components/core-sidebar/core-sidebar.service";
 import { ProductListService } from "./product-list.service";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ListGroupComponent } from "app/main/components/list-group/list-group.component";
 
 @Component({
   selector: "app-product-list",
@@ -38,7 +40,8 @@ export class ProductListComponent implements OnInit {
    */
   constructor(
     private _productListService: ProductListService,
-    private _coreSidebarService: CoreSidebarService
+    private _coreSidebarService: CoreSidebarService,
+    private modalService: NgbModal
   ) {
     this._unsubscribeAll = new Subject();
   }
@@ -74,6 +77,9 @@ export class ProductListComponent implements OnInit {
     this.temp_id=category_id;
     this.temp_name=category_name;
    // console.log(this._coreSidebarService.getSidebarRegistry(name).category_id)
+  }
+  modalOpenForm(modalForm) {
+    this.modalService.open(modalForm,{size:'lg',backdrop:'static'});
   }
 
   // Lifecycle Hooks
