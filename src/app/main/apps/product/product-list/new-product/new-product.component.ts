@@ -19,8 +19,11 @@ export class NewProductComponent implements OnInit {
   public linkedinVar;
   public landmarkVar;
   public addressVar;
+  public textLength;
+  public selectedItem;
+  public maxLength:number=150;
   public selectBasic = [
-    { name: "UK" },
+    { id:"test",name: "UK" },
     { name: "USA" },
     { name: "Spain" },
     { name: "France" },
@@ -34,7 +37,9 @@ export class NewProductComponent implements OnInit {
     { name: "Spanish" },
   ];
   public selectMultiSelected;
-
+  changeFn(selectedItem){
+    console.log(selectedItem)
+  }
   // private
 
   private horizontalWizardStepper: Stepper;
@@ -70,7 +75,10 @@ export class NewProductComponent implements OnInit {
   onSubmit() {
     return false;
   }
+  updateCounter(){
+    console.log(this.textLength)
 
+  }
   constructor() {}
 
   ngOnInit(): void {
@@ -78,7 +86,7 @@ export class NewProductComponent implements OnInit {
       document.querySelector("#stepper1"),
       {}
     );
-
+    this.selectedItem=this.selectBasic[0]
     this.bsStepper = document.querySelectorAll(".bs-stepper");
 
     // content header

@@ -8,22 +8,26 @@
             <button class="step-trigger">
               <span class="bs-stepper-box">1</span>
               <span class="bs-stepper-label">
-                <span class="bs-stepper-title">Account Details</span>
-                <span class="bs-stepper-subtitle">Setup Account Details</span>
+                <span class="bs-stepper-title">Product Details</span>
+                <span class="bs-stepper-subtitle">Setup Product Details</span>
               </span>
             </button>
           </div>
-          <div class="line"><i data-feather="chevron-right" class="font-medium-2"></i></div>
+          <div class="line">
+            <i data-feather="chevron-right" class="font-medium-2"></i>
+          </div>
           <div class="step" data-target="#personal-info">
             <button class="step-trigger">
               <span class="bs-stepper-box">2</span>
               <span class="bs-stepper-label">
-                <span class="bs-stepper-title">Personal Info</span>
-                <span class="bs-stepper-subtitle">Add Personal Info</span>
+                <span class="bs-stepper-title">Quantity and Price</span>
+                <span class="bs-stepper-subtitle">Add quantity and price</span>
               </span>
             </button>
           </div>
-          <div class="line"><i data-feather="chevron-right" class="font-medium-2"></i></div>
+          <div class="line">
+            <i data-feather="chevron-right" class="font-medium-2"></i>
+          </div>
           <div class="step" data-target="#address">
             <button class="step-trigger">
               <span class="bs-stepper-box">3</span>
@@ -33,13 +37,15 @@
               </span>
             </button>
           </div>
-          <div class="line"><i data-feather="chevron-right" class="font-medium-2"></i></div>
+          <div class="line">
+            <i data-feather="chevron-right" class="font-medium-2"></i>
+          </div>
           <div class="step" data-target="#social-links">
             <button class="step-trigger">
               <span class="bs-stepper-box">3</span>
               <span class="bs-stepper-label">
-                <span class="bs-stepper-title">Social Links</span>
-                <span class="bs-stepper-subtitle">Add Social Links</span>
+                <span class="bs-stepper-title">Images</span>
+                <span class="bs-stepper-subtitle">Images</span>
               </span>
             </button>
           </div>
@@ -49,31 +55,38 @@
             <div id="account-details" class="content">
               <form #accountDetailsForm="ngForm">
                 <div class="content-header">
-                  <h5 class="mb-0">Account Details</h5>
-                  <small class="text-muted">Enter Your Account Details.</small>
+                  <h5 class="mb-0">Product Details</h5>
+                  <small class="text-muted">Enter Your Product Details.</small>
                 </div>
 
                 <div class="row">
                   <div class="form-group col-md-6">
-                    <label class="form-label" for="username">Username</label>
+                    <label class="form-label" for="name">Name</label>
                     <input
                       [(ngModel)]="TDNameVar"
                       #TDNameRef="ngModel"
                       required
                       type="text"
-                      name="username"
-                      id="username"
+                      name="name"
+                      id="name"
                       class="form-control"
-                      [class.error]="!TDNameRef.valid && accountDetailsForm.submitted"
-                      placeholder="johndoe"
+                      [class.error]="
+                        !TDNameRef.valid && accountDetailsForm.submitted
+                      "
+                      placeholder="name"
                     />
-                    <span *ngIf="accountDetailsForm.submitted && TDNameRef.invalid" class="invalid-form">
-                      <small class="form-text text-danger" *ngIf="TDNameRef.errors.required"
+                    <span
+                      *ngIf="accountDetailsForm.submitted && TDNameRef.invalid"
+                      class="invalid-form"
+                    >
+                      <small
+                        class="form-text text-danger"
+                        *ngIf="TDNameRef.errors.required"
                         >This field is required!</small
                       >
                     </span>
                   </div>
-                  <div class="form-group col-md-6">
+                  <!-- <div class="form-group col-md-6">
                     <label class="form-label" for="email">Email</label>
                     <input
                       [(ngModel)]="TDEmailVar"
@@ -91,59 +104,53 @@
                     <span *ngIf="accountDetailsForm.submitted" class="invalid-form">
                       <small class="form-text text-danger" *ngIf="!TDEmailRef.valid">Email must be valid!</small>
                     </span>
+                  </div> -->
+
+                  <div class="form-group col-md-6">
+                    <label class="form-label" for="country">Category</label>
+                    <ng-select [items]="selectBasic" bindLabel="name" 
+                    [(ngModel)]="selectedItem" (change)="changeFn(selectedItem)"
+                    [ngModelOptions]="{standalone: true}" 
+                    >
+                    </ng-select>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="form-group form-password-toggle col-md-6">
-                    <label class="form-label" for="password">Password</label>
-                    <input
-                      type="password"
-                      name="password"
-                      id="password"
-                      class="form-control"
-                      [class.error]="!TDPasswordOnlyRef.valid && accountDetailsForm.submitted"
-                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                      ngModel
-                      #TDPasswordOnlyRef="ngModel"
-                      required
-                      minlength="6"
-                      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                    />
-                    <div
-                      *ngIf="TDPasswordOnlyRef.invalid && accountDetailsForm.submitted"
-                      class="form-text text-danger"
+                  <div class="form-group col-md-12">
+                    <label class="form-label" for="country">Details</label>
+                    <fieldset class="form-label-group mb-0">
+                      <textarea
+                        [(ngModel)]="textLength"
+                        [maxlength]="maxLength"
+                        #TDDetailRef="ngModel"
+                        name="details"
+                        id="details"
+                        class="form-control char-textarea"
+                        type="textarea"
+                        [class.error]="
+                        !TDDetailRef.valid && accountDetailsForm.submitted
+                        "
+                        rows="3"
+                        placeholder="Counter"
+                      ></textarea>
+                      <span
+                      *ngIf="accountDetailsForm.submitted && TDDetailRef.invalid"
+                      class="invalid-form"
                     >
-                      <small *ngIf="TDPasswordOnlyRef.errors.required"> Password is required. </small>
-                      <small *ngIf="TDPasswordOnlyRef.errors.pattern">
-                        Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more
-                        characters.</small
+                      <small
+                        class="form-text text-danger"
+                        *ngIf="TDDetailRef.errors.required"
+                        >This field is required!</small
                       >
-                    </div>
-                  </div>
-                  <div class="form-group form-password-toggle col-md-6">
-                    <label class="form-label" for="confirm-password">Confirm Password</label>
-                    <input
-                      type="password"
-                      name="confirm-password"
-                      id="confirm-password"
-                      class="form-control"
-                      [class.error]="!TDRepeatPasswordRef.valid && accountDetailsForm.submitted"
-                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                      required
-                      ngModel
-                      #TDRepeatPasswordRef="ngModel"
-                      pattern="{{ TDPasswordOnlyRef.value }}"
-                      minlength="6"
-                    />
-                    <div
-                      *ngIf="TDRepeatPasswordRef.invalid && accountDetailsForm.submitted"
-                      class="form-text text-danger"
-                    >
-                      <small *ngIf="TDRepeatPasswordRef.errors.required"> Confirm password is required. </small>
-                      <small *ngIf="TDRepeatPasswordRef.errors.pattern">
-                        Password & Confirm Password does not match.</small
-                      >
-                    </div>
+                    </span>
+                    </fieldset>
+                    <small class="textarea-counter-value float-right"
+                      ><span *ngIf="textLength" class="char-count">{{
+                        textLength.length
+                      }}</span>
+                      <span *ngIf="!textLength" class="char-count">0 </span> /
+                      {{ maxLength }}
+                    </small>
                   </div>
                 </div>
 
@@ -154,8 +161,13 @@
                     disabled
                     rippleEffect
                   >
-                    <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
-                    <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                    <i
+                      data-feather="arrow-left"
+                      class="align-middle mr-sm-25 mr-0"
+                    ></i>
+                    <span class="align-middle d-sm-inline-block d-none"
+                      >Previous</span
+                    >
                   </button>
                   <button
                     (click)="horizontalWizardStepperNext(accountDetailsForm)"
@@ -163,8 +175,13 @@
                     class="btn btn-primary btn-next"
                     rippleEffect
                   >
-                    <span class="align-middle d-sm-inline-block d-none">Next</span>
-                    <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
+                    <span class="align-middle d-sm-inline-block d-none"
+                      >Next</span
+                    >
+                    <i
+                      data-feather="arrow-right"
+                      class="align-middle ml-sm-25 ml-0"
+                    ></i>
                   </button>
                 </div>
               </form>
@@ -178,7 +195,9 @@
 
                 <div class="row">
                   <div class="form-group col-md-6">
-                    <label class="form-label" for="first-name">First Name</label>
+                    <label class="form-label" for="first-name"
+                      >First Name</label
+                    >
                     <input
                       [(ngModel)]="TDFirstNameVar"
                       #TDFirstNameRef="ngModel"
@@ -187,11 +206,20 @@
                       name="first-name"
                       id="first-name"
                       class="form-control"
-                      [class.error]="personalInfoForm.submitted && TDFirstNameRef.invalid"
+                      [class.error]="
+                        personalInfoForm.submitted && TDFirstNameRef.invalid
+                      "
                       placeholder="John"
                     />
-                    <span *ngIf="personalInfoForm.submitted && TDFirstNameRef.invalid" class="invalid-form">
-                      <small class="form-text text-danger" *ngIf="TDFirstNameRef.errors.required"
+                    <span
+                      *ngIf="
+                        personalInfoForm.submitted && TDFirstNameRef.invalid
+                      "
+                      class="invalid-form"
+                    >
+                      <small
+                        class="form-text text-danger"
+                        *ngIf="TDFirstNameRef.errors.required"
                         >This field is required!</small
                       >
                     </span>
@@ -206,11 +234,20 @@
                       name="last-name"
                       id="last-name"
                       class="form-control"
-                      [class.error]="personalInfoForm.submitted && TDLastNameRef.invalid"
+                      [class.error]="
+                        personalInfoForm.submitted && TDLastNameRef.invalid
+                      "
                       placeholder="Doe"
                     />
-                    <span *ngIf="personalInfoForm.submitted && TDLastNameRef.invalid" class="invalid-form">
-                      <small class="form-text text-danger" *ngIf="TDLastNameRef.errors.required"
+                    <span
+                      *ngIf="
+                        personalInfoForm.submitted && TDLastNameRef.invalid
+                      "
+                      class="invalid-form"
+                    >
+                      <small
+                        class="form-text text-danger"
+                        *ngIf="TDLastNameRef.errors.required"
                         >This field is required!</small
                       >
                     </span>
@@ -219,7 +256,8 @@
                 <div class="row">
                   <div class="form-group col-md-6">
                     <label class="form-label" for="country">Country</label>
-                    <ng-select [items]="selectBasic" bindLabel="name"> </ng-select>
+                    <ng-select [items]="selectBasic" bindLabel="name">
+                    </ng-select>
                   </div>
                   <div class="form-group col-md-6">
                     <label class="form-label" for="language">Language</label>
@@ -238,17 +276,31 @@
                 </div>
 
                 <div class="d-flex justify-content-between">
-                  <button (click)="horizontalWizardStepperPrevious()" class="btn btn-primary btn-prev" rippleEffect>
-                    <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
-                    <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                  <button
+                    (click)="horizontalWizardStepperPrevious()"
+                    class="btn btn-primary btn-prev"
+                    rippleEffect
+                  >
+                    <i
+                      data-feather="arrow-left"
+                      class="align-middle mr-sm-25 mr-0"
+                    ></i>
+                    <span class="align-middle d-sm-inline-block d-none"
+                      >Previous</span
+                    >
                   </button>
                   <button
                     (click)="horizontalWizardStepperNext(personalInfoForm)"
                     class="btn btn-primary btn-next"
                     rippleEffect
                   >
-                    <span class="align-middle d-sm-inline-block d-none">Next</span>
-                    <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
+                    <span class="align-middle d-sm-inline-block d-none"
+                      >Next</span
+                    >
+                    <i
+                      data-feather="arrow-right"
+                      class="align-middle ml-sm-25 ml-0"
+                    ></i>
                   </button>
                 </div>
               </form>
@@ -271,11 +323,18 @@
                       id="address"
                       name="address"
                       class="form-control"
-                      [class.error]="addressForm.submitted && addressRef.invalid"
+                      [class.error]="
+                        addressForm.submitted && addressRef.invalid
+                      "
                       placeholder="98  Borough bridge Road, Birmingham"
                     />
-                    <span *ngIf="addressForm.submitted && addressRef.invalid" class="invalid-form">
-                      <small class="form-text text-danger" *ngIf="addressRef.errors.required"
+                    <span
+                      *ngIf="addressForm.submitted && addressRef.invalid"
+                      class="invalid-form"
+                    >
+                      <small
+                        class="form-text text-danger"
+                        *ngIf="addressRef.errors.required"
                         >This field is required!</small
                       >
                     </span>
@@ -290,11 +349,18 @@
                       name="landmark"
                       id="landmark"
                       class="form-control"
-                      [class.error]="addressForm.submitted && landmarkRef.invalid"
+                      [class.error]="
+                        addressForm.submitted && landmarkRef.invalid
+                      "
                       placeholder="Borough bridge"
                     />
-                    <span *ngIf="addressForm.submitted && landmarkRef.invalid" class="invalid-form">
-                      <small class="form-text text-danger" *ngIf="landmarkRef.errors.required"
+                    <span
+                      *ngIf="addressForm.submitted && landmarkRef.invalid"
+                      class="invalid-form"
+                    >
+                      <small
+                        class="form-text text-danger"
+                        *ngIf="landmarkRef.errors.required"
                         >This field is required!</small
                       >
                     </span>
@@ -303,26 +369,50 @@
                 <div class="row">
                   <div class="form-group col-md-6">
                     <label class="form-label" for="pincode1">Pincode</label>
-                    <input type="text" id="pincode1" class="form-control" placeholder="658921" />
+                    <input
+                      type="text"
+                      id="pincode1"
+                      class="form-control"
+                      placeholder="658921"
+                    />
                   </div>
                   <div class="form-group col-md-6">
                     <label class="form-label" for="city1">City</label>
-                    <input type="text" id="city1" class="form-control" placeholder="Birmingham" />
+                    <input
+                      type="text"
+                      id="city1"
+                      class="form-control"
+                      placeholder="Birmingham"
+                    />
                   </div>
                 </div>
 
                 <div class="d-flex justify-content-between">
-                  <button (click)="horizontalWizardStepperPrevious()" class="btn btn-primary btn-prev" rippleEffect>
-                    <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
-                    <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                  <button
+                    (click)="horizontalWizardStepperPrevious()"
+                    class="btn btn-primary btn-prev"
+                    rippleEffect
+                  >
+                    <i
+                      data-feather="arrow-left"
+                      class="align-middle mr-sm-25 mr-0"
+                    ></i>
+                    <span class="align-middle d-sm-inline-block d-none"
+                      >Previous</span
+                    >
                   </button>
                   <button
                     (click)="horizontalWizardStepperNext(addressForm)"
                     class="btn btn-primary btn-next"
                     rippleEffect
                   >
-                    <span class="align-middle d-sm-inline-block d-none">Next</span>
-                    <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
+                    <span class="align-middle d-sm-inline-block d-none"
+                      >Next</span
+                    >
+                    <i
+                      data-feather="arrow-right"
+                      class="align-middle ml-sm-25 ml-0"
+                    ></i>
                   </button>
                 </div>
               </form>
@@ -344,11 +434,18 @@
                       id="twitter"
                       name="twitter"
                       class="form-control"
-                      [class.error]="socialLinkForm.submitted && twitterkRef.invalid"
+                      [class.error]="
+                        socialLinkForm.submitted && twitterkRef.invalid
+                      "
                       placeholder="https://twitter.com/abc"
                     />
-                    <span *ngIf="socialLinkForm.submitted && twitterkRef.invalid" class="invalid-form">
-                      <small class="form-text text-danger" *ngIf="twitterkRef.errors.required"
+                    <span
+                      *ngIf="socialLinkForm.submitted && twitterkRef.invalid"
+                      class="invalid-form"
+                    >
+                      <small
+                        class="form-text text-danger"
+                        *ngIf="twitterkRef.errors.required"
                         >This field is required!</small
                       >
                     </span>
@@ -363,11 +460,18 @@
                       id="facebook"
                       name="facebook"
                       class="form-control"
-                      [class.error]="socialLinkForm.submitted && facebookRef.invalid"
+                      [class.error]="
+                        socialLinkForm.submitted && facebookRef.invalid
+                      "
                       placeholder="https://facebook.com/abc"
                     />
-                    <span *ngIf="socialLinkForm.submitted && facebookRef.invalid" class="invalid-form">
-                      <small class="form-text text-danger" *ngIf="facebookRef.errors.required"
+                    <span
+                      *ngIf="socialLinkForm.submitted && facebookRef.invalid"
+                      class="invalid-form"
+                    >
+                      <small
+                        class="form-text text-danger"
+                        *ngIf="facebookRef.errors.required"
                         >This field is required!</small
                       >
                     </span>
@@ -384,11 +488,18 @@
                       id="google"
                       name="google"
                       class="form-control"
-                      [class.error]="socialLinkForm.submitted && googleRef.invalid"
+                      [class.error]="
+                        socialLinkForm.submitted && googleRef.invalid
+                      "
                       placeholder="https://plus.google.com/abc"
                     />
-                    <span *ngIf="socialLinkForm.submitted && googleRef.invalid" class="invalid-form">
-                      <small class="form-text text-danger" *ngIf="googleRef.errors.required"
+                    <span
+                      *ngIf="socialLinkForm.submitted && googleRef.invalid"
+                      class="invalid-form"
+                    >
+                      <small
+                        class="form-text text-danger"
+                        *ngIf="googleRef.errors.required"
                         >This field is required!</small
                       >
                     </span>
@@ -403,22 +514,40 @@
                       id="linkedin"
                       name="linkedin"
                       class="form-control"
-                      [class.error]="socialLinkForm.submitted && linkedinRef.invalid"
+                      [class.error]="
+                        socialLinkForm.submitted && linkedinRef.invalid
+                      "
                       placeholder="https://linkedin.com/abc"
                     />
-                    <span *ngIf="socialLinkForm.submitted && linkedinRef.invalid" class="invalid-form">
-                      <small class="form-text text-danger" *ngIf="linkedinRef.errors.required"
+                    <span
+                      *ngIf="socialLinkForm.submitted && linkedinRef.invalid"
+                      class="invalid-form"
+                    >
+                      <small
+                        class="form-text text-danger"
+                        *ngIf="linkedinRef.errors.required"
                         >This field is required!</small
                       >
                     </span>
                   </div>
                 </div>
                 <div class="d-flex justify-content-between">
-                  <button (click)="horizontalWizardStepperPrevious()" class="btn btn-primary btn-prev" rippleEffect>
-                    <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
-                    <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                  <button
+                    (click)="horizontalWizardStepperPrevious()"
+                    class="btn btn-primary btn-prev"
+                    rippleEffect
+                  >
+                    <i
+                      data-feather="arrow-left"
+                      class="align-middle mr-sm-25 mr-0"
+                    ></i>
+                    <span class="align-middle d-sm-inline-block d-none"
+                      >Previous</span
+                    >
                   </button>
-                  <button class="btn btn-success btn-submit" rippleEffect>Submit</button>
+                  <button class="btn btn-success btn-submit" rippleEffect>
+                    Submit
+                  </button>
                 </div>
               </form>
             </div>
