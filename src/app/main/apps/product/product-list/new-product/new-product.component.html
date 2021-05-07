@@ -218,7 +218,7 @@
                   </div>
 
                   <div class="form-group col-md-6">
-                    <label class="form-label" for="last-name">Last Name</label>
+                    <label class="form-label" for="last-name">Quantity</label>
                     <input
                       [(ngModel)]="TDQuantityVar"
                       #TDQuantityRef="ngModel"
@@ -281,117 +281,9 @@
             
             <div id="social-links" class="content">
               <form #socialLinkForm="ngForm">
-                <div class="content-header">
-                  <h5 class="mb-0">Social Links</h5>
-                  <small>Enter Your Social Links.</small>
-                </div>
+                
                 <div class="row">
-                  <div class="form-group col-md-6">
-                    <label class="form-label" for="twitter">Twitter</label>
-                    <input
-                      [(ngModel)]="twitterVar"
-                      #twitterkRef="ngModel"
-                      required
-                      type="text"
-                      id="twitter"
-                      name="twitter"
-                      class="form-control"
-                      [class.error]="
-                        socialLinkForm.submitted && twitterkRef.invalid
-                      "
-                      placeholder="https://twitter.com/abc"
-                    />
-                    <span
-                      *ngIf="socialLinkForm.submitted && twitterkRef.invalid"
-                      class="invalid-form"
-                    >
-                      <small
-                        class="form-text text-danger"
-                        *ngIf="twitterkRef.errors.required"
-                        >This field is required!</small
-                      >
-                    </span>
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label class="form-label" for="facebook">Facebook</label>
-                    <input
-                      [(ngModel)]="facebookVar"
-                      #facebookRef="ngModel"
-                      required
-                      type="text"
-                      id="facebook"
-                      name="facebook"
-                      class="form-control"
-                      [class.error]="
-                        socialLinkForm.submitted && facebookRef.invalid
-                      "
-                      placeholder="https://facebook.com/abc"
-                    />
-                    <span
-                      *ngIf="socialLinkForm.submitted && facebookRef.invalid"
-                      class="invalid-form"
-                    >
-                      <small
-                        class="form-text text-danger"
-                        *ngIf="facebookRef.errors.required"
-                        >This field is required!</small
-                      >
-                    </span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="form-group col-md-6">
-                    <label class="form-label" for="google">Google+</label>
-                    <input
-                      [(ngModel)]="googleVar"
-                      #googleRef="ngModel"
-                      required
-                      type="text"
-                      id="google"
-                      name="google"
-                      class="form-control"
-                      [class.error]="
-                        socialLinkForm.submitted && googleRef.invalid
-                      "
-                      placeholder="https://plus.google.com/abc"
-                    />
-                    <span
-                      *ngIf="socialLinkForm.submitted && googleRef.invalid"
-                      class="invalid-form"
-                    >
-                      <small
-                        class="form-text text-danger"
-                        *ngIf="googleRef.errors.required"
-                        >This field is required!</small
-                      >
-                    </span>
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label class="form-label" for="linkedin">Linkedin</label>
-                    <input
-                      [(ngModel)]="linkedinVar"
-                      #linkedinRef="ngModel"
-                      required
-                      type="text"
-                      id="linkedin"
-                      name="linkedin"
-                      class="form-control"
-                      [class.error]="
-                        socialLinkForm.submitted && linkedinRef.invalid
-                      "
-                      placeholder="https://linkedin.com/abc"
-                    />
-                    <span
-                      *ngIf="socialLinkForm.submitted && linkedinRef.invalid"
-                      class="invalid-form"
-                    >
-                      <small
-                        class="form-text text-danger"
-                        *ngIf="linkedinRef.errors.required"
-                        >This field is required!</small
-                      >
-                    </span>
-                  </div>
+                  <app-new-product-uploader></app-new-product-uploader>
                 </div>
                 <div class="d-flex justify-content-between">
                   <button
