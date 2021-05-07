@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 
 import Stepper from "bs-stepper";
+import * as snippet from 'app/main/forms/form-elements/input-mask/input-mask.snippetcode';
 
 @Component({
   selector: "app-new-product",
@@ -11,8 +12,8 @@ import Stepper from "bs-stepper";
 export class NewProductComponent implements OnInit {
   public TDNameVar;
   public TDEmailVar;
-  public TDFirstNameVar;
-  public TDLastNameVar;
+  public TDQuantityVar;
+  public TDPriceVar;
   public twitterVar;
   public facebookVar;
   public googleVar;

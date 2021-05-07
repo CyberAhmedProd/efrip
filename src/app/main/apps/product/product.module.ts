@@ -18,6 +18,8 @@ import { ProductListService } from 'app/main/apps/product/product-list/product-l
 
 import { NewProductSidebarComponent } from './product-list/new-product-sidebar/new-product-sidebar.component';
 import {NewProductComponent} from 'app/main/apps/product/product-list/new-product/new-product.component'
+import { CardSnippetModule } from '@core/components/card-snippet/card-snippet.module';
+import { NgxMaskModule } from 'ngx-mask';
 //import {EditProductSidebarComponent} from './product-list/edit-product-sidebar/edit-product-sidebar-component'
 // routing
 const routes: Routes = [
@@ -60,6 +62,8 @@ const routes: Routes = [
     NgbModule,
     NgSelectModule,
     CoreSidebarModule,
+    CardSnippetModule,
+    NgxMaskModule.forRoot(),
     
   ],
   providers: [ProductListService],
