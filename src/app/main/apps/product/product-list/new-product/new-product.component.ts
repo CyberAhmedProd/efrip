@@ -27,6 +27,12 @@ export class NewProductComponent implements OnInit {
   public maxLength: number = 150;
   public selectBasic = [];
   public images = [];
+  public submitIsEnabled=false;
+  updatesubmitbutton(){
+    console.log("hahahah")
+    this.submitIsEnabled=true;
+    this._ref.detectChanges();
+  }
   addItem(newItem: any) {
     this.images.push(newItem);
   }

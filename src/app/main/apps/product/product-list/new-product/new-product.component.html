@@ -282,7 +282,7 @@
             <div id="social-links" class="content">
               <form #socialLinkForm="ngForm">
                 <div class="row">
-                  <app-new-product-uploader (newItemEvent)="addItem($event)"></app-new-product-uploader>
+                  <app-new-product-uploader (newItemEvent)="addItem($event)" (submitIsEnabled)="updatesubmitbutton()"></app-new-product-uploader>
                 </div>
                 <div class="d-flex justify-content-between">
                   <button
@@ -300,6 +300,7 @@
                   </button>
                   <button class="btn btn-success btn-submit" 
                     (click)="onSubmit()"
+                    [disabled]="!submitIsEnabled"
                   rippleEffect>
                     Submit
                   </button>

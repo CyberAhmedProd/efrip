@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy,
   Output,
   EventEmitter,
+  Input,
 } from "@angular/core";
 import { environment } from "environments/environment";
 
@@ -29,8 +30,13 @@ export class NewProductUploaderComponent implements OnInit {
   public response;
   public fileReader: FileReader;
   public images = new Array();
+  @Output()
+  submitIsEnabled= new EventEmitter<boolean>();
   @Output() newItemEvent = new EventEmitter<any>();
 
+  updatesubmitbutton(){
+    this.submitIsEnabled.emit()
+  }
   addNewItemToParent(value: any) {
     this.newItemEvent.emit(value);
   }
@@ -82,11 +88,13 @@ export class NewProductUploaderComponent implements OnInit {
   async uploadAll() {
     this.uploader.isUploading = true;
     let i: [any];
+    
     console.log(this.uploader.getNotUploadedItems());
     let promise = new Promise<void>((resolve, reject) => resolve());
     // Add each element to the chain.
-    this.uploader.getNotUploadedItems().forEach((item, index) => {
+    var bar = new Promise<void>((resolve,reject)=> this.uploader.getNotUploadedItems().forEach((item, index,array) => {
       promise = promise.then(() => {
+        
         return this.uploadItem(item)
           .then((response) => {
             item.isSuccess = true;
@@ -98,10 +106,15 @@ export class NewProductUploaderComponent implements OnInit {
             this.addNewItemToParent({
               id: response.id,
             });
+            if (index === array.length -1) resolve();
+            
           })
           .catch((error) => {});
       });
+    })).then(()=>{
+      this.updatesubmitbutton();
     });
+    
   }
 
   ngOnInit(): void {
