@@ -208,7 +208,7 @@
         </button>
       </div>
       <div class="modal-body" tabindex="0" ngbAutofocus>
-        <app-new-product></app-new-product>
+        <app-new-product [categories]="categories"></app-new-product>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="modal.close('Accept click')" rippleEffect>

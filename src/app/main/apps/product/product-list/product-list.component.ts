@@ -9,6 +9,10 @@ import { CoreSidebarService } from "@core/components/core-sidebar/core-sidebar.s
 import { ProductListService } from "./product-list.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ListGroupComponent } from "app/main/components/list-group/list-group.component";
+import { InvoiceListService } from "../../invoice/invoice-list/invoice-list.service";
+import { Category } from "app/auth/models";
+
+
 
 @Component({
   selector: "app-product-list",
@@ -19,11 +23,13 @@ import { ListGroupComponent } from "app/main/components/list-group/list-group.co
 export class ProductListComponent implements OnInit {
   // public
   public data: any;
+  
   public selectedOption = 10;
   public selectedStatusOption = "";
   public ColumnMode = ColumnMode;
   public temp_id:string;
   public temp_name:string;
+  public categories:Category[];
 
   // decorator
   @ViewChild(DatatableComponent) table: DatatableComponent;
@@ -41,6 +47,7 @@ export class ProductListComponent implements OnInit {
   constructor(
     private _productListService: ProductListService,
     private _coreSidebarService: CoreSidebarService,
+    private _categoryService:InvoiceListService,
     private modalService: NgbModal
   ) {
     this._unsubscribeAll = new Subject();
@@ -92,9 +99,15 @@ export class ProductListComponent implements OnInit {
     .pipe(takeUntil(this._unsubscribeAll))
     .subscribe((response) => {
       this.data = response;
+      console.log(this.data)
       this.rows = this.data;
       this.tempData = this.rows;
     });
+    this._categoryService.getDataTableRows()
+    
+    .then((response) => {
+      this.categories=response;
+    })
   }
 
   deleteProduct(id) {

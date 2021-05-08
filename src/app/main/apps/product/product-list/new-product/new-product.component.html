@@ -97,7 +97,7 @@
                   <div class="form-group col-md-6">
                     <label class="form-label" for="country">Category</label>
                     <ng-select
-                      [items]="selectBasic"
+                      [items]="categories"
                       bindLabel="name"
                       [(ngModel)]="selectedItem"
                       (change)="changeFn(selectedItem)"

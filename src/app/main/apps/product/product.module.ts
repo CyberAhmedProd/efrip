@@ -22,6 +22,8 @@ import { CardSnippetModule } from '@core/components/card-snippet/card-snippet.mo
 import { NgxMaskModule } from 'ngx-mask';
 import {NewProductUploaderComponent} from 'app/main/apps/product/product-list/new-product-uploader/new-product-uploader.component'
 import { FileUploadModule } from 'ng2-file-upload';
+import { ImageService } from 'app/auth/service';
+import { InvoiceListService } from '../invoice/invoice-list/invoice-list.service';
 //import {EditProductSidebarComponent} from './product-list/edit-product-sidebar/edit-product-sidebar-component'
 // routing
 const routes: Routes = [
@@ -70,7 +72,7 @@ const routes: Routes = [
     FileUploadModule,
     
   ],
-  providers: [ProductListService],
+  providers: [ProductListService,ImageService,InvoiceListService],
   exports: [ProductListComponent]
 })
 export class ProductModule {}

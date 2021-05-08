@@ -52,7 +52,7 @@ export class AccountSettingsComponent implements OnInit {
           this.currentOutput = event.target.files[0];
       }
       reader.readAsDataURL(event.target.files[0]);
-
+      
       const file = (event.target as HTMLInputElement).files[0];
     this.form.patchValue({
       img: file

@@ -43,7 +43,7 @@ export class InvoiceListService implements Resolve<any> {
   /**
    * Get rows
    */
-  getDataTableRows(): Promise<any[]> {
+  getDataTableRows(): Promise<Category[]> {
     return new Promise((resolve, reject) => {
       this._httpClient.get(`${environment.apiDistant}/api/category`).subscribe((response: any) => {
         this.rows = response;

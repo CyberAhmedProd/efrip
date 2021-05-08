@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
 
 import Stepper from "bs-stepper";
 import * as snippet from 'app/main/forms/form-elements/input-mask/input-mask.snippetcode';
-
+import { InvoiceListService } from "app/main/apps/invoice/invoice-list/invoice-list.service";
+import { ChangeDetectorRef } from "@angular/core";
+import { Category } from "app/auth/models";
 @Component({
   selector: "app-new-product",
   templateUrl: "./new-product.component.html",
@@ -11,26 +13,15 @@ import * as snippet from 'app/main/forms/form-elements/input-mask/input-mask.sni
 })
 export class NewProductComponent implements OnInit {
   public TDNameVar;
-  public TDEmailVar;
+  
   public TDQuantityVar;
   public TDPriceVar;
-  public twitterVar;
-  public facebookVar;
-  public googleVar;
-  public linkedinVar;
-  public landmarkVar;
-  public addressVar;
+  @Input()
+  public categories:Category[]
   public textLength;
   public selectedItem;
   public maxLength:number=150;
-  public selectBasic = [
-    { id:"test",name: "UK" },
-    { name: "USA" },
-    { name: "Spain" },
-    { name: "France" },
-    { name: "Italy" },
-    { name: "Australia" },
-  ];
+  public selectBasic =[]
 
   public selectMulti = [
     { name: "English" },
@@ -80,13 +71,18 @@ export class NewProductComponent implements OnInit {
     console.log(this.textLength)
 
   }
-  constructor() {}
+  constructor(private _categroyService:InvoiceListService,
+      private _ref:ChangeDetectorRef) {
+        
+      }
 
   ngOnInit(): void {
     this.horizontalWizardStepper = new Stepper(
       document.querySelector("#stepper1"),
       {}
     );
+    
+    console.log("yes",this.categories)
     this.selectedItem=this.selectBasic[0]
     this.bsStepper = document.querySelectorAll(".bs-stepper");
 
