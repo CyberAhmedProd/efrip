@@ -11,12 +11,10 @@ import { Ng2FlatpickrModule } from 'ng2-flatpickr';
 import { CoreCommonModule } from '@core/common.module';
 import { CoreDirectivesModule } from '@core/directives/directives';
 import { CorePipesModule } from '@core/pipes/pipes.module';
-import { CoreSidebarModule } from '@core/components';
 
 import { ProductListComponent } from 'app/main/apps/product/product-list/product-list.component';
 import { ProductListService } from 'app/main/apps/product/product-list/product-list.service';
 
-import { NewProductSidebarComponent } from './product-list/new-product-sidebar/new-product-sidebar.component';
 import {NewProductComponent} from 'app/main/apps/product/product-list/new-product/new-product.component'
 import { CardSnippetModule } from '@core/components/card-snippet/card-snippet.module';
 import { NgxMaskModule } from 'ngx-mask';
@@ -30,9 +28,10 @@ const routes: Routes = [
   {
     path: 'list',
     component: ProductListComponent,
-    resolve: {
-      uls: ProductListService
-    }
+    // resolve: {
+    //   spinner:true,
+    //   uls: ProductListService
+    // }
   },
   {
     path: 'preview',
@@ -48,7 +47,6 @@ const routes: Routes = [
   declarations: [
     
     ProductListComponent,
-    NewProductSidebarComponent,
     NewProductComponent,
     NewProductUploaderComponent,
     
@@ -66,7 +64,6 @@ const routes: Routes = [
     CorePipesModule,
     NgbModule,
     NgSelectModule,
-    CoreSidebarModule,
     CardSnippetModule,
     NgxMaskModule.forRoot(),
     FileUploadModule,

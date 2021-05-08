@@ -30,7 +30,7 @@ export class ProductListComponent implements OnInit {
   public temp_id:string;
   public temp_name:string;
   public categories:Category[];
-
+  public spinner:boolean=true;
   // decorator
   @ViewChild(DatatableComponent) table: DatatableComponent;
 
@@ -46,7 +46,7 @@ export class ProductListComponent implements OnInit {
    */
   constructor(
     private _productListService: ProductListService,
-    private _coreSidebarService: CoreSidebarService,
+    
     private _categoryService:InvoiceListService,
     private modalService: NgbModal
   ) {
@@ -74,17 +74,7 @@ export class ProductListComponent implements OnInit {
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
   }
-  toggleSidebar(name): void {
-    this._coreSidebarService.getSidebarRegistry(name).toggleOpen();
-    
-  }
   
-  toggleSidebar2(name,category_id,category_name): void {
-    this._coreSidebarService.getSidebarRegistry(name).toggleOpen();
-    this.temp_id=category_id;
-    this.temp_name=category_name;
-   // console.log(this._coreSidebarService.getSidebarRegistry(name).category_id)
-  }
   modalOpenForm(modalForm) {
     this.modalService.open(modalForm,{size:'lg',backdrop:'static'});
   }
@@ -94,15 +84,22 @@ export class ProductListComponent implements OnInit {
   /**
    * On init
    */
-  ngOnInit(): void {
-    this._productListService.onDatatablessChanged
-    .pipe(takeUntil(this._unsubscribeAll))
-    .subscribe((response) => {
+  loadData(){
+    
+    this._productListService.getDataTableRows()
+    
+    .then((response) => {
       this.data = response;
       console.log(this.data)
       this.rows = this.data;
       this.tempData = this.rows;
+      this.spinner=false;
+      
     });
+  }
+  ngOnInit(): void {
+    this.spinner=true;
+    this.loadData();
     this._categoryService.getDataTableRows()
     
     .then((response) => {
@@ -112,8 +109,9 @@ export class ProductListComponent implements OnInit {
 
   deleteProduct(id) {
     this._productListService.deleteProduct(id);
+    
     setTimeout(() => {
-      this._productListService.getDataTableRows();
+      this.loadData()
     }, 500);
   }
   
