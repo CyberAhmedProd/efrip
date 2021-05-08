@@ -49,7 +49,7 @@ export class ProductListService implements Resolve<any> {
       this._httpClient.get(`${environment.apiDistant}/api/product`).subscribe((response: any) => {
         this.rows = response;
         this.onDatatablessChanged.next(this.rows);
-        resolve(this.rows);
+        resolve(this.rows.reverse());
       }, reject);
     });
   }

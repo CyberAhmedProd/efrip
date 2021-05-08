@@ -106,7 +106,11 @@ export class NewProductUploaderComponent implements OnInit {
             this.addNewItemToParent({
               id: response.id,
             });
-            if (index === array.length -1) resolve();
+            this.uploader.progress+=(1/array.length)*100
+            this.ref.detectChanges();
+            if (index === array.length -1) {
+              resolve()
+            };
             
           })
           .catch((error) => {});
