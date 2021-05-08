@@ -54,7 +54,7 @@
                         {{ item?.file?.size / 1024 / 1024 | number: '.2' }} MB
                       </td>
                       <td class="text-center">
-                        <span *ngIf="item.isSuccess">haha<i data-feather="check"></i></span>
+                        <span *ngIf="item.isSuccess"><i data-feather="check"></i></span>
                         <span *ngIf="item.isCancel"><i data-feather="slash"></i></span>
                         <span *ngIf="item.isError"><i data-feather="x-circle"></i></span>
                       </td>
@@ -63,6 +63,7 @@
                           type="button"
                           class="btn btn-raised btn-outline-danger btn-sm"
                           (click)="item.remove()"
+                          [disabled]="item.isUploaded"
                           rippleEffect
                         >
                           <i data-feather="trash"></i>

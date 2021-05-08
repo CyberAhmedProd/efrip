@@ -1,10 +1,12 @@
 import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
 
 import Stepper from "bs-stepper";
-import * as snippet from 'app/main/forms/form-elements/input-mask/input-mask.snippetcode';
+import * as snippet from "app/main/forms/form-elements/input-mask/input-mask.snippetcode";
 import { InvoiceListService } from "app/main/apps/invoice/invoice-list/invoice-list.service";
 import { ChangeDetectorRef } from "@angular/core";
 import { Category } from "app/auth/models";
+import { AuthenticationService } from "app/auth/service";
+import { ProductListService } from "../product-list.service";
 @Component({
   selector: "app-new-product",
   templateUrl: "./new-product.component.html",
@@ -13,15 +15,21 @@ import { Category } from "app/auth/models";
 })
 export class NewProductComponent implements OnInit {
   public TDNameVar;
-  
+
   public TDQuantityVar;
   public TDPriceVar;
   @Input()
-  public categories:Category[]
+  public modal;
+  @Input()
+  public categories: Category[];
   public textLength;
   public selectedItem;
-  public maxLength:number=150;
-  public selectBasic =[]
+  public maxLength: number = 150;
+  public selectBasic = [];
+  public images = [];
+  addItem(newItem: any) {
+    this.images.push(newItem);
+  }
 
   public selectMulti = [
     { name: "English" },
@@ -29,8 +37,8 @@ export class NewProductComponent implements OnInit {
     { name: "Spanish" },
   ];
   public selectMultiSelected;
-  changeFn(selectedItem){
-    console.log(selectedItem)
+  changeFn(selectedItem) {
+    console.log(selectedItem);
   }
   // private
 
@@ -65,25 +73,48 @@ export class NewProductComponent implements OnInit {
    * On Submit
    */
   onSubmit() {
-    return false;
+    let toSend = {
+      name: this.TDNameVar,
+      user: {
+        id: this._authService.currentUserValue.id,
+      },
+      category: {
+        id: this.selectedItem.id,
+      },
+      quantity: this.TDQuantityVar,
+      price: this.TDPriceVar,
+      details: this.textLength,
+      description: null,
+      featured: true,
+      images: this.images,
+    };
+    this._productService.addProduct(toSend).subscribe(data => {
+      console.log(data)
+    })
+    setTimeout(() => {
+      this._productService.getDataTableRows();
+    }, 500);
+    this.modal.close();
+    
   }
-  updateCounter(){
-    console.log(this.textLength)
-
+  updateCounter() {
+    console.log(this.textLength);
   }
-  constructor(private _categroyService:InvoiceListService,
-      private _ref:ChangeDetectorRef) {
-        
-      }
+  constructor(
+    private _categroyService: InvoiceListService,
+    private _ref: ChangeDetectorRef,
+    private _authService: AuthenticationService,
+    private _productService: ProductListService
+  ) {}
 
   ngOnInit(): void {
     this.horizontalWizardStepper = new Stepper(
       document.querySelector("#stepper1"),
       {}
     );
-    
-    console.log("yes",this.categories)
-    this.selectedItem=this.selectBasic[0]
+
+    console.log("yes", this.categories);
+    this.selectedItem = this.categories[0];
     this.bsStepper = document.querySelectorAll(".bs-stepper");
 
     // content header

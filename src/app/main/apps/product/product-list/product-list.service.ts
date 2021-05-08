@@ -59,9 +59,17 @@ export class ProductListService implements Resolve<any> {
    * product Product)
    */
   addProduct(product) {
-    return this._httpClient.post<MyData>(`${environment.apiDistant}/api/product`,
+    return this._httpClient.post<MyData>(`${environment.apiDistant}/api/product/add`,
     {
-      name : product.name
+      name:product.name,
+      user:product.user,
+      category:product.category,
+      details:product.details,
+      quantity:product.quantity,
+      price:product.price,
+      description:product.description,
+      featured:product.featured,
+      images:product.images
     });
   }
 

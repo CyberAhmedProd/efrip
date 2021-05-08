@@ -1,4 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Output,
+  EventEmitter,
+} from "@angular/core";
 import { environment } from "environments/environment";
 
 import { FileItem, FileUploader, ParsedResponseHeaders } from "ng2-file-upload";
@@ -22,8 +28,12 @@ export class NewProductUploaderComponent implements OnInit {
   public uploader: FileUploader;
   public response;
   public fileReader: FileReader;
-  public images =new Array();
+  public images = new Array();
+  @Output() newItemEvent = new EventEmitter<any>();
 
+  addNewItemToParent(value: any) {
+    this.newItemEvent.emit(value);
+  }
   // Public Methods
   // -----------------------------------------------------------------------------------------------------
   fileOverBase(e: any): void {
@@ -49,18 +59,6 @@ export class NewProductUploaderComponent implements OnInit {
       disableMultipart: true,
       parametersBeforeFiles: true,
       removeAfterUpload: true,
-
-      //itemAlias: "photo", // 'DisableMultipart' must be 'true' for formatDataFunction to be called.
-
-      // formatDataFunctionIsAsync: true,
-      // formatDataFunction: async (item) => {
-      //     return new Promise( (resolve, reject) => {
-      //       resolve({
-      //         title: 'haha',
-      //         image:null
-      //       });
-      //     });
-      //   }
     });
 
     this.hasBaseDropZoneOver = false;
@@ -74,55 +72,38 @@ export class NewProductUploaderComponent implements OnInit {
   uploadItem(item) {
     return new Promise<any>((resolve, reject) => {
       this._imageService.addImage2(item).subscribe((response: any) => {
-        
         resolve(response);
       }, reject);
     });
-
-    this._imageService.addImage2(item);
-
-    this._imageService.addImage2(item).subscribe((response: any) => {
-      this.response = response;
-      console.log(item.file.name, " is done");
-    });
-    return;
   }
-  showimages(){
-    console.log(this.images)
+  showimages() {
+    console.log(this.images);
   }
   async uploadAll() {
     this.uploader.isUploading = true;
-    let i:[any]
+    let i: [any];
     console.log(this.uploader.getNotUploadedItems());
     let promise = new Promise<void>((resolve, reject) => resolve());
     // Add each element to the chain.
-    this.uploader.getNotUploadedItems().forEach((item,index) => {
+    this.uploader.getNotUploadedItems().forEach((item, index) => {
       promise = promise.then(() => {
         return this.uploadItem(item)
           .then((response) => {
-            
-            
-            console.log(response);
-            console.log("haha"), (item.isSuccess = true);
+            item.isSuccess = true;
             item.isUploaded = true;
             this.ref.detectChanges();
             this.images.push({
-              id:response.id
-            })
+              id: response.id,
+            });
+            this.addNewItemToParent({
+              id: response.id,
+            });
           })
           .catch((error) => {});
       });
     });
-    alert("Foreach DONE !");
   }
 
-  //   return new Promise((resolve, reject) => {
-  //     this._httpClient.get(`${environment.apiDistant}/api/category`).subscribe((response: any) => {
-  //       this.rows = response;
-  //       this.onDatatablessChanged.next(this.rows);
-  //       resolve(this.rows);
-  //     }, reject);
-  //   });
   ngOnInit(): void {
     console.log(this.uploader);
     this.contentHeader = {
