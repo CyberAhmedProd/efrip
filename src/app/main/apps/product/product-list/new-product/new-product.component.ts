@@ -128,8 +128,6 @@ export class NewProductComponent implements OnInit {
       document.querySelector("#stepper1"),
       {}
     );
-
-    console.log("yes", this.categories);
     this.selectedItem = this.categories[0];
     this.bsStepper = document.querySelectorAll(".bs-stepper");
 

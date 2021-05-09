@@ -94,7 +94,6 @@ export class ProductListComponent implements OnInit {
     
     .then((response) => {
       this.data = response;
-      console.log(this.data)
       this.rows = this.data;
       this.tempData = this.rows;
       this.spinner=false;
