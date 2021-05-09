@@ -39,8 +39,8 @@ export class NewProductComponent implements OnInit {
   updateparenttable() {
     this.updatetable.emit();
   }
-  updatesubmitbutton() {
-    this.submitIsEnabled = true;
+  updatesubmitbutton(value) {
+    this.submitIsEnabled = value;
     this._ref.detectChanges();
   }
   addItem(newItem: any) {

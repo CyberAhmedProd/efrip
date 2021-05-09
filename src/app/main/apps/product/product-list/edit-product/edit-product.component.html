@@ -285,7 +285,7 @@
                     <div class="col-md-12">
                       <app-new-product-uploader
                         (newItemEvent)="addItem($event)"
-                        (submitIsEnabled)="updatesubmitbutton()"
+                        (submitIsEnabled)="updatesubmitbutton($event)"
                         [currentImages]="productToUpdate.images"
                       ></app-new-product-uploader>
                     </div>

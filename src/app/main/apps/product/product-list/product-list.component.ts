@@ -39,6 +39,7 @@ export class ProductListComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
   public rows;
   upadatetablefromchild(){
+    console.log("shshhshsha")
     this.loadData();
     this.ref.detectChanges()
   }
@@ -89,7 +90,7 @@ export class ProductListComponent implements OnInit {
    * On init
    */
   loadData(){
-    
+    this.spinner=true;
     this._productListService.getDataTableRows()
     
     .then((response) => {

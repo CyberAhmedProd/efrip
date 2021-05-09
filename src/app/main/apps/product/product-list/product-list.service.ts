@@ -80,9 +80,17 @@ export class ProductListService implements Resolve<any> {
       console.log(data);
     })
   }
-  editProduct(product: Product){
+  editProduct(product){
     return this._httpClient.put<MyData>(`${environment.apiDistant}/api/product/update/`+product.id,{
-      name: product.name
+      name:product.name,
+      user:product.user,
+      category:product.category,
+      details:product.details,
+      quantity:product.quantity,
+      price:product.price,
+      description:product.description,
+      featured:product.featured,
+      images:product.images
     })
   }
 }

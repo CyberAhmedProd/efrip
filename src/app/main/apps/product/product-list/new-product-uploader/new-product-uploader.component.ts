@@ -31,17 +31,44 @@ export class NewProductUploaderComponent implements OnInit {
   public uploader: FileUploader;
   public response;
   public fileReader: FileReader;
-  
+
   public images = new Array();
   @Input()
-  currentImages;
-  
+  currentImages: any[];
+
   @Output()
-  submitIsEnabled= new EventEmitter<boolean>();
+  submitIsEnabled = new EventEmitter<boolean>();
   @Output() newItemEvent = new EventEmitter<any>();
-  
-  updatesubmitbutton(){
-    this.submitIsEnabled.emit()
+  //delete the image from the database
+  // removeitemfromtable(itemtoremove,table){
+  //   table.forEach((item))
+  // }
+  deleteImage(image) {
+    const photo = (element) => (element = image);
+    let todelete = this.currentImages.findIndex(photo);
+
+    // var bar = new Promise((resolve, reject) => {
+    //   this._imageService.deleteImage(image.id).subscribe((data) => {
+    //     resolve(data.success);
+    //   }),
+    //     reject;
+    // }).then((data) => {
+    //   if (data === 1) {
+    //     this.currentImages.splice(todelete, 1);
+    //     console.log(this.currentImages);
+    //     if (!this.currentImages.length && !this.images.length) {
+    //       this.updatesubmitbutton(false);
+    //     }
+    //   }
+    // });
+    this.currentImages.splice(todelete, 1);
+    //console.log(this.currentImages);
+    if (!this.currentImages.length && !this.images.length) {
+      this.updatesubmitbutton(false);
+    }
+  }
+  updatesubmitbutton(value) {
+    this.submitIsEnabled.emit(value);
   }
   addNewItemToParent(value: any) {
     this.newItemEvent.emit(value);
@@ -55,7 +82,7 @@ export class NewProductUploaderComponent implements OnInit {
   fileOverAnother(e: any): void {
     this.hasAnotherDropZoneOver = e;
   }
-  
+
   constructor(
     private http: HttpClient,
     private _imageService: ImageService,
@@ -71,9 +98,7 @@ export class NewProductUploaderComponent implements OnInit {
       disableMultipart: true,
       parametersBeforeFiles: true,
       removeAfterUpload: true,
-    }
-      
-    );
+    });
 
     this.hasBaseDropZoneOver = false;
     this.hasAnotherDropZoneOver = false;
@@ -81,7 +106,6 @@ export class NewProductUploaderComponent implements OnInit {
     this.response = "";
 
     this.uploader.response.subscribe((res) => (this.response = res));
-    
   }
 
   uploadItem(item) {
@@ -91,50 +115,59 @@ export class NewProductUploaderComponent implements OnInit {
       }, reject);
     });
   }
-  
-  clearQueue(){
-    this.uploader.getNotUploadedItems().forEach((item)=> {
-      item.remove()
-    })
+
+  clearQueue() {
+    this.uploader.getNotUploadedItems().forEach((item) => {
+      item.remove();
+    });
+  }
+  async updateparent(){
+    if (this.currentImages) {
+      this.currentImages.slice().reverse().forEach((item) => {
+        this.addNewItemToParent({
+          id: item.id,
+        });
+      });
+    }
   }
   async uploadAll() {
+    
     this.uploader.isUploading = true;
-    
-    
-    
+
     let promise = new Promise<void>((resolve, reject) => resolve());
     // Add each element to the chain.
-    var bar = new Promise<void>((resolve,reject)=> this.uploader.getNotUploadedItems().forEach((item, index,array) => {
-      promise = promise.then(() => {
-        item.isUploading=true;
-        this.ref.detectChanges();
-        return this.uploadItem(item)
-          .then((response) => {
-            item.isSuccess = true;
-            item.isUploaded = true;
-            this.ref.detectChanges();
-            this.images.push({
-              id: response.id,
-            });
-            this.addNewItemToParent({
-              id: response.id,
-            });
-            this.uploader.progress+=(1/array.length)*100
-            this.ref.detectChanges();
-            if (index === array.length -1) {
-              resolve()
-            };
-            
-          })
-          .catch((error) => {});
-      });
-    })).then(()=>{
-      this.updatesubmitbutton();
+    var bar = new Promise<void>((resolve, reject) =>
+      this.uploader.getNotUploadedItems().forEach((item, index, array) => {
+        promise = promise.then(() => {
+          item.isUploading = true;
+          this.ref.detectChanges();
+          return this.uploadItem(item)
+            .then((response) => {
+              item.isSuccess = true;
+              item.isUploaded = true;
+              this.ref.detectChanges();
+              this.images.push({
+                id: response.id,
+              });
+              this.addNewItemToParent({
+                id: response.id,
+              });
+              this.uploader.progress += (1 / array.length) * 100;
+              this.ref.detectChanges();
+              if (index === array.length - 1) {
+                resolve();
+              }
+            })
+            .catch((error) => {});
+        });
+      })
+    ).then(() => {
+      this.updatesubmitbutton(true);
     });
-    
   }
 
   ngOnInit(): void {
+    
     this.contentHeader = {
       headerTitle: "File Uploader",
       actionButton: true,
