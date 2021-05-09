@@ -23,6 +23,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { ImageService } from 'app/auth/service';
 import { InvoiceListService } from '../invoice/invoice-list/invoice-list.service';
 //import {EditProductSidebarComponent} from './product-list/edit-product-sidebar/edit-product-sidebar-component'
+
 // routing
 const routes: Routes = [
   {
@@ -51,6 +52,7 @@ const routes: Routes = [
     NewProductUploaderComponent,
     
     
+    
    
   ],
   imports: [
@@ -67,6 +69,7 @@ const routes: Routes = [
     CardSnippetModule,
     NgxMaskModule.forRoot(),
     FileUploadModule,
+    
     
   ],
   providers: [ProductListService,ImageService,InvoiceListService],

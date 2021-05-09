@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
 
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -38,7 +38,10 @@ export class ProductListComponent implements OnInit {
   private tempData = [];
   private _unsubscribeAll: Subject<any>;
   public rows;
-
+  upadatetablefromchild(){
+    this.loadData();
+    this.ref.detectChanges()
+  }
   /**
    * Constructor
    *
@@ -48,7 +51,8 @@ export class ProductListComponent implements OnInit {
     private _productListService: ProductListService,
     
     private _categoryService:InvoiceListService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private ref: ChangeDetectorRef
   ) {
     this._unsubscribeAll = new Subject();
   }

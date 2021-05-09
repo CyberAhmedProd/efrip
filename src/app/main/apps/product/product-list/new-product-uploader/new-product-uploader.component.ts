@@ -5,6 +5,7 @@ import {
   Output,
   EventEmitter,
   Input,
+  ViewChild,
 } from "@angular/core";
 import { environment } from "environments/environment";
 
@@ -12,6 +13,7 @@ import { FileItem, FileUploader, ParsedResponseHeaders } from "ng2-file-upload";
 import { HttpClient } from "@angular/common/http";
 import { ImageService } from "app/auth/service/image.service";
 import { ChangeDetectorRef } from "@angular/core";
+import { ColumnMode, DatatableComponent } from "@swimlane/ngx-datatable";
 
 const URL1 = `${environment.apiDistant}/api/photos/add`;
 interface MyData {}
@@ -29,11 +31,13 @@ export class NewProductUploaderComponent implements OnInit {
   public uploader: FileUploader;
   public response;
   public fileReader: FileReader;
+  
   public images = new Array();
+  
   @Output()
   submitIsEnabled= new EventEmitter<boolean>();
   @Output() newItemEvent = new EventEmitter<any>();
-
+  
   updatesubmitbutton(){
     this.submitIsEnabled.emit()
   }
@@ -49,7 +53,7 @@ export class NewProductUploaderComponent implements OnInit {
   fileOverAnother(e: any): void {
     this.hasAnotherDropZoneOver = e;
   }
-  rows: any;
+  
   constructor(
     private http: HttpClient,
     private _imageService: ImageService,
@@ -65,7 +69,9 @@ export class NewProductUploaderComponent implements OnInit {
       disableMultipart: true,
       parametersBeforeFiles: true,
       removeAfterUpload: true,
-    });
+    }
+      
+    );
 
     this.hasBaseDropZoneOver = false;
     this.hasAnotherDropZoneOver = false;
@@ -73,6 +79,7 @@ export class NewProductUploaderComponent implements OnInit {
     this.response = "";
 
     this.uploader.response.subscribe((res) => (this.response = res));
+    
   }
 
   uploadItem(item) {
@@ -82,19 +89,23 @@ export class NewProductUploaderComponent implements OnInit {
       }, reject);
     });
   }
-  showimages() {
-    console.log(this.images);
+  
+  clearQueue(){
+    this.uploader.getNotUploadedItems().forEach((item)=> {
+      item.remove()
+    })
   }
   async uploadAll() {
     this.uploader.isUploading = true;
-    let i: [any];
     
-    console.log(this.uploader.getNotUploadedItems());
+    
+    
     let promise = new Promise<void>((resolve, reject) => resolve());
     // Add each element to the chain.
     var bar = new Promise<void>((resolve,reject)=> this.uploader.getNotUploadedItems().forEach((item, index,array) => {
       promise = promise.then(() => {
-        
+        item.isUploading=true;
+        this.ref.detectChanges();
         return this.uploadItem(item)
           .then((response) => {
             item.isSuccess = true;
@@ -122,7 +133,6 @@ export class NewProductUploaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.uploader);
     this.contentHeader = {
       headerTitle: "File Uploader",
       actionButton: true,

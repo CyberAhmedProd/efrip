@@ -1,7 +1,13 @@
-import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewEncapsulation,
+} from "@angular/core";
 
 import Stepper from "bs-stepper";
-import * as snippet from "app/main/forms/form-elements/input-mask/input-mask.snippetcode";
 import { InvoiceListService } from "app/main/apps/invoice/invoice-list/invoice-list.service";
 import { ChangeDetectorRef } from "@angular/core";
 import { Category } from "app/auth/models";
@@ -27,10 +33,14 @@ export class NewProductComponent implements OnInit {
   public maxLength: number = 150;
   public selectBasic = [];
   public images = [];
-  public submitIsEnabled=false;
-  updatesubmitbutton(){
-    console.log("hahahah")
-    this.submitIsEnabled=true;
+  public submitIsEnabled = false;
+  public toastStyle: object = {};
+  @Output() updatetable = new EventEmitter<any>();
+  updateparenttable() {
+    this.updatetable.emit();
+  }
+  updatesubmitbutton() {
+    this.submitIsEnabled = true;
     this._ref.detectChanges();
   }
   addItem(newItem: any) {
@@ -63,6 +73,7 @@ export class NewProductComponent implements OnInit {
    *
    * @param data
    */
+
   horizontalWizardStepperNext(data) {
     if (data.form.valid === true) {
       this.horizontalWizardStepper.next();
@@ -94,18 +105,17 @@ export class NewProductComponent implements OnInit {
       featured: true,
       images: this.images,
     };
-    this._productService.addProduct(toSend).subscribe(data => {
-      console.log(data)
-    })
+    this._productService.addProduct(toSend).subscribe();
     setTimeout(() => {
       this._productService.getDataTableRows();
     }, 500);
     this.modal.close();
-    
+    this.updateparenttable();
   }
   updateCounter() {
     console.log(this.textLength);
   }
+
   constructor(
     private _categroyService: InvoiceListService,
     private _ref: ChangeDetectorRef,

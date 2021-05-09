@@ -1,115 +1,120 @@
 <div class="content-wrapper">
-    <div class="content-body">
-      
-      <!-- File Uploader -->
-      <section id="file-upload">
-        <div class="card">
-          <div class="card-body">
-            
-            <div class="row">
-              <div class="col-lg-3">
-                <h4>Select files</h4>
-                <fieldset class="form-group">
-                  <label for="file-upload-multiple">Multiple:</label>
-                  <div class="custom-file">
-                    <input
-                      type="file"
-                      
-                      class="custom-file-input"
-                      type="file"
-                      ng2FileSelect
-                      
-                      [uploader]="uploader"
-                      multiple
-                      id="file-upload-multiple"
-                    />
-                    <label class="custom-file-label">Choose file</label>
-                  </div>
-                </fieldset>
+  <div class="content-body">
+    <!-- File Uploader -->
+    <section id="file-upload">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <h4>Select files</h4>
+              <fieldset class="form-group">
+                <label for="file-upload-multiple">Multiple:</label>
+                <div class="custom-file">
+                  <input
+                    type="file"
+                    class="custom-file-input"
+                    type="file"
+                    ng2FileSelect
+                    [uploader]="uploader"
+                    multiple
+                    id="file-upload-multiple"
+                  />
+                  <label class="custom-file-label">Choose file</label>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 overflow-auto">
+              <div class="d-flex justify-content-between mb-1">
+                <h4>Upload queue</h4>
+                <p>Queue length: {{ uploader?.queue?.length }}</p>
               </div>
-  
-              <div class="col-lg-9 overflow-auto">
-                <div class="d-flex justify-content-between mb-1">
-                  <h4>Upload queue</h4>
-                  <p>Queue length: {{ uploader?.queue?.length }}</p>
-                </div>
-  
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th width="50%">Name</th>
-                      
-                      <th>Size</th>
-                      <th>Status</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let item of uploader.queue">
-                      <td>
-                        <strong>{{ item?.file?.name }}</strong>
-                      </td>
-                      
-                      <td *ngIf="uploader.options.isHTML5" nowrap>
-                        {{ item?.file?.size / 1024 / 1024 | number: '.2' }} MB
-                      </td>
-                      <td class="text-center">
-                        <span *ngIf="item.isSuccess"><i data-feather="check"></i></span>
-                        <span *ngIf="item.isCancel"><i data-feather="slash"></i></span>
-                        <span *ngIf="item.isError"><i data-feather="x-circle"></i></span>
-                      </td>
-                      <td nowrap>
-                        <button
-                          type="button"
-                          class="btn btn-raised btn-outline-danger btn-sm"
-                          (click)="item.remove()"
-                          [disabled]="item.isUploaded"
-                          rippleEffect
-                        >
-                          <i data-feather="trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-  
-                <div id="">
-                  <p class="mt-1">Queue progress:</p>
-                  <ngb-progressbar class="mb-1" type="primary" [value]="uploader.progress"></ngb-progressbar>
-                  <button
-                    type="button"
-                    class="btn mr-1 btn-primary mb-1 mb-sm-0"
-                    (click)="uploadAll()"
-                    [disabled]="!uploader.getNotUploadedItems().length"
-                    rippleEffect
-                  >
-                    <span data-feather="upload" class="mr-25"></span> Upload all
-                  </button>
-                  <button
-                    type="button"
-                    class="btn mr-1 btn-outline-warning mb-1 mb-sm-0"
-                    (click)="showimages()"
-                    
-                    rippleEffect
-                  >
-                    <span data-feather="slash" class="mr-25"></span> Cancel all
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-outline-danger mb-1 mb-sm-0"
-                    (click)="uploader.clearQueue()"
-                    [disabled]="!uploader.queue.length"
-                    rippleEffect
-                  >
-                    <span data-feather="trash" class="mr-25"></span> Remove all
-                  </button>
-                </div>
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th width="50%">Name</th>
+
+                    <th>Size</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of uploader.queue">
+                    <td>
+                      <strong>{{ item?.file?.name }}</strong>
+                    </td>
+
+                    <td *ngIf="uploader.options.isHTML5" nowrap>
+                      {{ item?.file?.size / 1024 / 1024 | number: ".2" }} MB
+                    </td>
+                    <td class="text-center">
+                      <span *ngIf="item.isSuccess"
+                        ><i data-feather="check"></i
+                      ></span>
+                      <div
+                        *ngIf="item.isUploading && !item.isSuccess"
+                        class="spinner-border text-primary"
+                        role="status"
+                      >
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                      <span *ngIf="item.isCancel"
+                        ><i data-feather="slash"></i
+                      ></span>
+                      <span *ngIf="item.isError"
+                        ><i data-feather="x-circle"></i
+                      ></span>
+                    </td>
+                    <td nowrap>
+                      <button
+                        type="button"
+                        class="btn btn-raised btn-outline-danger btn-sm"
+                        (click)="item.remove()"
+                        [disabled]="item.isUploaded"
+                        rippleEffect
+                      >
+                        <i data-feather="trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div id="">
+                <p class="mt-1">Queue progress:</p>
+                <ngb-progressbar
+                  class="mb-1"
+                  type="primary"
+                  [value]="uploader.progress"
+                ></ngb-progressbar>
+                <button
+                  type="button"
+                  class="btn mr-1 btn-primary mb-1 mb-sm-0"
+                  (click)="uploadAll()"
+                  [disabled]="!uploader.getNotUploadedItems().length"
+                  rippleEffect
+                >
+                  <span data-feather="upload" class="mr-25"></span> Upload all
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-outline-danger mb-1 mb-sm-0"
+                  (click)="clearQueue()"
+                  [disabled]="!uploader.queue.length"
+                  rippleEffect
+                >
+                  <span data-feather="trash" class="mr-25"></span> Remove all
+                </button>
               </div>
             </div>
           </div>
         </div>
-      </section>
-      <!--/ File Uploader -->
-    </div>
+      </div>
+    </section>
+    <!--/ File Uploader -->
   </div>
-  
+</div>
