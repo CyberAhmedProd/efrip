@@ -1,0 +1,324 @@
+<div class="content-wrapper">
+    <div class="content-body">
+      <!-- Horizontal Wizard -->
+      <section class="horizontal-wizard">
+        <div id="stepper1" class="bs-stepper horizontal-wizard-example">
+          <div class="bs-stepper-header">
+            <div class="step" data-target="#account-details">
+              <button class="step-trigger">
+                <span class="bs-stepper-box">1</span>
+                <span class="bs-stepper-label">
+                  <span class="bs-stepper-title">Product Details</span>
+                  <span class="bs-stepper-subtitle">Setup Product Details</span>
+                </span>
+              </button>
+            </div>
+            <div class="line">
+              <i data-feather="chevron-right" class="font-medium-2"></i>
+            </div>
+            <div class="step" data-target="#personal-info">
+              <button class="step-trigger">
+                <span class="bs-stepper-box">2</span>
+                <span class="bs-stepper-label">
+                  <span class="bs-stepper-title">Quantity and Price</span>
+                  <span class="bs-stepper-subtitle">Add quantity and price</span>
+                </span>
+              </button>
+            </div>
+            <div class="line">
+              <i data-feather="chevron-right" class="font-medium-2"></i>
+            </div>
+            <div class="step" data-target="#social-links">
+              <button class="step-trigger">
+                <span class="bs-stepper-box">3</span>
+                <span class="bs-stepper-label">
+                  <span class="bs-stepper-title">Images</span>
+                  <span class="bs-stepper-subtitle">Images</span>
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="bs-stepper-content">
+            <form (ngSubmit)="(HWForm.form.valid)" #HWForm="ngForm">
+              <div id="account-details" class="content">
+                <form #accountDetailsForm="ngForm">
+                  <div class="content-header">
+                    <h5 class="mb-0">Product Details</h5>
+                    <small class="text-muted">Enter Your Product Details.</small>
+                  </div>
+  
+                  <div class="row">
+                    <div class="form-group col-md-6">
+                      <label class="form-label" for="name">Name</label>
+                      <input
+                        [(ngModel)]="TDNameVar"
+                        #TDNameRef="ngModel"
+                        required
+                        type="text"
+                        name="name"
+                        id="name"
+                        class="form-control"
+                        [class.error]="
+                          !TDNameRef.valid && accountDetailsForm.submitted
+                        "
+                        placeholder="name"
+                      />
+                      <span
+                        *ngIf="accountDetailsForm.submitted && TDNameRef.invalid"
+                        class="invalid-form"
+                      >
+                        <small
+                          class="form-text text-danger"
+                          *ngIf="TDNameRef.errors.required"
+                          >This field is required!</small
+                        >
+                      </span>
+                    </div>
+                    <!-- <div class="form-group col-md-6">
+                      <label class="form-label" for="email">Email</label>
+                      <input
+                        [(ngModel)]="TDEmailVar"
+                        #TDEmailRef="ngModel"
+                        required
+                        email
+                        type="email"
+                        name="email"
+                        id="email"
+                        class="form-control"
+                        [class.error]="!TDEmailRef.valid && accountDetailsForm.submitted"
+                        placeholder="john.doe@email.com"
+                        aria-label="john.doe"
+                      />
+                      <span *ngIf="accountDetailsForm.submitted" class="invalid-form">
+                        <small class="form-text text-danger" *ngIf="!TDEmailRef.valid">Email must be valid!</small>
+                      </span>
+                    </div> -->
+  
+                    <div class="form-group col-md-6">
+                      <label class="form-label" for="country">Category</label>
+                      <ng-select
+                        [items]="categories"
+                        bindLabel="name"
+                        [(ngModel)]="selectedItem"
+                        (change)="changeFn(selectedItem)"
+                        [ngModelOptions]="{ standalone: true }"
+                      >
+                      </ng-select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-md-12">
+                      <label class="form-label" for="country">Details</label>
+                      <fieldset class="form-label-group mb-0">
+                        <textarea
+                          [(ngModel)]="textLength"
+                          [maxlength]="maxLength"
+                          #TDDetailRef="ngModel"
+                          name="details"
+                          id="details"
+                          class="form-control char-textarea"
+                          type="textarea"
+                          [class.error]="
+                            !TDDetailRef.valid && accountDetailsForm.submitted
+                          "
+                          rows="3"
+                          placeholder="Counter"
+                        ></textarea>
+                        <span
+                          *ngIf="
+                            accountDetailsForm.submitted && TDDetailRef.invalid
+                          "
+                          class="invalid-form"
+                        >
+                          <small
+                            class="form-text text-danger"
+                            *ngIf="TDDetailRef.errors.required"
+                            >This field is required!</small
+                          >
+                        </span>
+                      </fieldset>
+                      <small class="textarea-counter-value float-right"
+                        ><span *ngIf="textLength" class="char-count">{{
+                          textLength.length
+                        }}</span>
+                        <span *ngIf="!textLength" class="char-count">0 </span> /
+                        {{ maxLength }}
+                      </small>
+                    </div>
+                  </div>
+  
+                  <div class="d-flex justify-content-between">
+                    <button
+                      (click)="horizontalWizardStepperPrevious()"
+                      class="btn btn-outline-secondary btn-prev"
+                      disabled
+                      rippleEffect
+                    >
+                      <i
+                        data-feather="arrow-left"
+                        class="align-middle mr-sm-25 mr-0"
+                      ></i>
+                      <span class="align-middle d-sm-inline-block d-none"
+                        >Previous</span
+                      >
+                    </button>
+                    <button
+                      (click)="horizontalWizardStepperNext(accountDetailsForm)"
+                      type="submit"
+                      class="btn btn-primary btn-next"
+                      rippleEffect
+                    >
+                      <span class="align-middle d-sm-inline-block d-none"
+                        >Next</span
+                      >
+                      <i
+                        data-feather="arrow-right"
+                        class="align-middle ml-sm-25 ml-0"
+                      ></i>
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <div id="personal-info" class="content">
+                <form #personalInfoForm="ngForm">
+                  <div class="content-header">
+                    <h5 class="mb-0">Price And Quantity</h5>
+                    <small>Enter Your Price and Quantity.</small>
+                  </div>
+  
+                  <div class="row">
+                    <div class="form-group col-md-6">
+                      <label class="form-label" for="first-name">Price</label>
+  
+                      <input
+                        [(ngModel)]="TDPriceVar"
+                        #TDPriceRef="ngModel"
+                        required
+                        name="first-name"
+                        id="first-name"
+                        class="form-control"
+                        placeholder="0 DT"
+                        type="text"
+                        suffix=" DT"
+                        mask="09{5}"
+                        [class.error]="
+                          personalInfoForm.submitted && TDPriceRef.invalid
+                        "
+                      />
+                      <span
+                        *ngIf="personalInfoForm.submitted && TDPriceRef.invalid"
+                        class="invalid-form"
+                      >
+                        <small
+                          class="form-text text-danger"
+                          *ngIf="TDQuantityRef.errors.required"
+                          >This field is required!</small
+                        >
+                      </span>
+                    </div>
+  
+                    <div class="form-group col-md-6">
+                      <label class="form-label" for="last-name">Quantity</label>
+                      <input
+                        [(ngModel)]="TDQuantityVar"
+                        #TDQuantityRef="ngModel"
+                        required
+                        type="text"
+                        name="last-name"
+                        id="last-name"
+                        class="form-control"
+                        type="text"
+                        placeholder="0"
+                        mask="09{4}"
+                        [class.error]="
+                          personalInfoForm.submitted && TDQuantityRef.invalid
+                        "
+                      />
+                      <span
+                        *ngIf="
+                          personalInfoForm.submitted && TDQuantityRef.invalid
+                        "
+                        class="invalid-form"
+                      >
+                        <small
+                          class="form-text text-danger"
+                          *ngIf="TDQuantityRef.errors.required"
+                          >This field is required!</small
+                        >
+                      </span>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <button
+                      (click)="horizontalWizardStepperPrevious()"
+                      class="btn btn-primary btn-prev"
+                      rippleEffect
+                    >
+                      <i
+                        data-feather="arrow-left"
+                        class="align-middle mr-sm-25 mr-0"
+                      ></i>
+                      <span class="align-middle d-sm-inline-block d-none"
+                        >Previous</span
+                      >
+                    </button>
+                    <button
+                      (click)="horizontalWizardStepperNext(personalInfoForm)"
+                      class="btn btn-primary btn-next"
+                      rippleEffect
+                    >
+                      <span class="align-middle d-sm-inline-block d-none"
+                        >Next</span
+                      >
+                      <i
+                        data-feather="arrow-right"
+                        class="align-middle ml-sm-25 ml-0"
+                      ></i>
+                    </button>
+                  </div>
+                </form>
+              </div>
+  
+              <div id="social-links" class="content">
+                <form #socialLinkForm="ngForm">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <app-new-product-uploader
+                        (newItemEvent)="addItem($event)"
+                        (submitIsEnabled)="updatesubmitbutton()"
+                      ></app-new-product-uploader>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <button
+                      (click)="horizontalWizardStepperPrevious()"
+                      class="btn btn-primary btn-prev"
+                      rippleEffect
+                    >
+                      <i
+                        data-feather="arrow-left"
+                        class="align-middle mr-sm-25 mr-0"
+                      ></i>
+                      <span class="align-middle d-sm-inline-block d-none"
+                        >Previous</span
+                      >
+                    </button>
+                    <button
+                      class="btn btn-success btn-submit"
+                      (click)="onSubmit()"
+                      [disabled]="!submitIsEnabled"
+                      rippleEffect
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+      <!--/ Horizontal Wizard -->
+    </div>
+  </div>
+  

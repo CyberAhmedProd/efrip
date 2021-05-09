@@ -22,6 +22,7 @@ import {NewProductUploaderComponent} from 'app/main/apps/product/product-list/ne
 import { FileUploadModule } from 'ng2-file-upload';
 import { ImageService } from 'app/auth/service';
 import { InvoiceListService } from '../invoice/invoice-list/invoice-list.service';
+import {EditProductComponent} from 'app/main/apps/product/product-list/edit-product/edit-product.component'
 //import {EditProductSidebarComponent} from './product-list/edit-product-sidebar/edit-product-sidebar-component'
 
 // routing
@@ -50,6 +51,7 @@ const routes: Routes = [
     ProductListComponent,
     NewProductComponent,
     NewProductUploaderComponent,
+    EditProductComponent,
     
     
     
