@@ -137,6 +137,7 @@ import {
       this.TDQuantityVar=this.productToUpdate.quantity;
       this.textLength=this.productToUpdate.details;
       this.selectedItem=this.productToUpdate.category;
+      
   
       // content header
     }

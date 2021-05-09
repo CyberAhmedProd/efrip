@@ -286,6 +286,7 @@
                       <app-new-product-uploader
                         (newItemEvent)="addItem($event)"
                         (submitIsEnabled)="updatesubmitbutton()"
+                        [currentImages]="productToUpdate.images"
                       ></app-new-product-uploader>
                     </div>
                   </div>

@@ -33,6 +33,8 @@ export class NewProductUploaderComponent implements OnInit {
   public fileReader: FileReader;
   
   public images = new Array();
+  @Input()
+  currentImages;
   
   @Output()
   submitIsEnabled= new EventEmitter<boolean>();
