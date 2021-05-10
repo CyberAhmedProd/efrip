@@ -4,5 +4,5 @@ export * from './address'
 export * from './Image';
 export * from './profil';
 export * from './category';
-export * from './product'
-export * from './profilBody'
+export * from './product';
+

@@ -19,6 +19,7 @@ export class AccountSettingsComponent implements OnInit {
   _countryList : any = ['Tunisia','Alegria','Marroco'];
   public contentHeader: object;
   public data: Profil;
+  _country : any;
   public birthDateOptions: FlatpickrOptions = {
     altInput: true
   };

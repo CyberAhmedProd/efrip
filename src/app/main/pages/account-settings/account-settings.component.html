@@ -286,9 +286,10 @@
                               [(ngModel)]="data.address.country"
                               id="accountSelect"
                               name="accountSelect"
+                              
                             >
-                        
-                              <option *ngFor="let country of _countryList" [ngValue]="data.address.country">{{country}}</option>
+                            <option value="{{data.address.country}}" selected disabled hidden>{{data.address.country}}</option>
+                              <option *ngFor="let _country of _countryList" [ngValue]="_country">{{_country}}</option>
                           
                             </select>
                           </div>
@@ -308,7 +309,7 @@
                         </div>
                         
                         <div class="col-12">
-                          <button type="submit" class="btn btn-primary mt-1 mr-1" rippleEffect>Save changes</button>
+                          <button type="submit" class="btn btn-primary mt-1 mr-1" rippleEffect (click)="updateProfilUser()">Save changes</button>
                           <button type="reset" class="btn btn-outline-secondary mt-1" rippleEffect>Cancel</button>
                         </div>
                       </div>
