@@ -3,22 +3,18 @@ import { MediaObserver } from '@angular/flex-layout';
 
 import * as _ from 'lodash';
 import { Observable, Observer, Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
 import { AuthenticationService, UserService } from 'app/auth/service';
 import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.service';
 import { CoreConfigService } from '@core/services/config.service';
 import { CoreMediaService } from '@core/services/media.service';
-
 import { User,Profil } from 'app/auth/models';
-
-
-import { coreConfig } from 'app/app-config';
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'environments/environment';
+
+import { local_image } from 'app/image.const';
 
 @Component({
   selector: 'app-navbar',
@@ -236,8 +232,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
         await this._userService.getProfil(this.currentUser.id).then(x => this.currentUSerProfil = x
           );
         if(this.currentUSerProfil){
-        this.imageData= this.currentUSerProfil.avatar.image.data;
-        this.imageSource = "data:image/png;base64,"+this.imageData;
+        
+        if(this.currentUSerProfil.avatar.image){
+          this.imageData= this.currentUSerProfil.avatar.image.data;
+          this.imageSource = "data:image/png;base64,"+this.imageData;
+        }
+        else
+          this.imageSource = "data:image/png;base64,"+local_image;
        }
       }
    

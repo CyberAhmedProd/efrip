@@ -85,7 +85,8 @@
           <ngx-datatable-column name="User" prop="row.user" [width]="200">
             <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
               <div class="d-flex align-items-center">
-                <div *ngIf="row.avatar ; else customAvatar">
+                <div *ngIf="row.avatar.image ; else customAvatar">
+                  
                   <img
                     class="rounded-circle mr-1"
                     src="data:image/png;base64,{{row.avatar.image.data}}"

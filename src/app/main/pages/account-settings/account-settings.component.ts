@@ -8,6 +8,7 @@ import { AccountSettingsService } from 'app/main/pages/account-settings/account-
 import { Image, Profil } from 'app/auth/models';
 import { ImageService, ProfilService } from 'app/auth/service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { local_image } from 'app/image.const'
 @Component({
   selector: 'app-account-settings',
   templateUrl: './account-settings.component.html',
@@ -19,6 +20,7 @@ export class AccountSettingsComponent implements OnInit {
   _countryList : any = ['Tunisia','Alegria','Marroco'];
   public contentHeader: object;
   public data: Profil;
+  img :any
   _country : any;
   public birthDateOptions: FlatpickrOptions = {
     altInput: true
@@ -46,11 +48,11 @@ export class AccountSettingsComponent implements OnInit {
   currentOutput : any
   _imgData : Image
   onFileSelected(event) {
-    console.log(event.target.files);
+    console.log(event.target.files[0]);
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
       reader.onload = (event: any) => {
-          this.currentInput = event.target.result;
+          this.img = event.target.result;
           this.currentOutput = event.target.files[0];
       }
       reader.readAsDataURL(event.target.files[0]);
@@ -110,6 +112,10 @@ export class AccountSettingsComponent implements OnInit {
   ngOnInit() {
     this._accountSettingsService.onDatatablessChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe(response => {
       this.data = response;
+      if(this.data.avatar.image)
+        this.img = 'data:image/png;base64,'+this.data.avatar.image.data
+      else
+        this.img = 'data:image/png;base64,'+local_image
     });
 
     // content header

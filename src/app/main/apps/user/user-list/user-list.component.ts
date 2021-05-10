@@ -1,13 +1,11 @@
 import { Component, OnInit, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
-
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
 import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.service';
-
 import { UserListService } from 'app/main/apps/user/user-list/user-list.service';
 import { UserService } from 'app/auth/service';
+import { local_image } from 'app/image.const'
 
 @Component({
   selector: 'app-user-list',
