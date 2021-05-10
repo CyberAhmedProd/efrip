@@ -1,11 +1,21 @@
-import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Output,
+  EventEmitter,
+  Input,
+  ViewChild,
+} from "@angular/core";
 import { environment } from "environments/environment";
 
 import { FileItem, FileUploader, ParsedResponseHeaders } from "ng2-file-upload";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { ImageService } from "app/auth/service/image.service";
-import { PathLocationStrategy } from "@angular/common";
-const URL = `${environment.apiDistant}/api/photos/add`;
+import { ChangeDetectorRef } from "@angular/core";
+import { ColumnMode, DatatableComponent } from "@swimlane/ngx-datatable";
+
+const URL1 = `${environment.apiDistant}/api/photos/add`;
 interface MyData {}
 @Component({
   selector: "app-new-product-uploader",
@@ -20,7 +30,51 @@ export class NewProductUploaderComponent implements OnInit {
   public hasBaseDropZoneOver: boolean = false;
   public uploader: FileUploader;
   public response;
+  public fileReader: FileReader;
 
+  public images = new Array();
+  @Input()
+  currentImages: any[];
+
+  currentImages2:any[];
+
+  @Output()
+  submitIsEnabled = new EventEmitter<boolean>();
+  @Output() newItemEvent = new EventEmitter<any>();
+  //delete the image from the database
+  // removeitemfromtable(itemtoremove,table){
+  //   table.forEach((item))
+  // }
+  deleteImage(image) {
+    const photo = (element) => (element = image);
+    let todelete = this.currentImages2.findIndex(photo);
+
+    // var bar = new Promise((resolve, reject) => {
+    //   this._imageService.deleteImage(image.id).subscribe((data) => {
+    //     resolve(data.success);
+    //   }),
+    //     reject;
+    // }).then((data) => {
+    //   if (data === 1) {
+    //     this.currentImages.splice(todelete, 1);
+    //     console.log(this.currentImages);
+    //     if (!this.currentImages.length && !this.images.length) {
+    //       this.updatesubmitbutton(false);
+    //     }
+    //   }
+    // });
+    this.currentImages2.splice(todelete, 1);
+    //console.log(this.currentImages);
+    if (!this.currentImages2.length && !this.images.length) {
+      this.updatesubmitbutton(false);
+    }
+  }
+  updatesubmitbutton(value) {
+    this.submitIsEnabled.emit(value);
+  }
+  addNewItemToParent(value: any) {
+    this.newItemEvent.emit(value);
+  }
   // Public Methods
   // -----------------------------------------------------------------------------------------------------
   fileOverBase(e: any): void {
@@ -30,97 +84,92 @@ export class NewProductUploaderComponent implements OnInit {
   fileOverAnother(e: any): void {
     this.hasAnotherDropZoneOver = e;
   }
-  rows: any;
-  constructor(private http: HttpClient, private _imageService: ImageService) {
-    let headers = new Headers();
 
+  constructor(
+    private http: HttpClient,
+    private _imageService: ImageService,
+    private ref: ChangeDetectorRef
+  ) {
     this.uploader = new FileUploader({
-      url: URL,
+      url: URL1,
       isHTML5: true,
-      method:'POST',
-      itemAlias:'photo',
-      removeAfterUpload:true,
-      headers: [
-         {
-             name:'Accept',
-             value:'application/json, text/plain, */*'
-             
-         },
-         {
-             name:'Content-Type',
-             value:'multipart/form-data; boundary=<calculated when request is sent>'
-         } 
-        
-          
-        ],
-              // 'DisableMultipart' must be 'true' for formatDataFunction to be called.
-      //disableMultipart: true,
-      
-      //itemAlias: "photo", // 'DisableMultipart' must be 'true' for formatDataFunction to be called.
 
-    // formatDataFunctionIsAsync: true,
-    // formatDataFunction: async (item) => {
-    //     return new Promise( (resolve, reject) => {
-    //       resolve({
-    //         title: 'haha',
-    //         image:null
-    //       });
-    //     });
-    //   }
-      
+      itemAlias: "image",
+
+      // 'DisableMultipart' must be 'true' for formatDataFunction to be called.
+      disableMultipart: true,
+      parametersBeforeFiles: true,
+      removeAfterUpload: true,
     });
-    
-    
+
     this.hasBaseDropZoneOver = false;
     this.hasAnotherDropZoneOver = false;
-    
 
     this.response = "";
 
     this.uploader.response.subscribe((res) => (this.response = res));
   }
-  //   return new Promise((resolve, reject) => {
-  //     this._httpClient.get(`${environment.apiDistant}/api/category`).subscribe((response: any) => {
-  //       this.rows = response;
-  //       this.onDatatablessChanged.next(this.rows);
-  //       resolve(this.rows);
-  //     }, reject);
-  //   });
+
+  uploadItem(item) {
+    return new Promise<any>((resolve, reject) => {
+      this._imageService.addImage2(item).subscribe((response: any) => {
+        resolve(response);
+      }, reject);
+    });
+  }
+
+  clearQueue() {
+    this.uploader.getNotUploadedItems().forEach((item) => {
+      item.remove();
+    });
+  }
+  updateparent(){
+    if (this.currentImages2) {
+      this.currentImages2.forEach((item) => {
+        this.addNewItemToParent({
+          id: item.id,
+        });
+      });
+    }
+  }
+  async uploadAll() {
+    
+    this.uploader.isUploading = true;
+
+    let promise = new Promise<void>((resolve, reject) => resolve());
+    // Add each element to the chain.
+    var bar = new Promise<void>((resolve, reject) =>
+      this.uploader.getNotUploadedItems().forEach((item, index, array) => {
+        promise = promise.then(() => {
+          item.isUploading = true;
+          this.ref.detectChanges();
+          return this.uploadItem(item)
+            .then((response) => {
+              item.isSuccess = true;
+              item.isUploaded = true;
+              this.ref.detectChanges();
+              this.images.push({
+                id: response.id,
+              });
+              this.addNewItemToParent({
+                id: response.id,
+              });
+              this.uploader.progress += (1 / array.length) * 100;
+              this.ref.detectChanges();
+              if (index === array.length - 1) {
+                resolve();
+              }
+            })
+            .catch((error) => {});
+        });
+      })
+    ).then(() => {
+      this.updatesubmitbutton(true);
+    });
+  }
+
   ngOnInit(): void {
-    this.uploader.onBuildItemForm=(fileitem:FileItem,form:any) => {
-        form.push('image', fileitem.file.rawFile);
-        form.push('title',"gfsdf");
-
-        return{fileitem,form}
-    }
-    this.uploader.onBeforeUploadItem = (fileItem: any) => {
-        fileItem.formData.push( { 'image': fileItem.file.rawFile } );
-        fileItem.formData.push( { 'title':"gfsdf" } );
-        console.log("just",fileItem)
-       };
-    this.uploader.onAfterAddingFile=(fileitem:FileItem)=>{
-       
-        
-        fileitem.withCredentials=false;
-
-    }
-    this.uploader.onCompleteItem=(item:FileItem,response:String,status:number,headers:ParsedResponseHeaders) => {
-        console.log(item);
-        console.log(response);
-        console.log(status)
-    }
-  
-     this.uploader.uploadItem=(item)=>{
-         return new Promise((resolve, reject)=> {
-            this._imageService.addImage2(item).subscribe((response: any)=> {
-                this.response=response;
-                resolve(this.response);
-            },reject)
-
-         })
-
-    }
-    console.log(this.uploader);
+    this.currentImages2=[...this.currentImages]
     this.contentHeader = {
       headerTitle: "File Uploader",
       actionButton: true,

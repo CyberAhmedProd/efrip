@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
 
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -9,6 +9,10 @@ import { CoreSidebarService } from "@core/components/core-sidebar/core-sidebar.s
 import { ProductListService } from "./product-list.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ListGroupComponent } from "app/main/components/list-group/list-group.component";
+import { InvoiceListService } from "../../invoice/invoice-list/invoice-list.service";
+import { Category } from "app/auth/models";
+
+
 
 @Component({
   selector: "app-product-list",
@@ -19,12 +23,14 @@ import { ListGroupComponent } from "app/main/components/list-group/list-group.co
 export class ProductListComponent implements OnInit {
   // public
   public data: any;
+  
   public selectedOption = 10;
   public selectedStatusOption = "";
   public ColumnMode = ColumnMode;
   public temp_id:string;
   public temp_name:string;
-
+  public categories:Category[];
+  public spinner:boolean=true;
   // decorator
   @ViewChild(DatatableComponent) table: DatatableComponent;
 
@@ -32,7 +38,11 @@ export class ProductListComponent implements OnInit {
   private tempData = [];
   private _unsubscribeAll: Subject<any>;
   public rows;
-
+  upadatetablefromchild(){
+    console.log("shshhshsha")
+    this.loadData();
+    this.ref.detectChanges()
+  }
   /**
    * Constructor
    *
@@ -40,8 +50,10 @@ export class ProductListComponent implements OnInit {
    */
   constructor(
     private _productListService: ProductListService,
-    private _coreSidebarService: CoreSidebarService,
-    private modalService: NgbModal
+    
+    private _categoryService:InvoiceListService,
+    private modalService: NgbModal,
+    private ref: ChangeDetectorRef
   ) {
     this._unsubscribeAll = new Subject();
   }
@@ -67,17 +79,7 @@ export class ProductListComponent implements OnInit {
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
   }
-  toggleSidebar(name): void {
-    this._coreSidebarService.getSidebarRegistry(name).toggleOpen();
-    
-  }
   
-  toggleSidebar2(name,category_id,category_name): void {
-    this._coreSidebarService.getSidebarRegistry(name).toggleOpen();
-    this.temp_id=category_id;
-    this.temp_name=category_name;
-   // console.log(this._coreSidebarService.getSidebarRegistry(name).category_id)
-  }
   modalOpenForm(modalForm) {
     this.modalService.open(modalForm,{size:'lg',backdrop:'static'});
   }
@@ -87,20 +89,40 @@ export class ProductListComponent implements OnInit {
   /**
    * On init
    */
-  ngOnInit(): void {
-    this._productListService.onDatatablessChanged
-    .pipe(takeUntil(this._unsubscribeAll))
-    .subscribe((response) => {
+  loadData(){
+    this.spinner = true;
+    this._productListService.getDataTableRows()
+    
+    .then((response) => {
       this.data = response;
       this.rows = this.data;
       this.tempData = this.rows;
+      this.spinner=false;
+      
     });
+  }
+  ngOnInit(): void {
+    this.spinner=true;
+    this.loadData();
+    this._productListService.onDatatablessChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((response) => {
+        this.data = response;
+        this.rows = this.data;
+        this.tempData = this.rows;
+      });
+    this._categoryService.getDataTableRows()
+    
+    .then((response) => {
+      this.categories=response;
+    })
   }
 
   deleteProduct(id) {
     this._productListService.deleteProduct(id);
+    
     setTimeout(() => {
-      this._productListService.getDataTableRows();
+      this.loadData()
     }, 500);
   }
   

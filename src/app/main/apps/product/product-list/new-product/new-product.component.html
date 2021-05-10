@@ -97,7 +97,7 @@
                   <div class="form-group col-md-6">
                     <label class="form-label" for="country">Category</label>
                     <ng-select
-                      [items]="selectBasic"
+                      [items]="categories"
                       bindLabel="name"
                       [(ngModel)]="selectedItem"
                       (change)="changeFn(selectedItem)"
@@ -229,7 +229,7 @@
                       class="form-control"
                       type="text"
                       placeholder="0"
-                      mask="09{4}"   
+                      mask="09{4}"
                       [class.error]="
                         personalInfoForm.submitted && TDQuantityRef.invalid
                       "
@@ -278,12 +278,16 @@
                 </div>
               </form>
             </div>
-            
+
             <div id="social-links" class="content">
               <form #socialLinkForm="ngForm">
-                
                 <div class="row">
-                  <app-new-product-uploader></app-new-product-uploader>
+                  <div class="col-md-12">
+                    <app-new-product-uploader
+                      (newItemEvent)="addItem($event)"
+                      (submitIsEnabled)="updatesubmitbutton($event)"
+                    ></app-new-product-uploader>
+                  </div>
                 </div>
                 <div class="d-flex justify-content-between">
                   <button
@@ -299,7 +303,12 @@
                       >Previous</span
                     >
                   </button>
-                  <button class="btn btn-success btn-submit" rippleEffect>
+                  <button
+                    class="btn btn-success btn-submit"
+                    (click)="onSubmit()"
+                    [disabled]="!submitIsEnabled"
+                    rippleEffect
+                  >
                     Submit
                   </button>
                 </div>
