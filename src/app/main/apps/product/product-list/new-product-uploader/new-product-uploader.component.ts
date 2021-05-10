@@ -36,6 +36,8 @@ export class NewProductUploaderComponent implements OnInit {
   @Input()
   currentImages: any[];
 
+  currentImages2:any[];
+
   @Output()
   submitIsEnabled = new EventEmitter<boolean>();
   @Output() newItemEvent = new EventEmitter<any>();
@@ -45,7 +47,7 @@ export class NewProductUploaderComponent implements OnInit {
   // }
   deleteImage(image) {
     const photo = (element) => (element = image);
-    let todelete = this.currentImages.findIndex(photo);
+    let todelete = this.currentImages2.findIndex(photo);
 
     // var bar = new Promise((resolve, reject) => {
     //   this._imageService.deleteImage(image.id).subscribe((data) => {
@@ -61,9 +63,9 @@ export class NewProductUploaderComponent implements OnInit {
     //     }
     //   }
     // });
-    this.currentImages.splice(todelete, 1);
+    this.currentImages2.splice(todelete, 1);
     //console.log(this.currentImages);
-    if (!this.currentImages.length && !this.images.length) {
+    if (!this.currentImages2.length && !this.images.length) {
       this.updatesubmitbutton(false);
     }
   }
@@ -121,9 +123,9 @@ export class NewProductUploaderComponent implements OnInit {
       item.remove();
     });
   }
-  async updateparent(){
-    if (this.currentImages) {
-      this.currentImages.slice().reverse().forEach((item) => {
+  updateparent(){
+    if (this.currentImages2) {
+      this.currentImages2.forEach((item) => {
         this.addNewItemToParent({
           id: item.id,
         });
@@ -167,7 +169,7 @@ export class NewProductUploaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+    this.currentImages2=[...this.currentImages]
     this.contentHeader = {
       headerTitle: "File Uploader",
       actionButton: true,

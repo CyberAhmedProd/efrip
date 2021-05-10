@@ -100,7 +100,6 @@
                         [items]="categories"
                         bindLabel="name"
                         [(ngModel)]="selectedItem"
-                        (change)="changeFn(selectedItem)"
                         [ngModelOptions]="{ standalone: true }"
                       >
                       </ng-select>
@@ -307,9 +306,10 @@
                     <button
                       class="btn btn-success btn-submit"
                       (click)="onSubmit()"
-                      [disabled]="!submitIsEnabled"
+                      [disabled]="loading ||!submitIsEnabled"
                       rippleEffect
                     >
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                       Submit
                     </button>
                   </div>

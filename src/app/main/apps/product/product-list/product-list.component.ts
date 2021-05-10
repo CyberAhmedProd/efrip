@@ -90,7 +90,7 @@ export class ProductListComponent implements OnInit {
    * On init
    */
   loadData(){
-    this.spinner=true;
+    this.spinner = true;
     this._productListService.getDataTableRows()
     
     .then((response) => {
@@ -104,6 +104,13 @@ export class ProductListComponent implements OnInit {
   ngOnInit(): void {
     this.spinner=true;
     this.loadData();
+    this._productListService.onDatatablessChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((response) => {
+        this.data = response;
+        this.rows = this.data;
+        this.tempData = this.rows;
+      });
     this._categoryService.getDataTableRows()
     
     .then((response) => {

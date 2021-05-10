@@ -40,12 +40,14 @@ export class EditProductComponent implements OnInit {
   public selectBasic = [];
   public images = [];
   public submitIsEnabled = false;
-  public toastStyle: object = {};
+  public toastStyle: object = {};7
+  
   @Output() updatetable = new EventEmitter<any>();
-
+  public loading = false;
   updateparenttable() {
     console.log("hahah");
     this.updatetable.emit();
+    this._ref.detectChanges();
   }
   updatesubmitbutton(value) {
     this.submitIsEnabled = value;
@@ -97,7 +99,8 @@ export class EditProductComponent implements OnInit {
   /**
    * On Submit
    */
-  onSubmit() {
+  async onSubmit() {
+    this.loading = true;
     this.child.updateparent();
     let toSend = {
       id: this.productToUpdate.id,
@@ -115,15 +118,21 @@ export class EditProductComponent implements OnInit {
       featured: true,
       images: this.images,
     };
-    var foo = new Promise((resolve, reject) => {
+    var foo = new Promise<void>((resolve, reject) => {
       this._productService.editProduct(toSend).subscribe((data) => {
-        console.log(data);
-        resolve(data);
+        resolve();
       });
-    }).then(() => {
-      this.updateparenttable();
-      this._ref.detectChanges();
     });
+    foo.then(() => {
+      
+      this._productService.getDataTableRows().then(()=>{
+        this.loading=false;
+        this._ref.detectChanges();
+        this.modal.close();
+      })
+      //this.updateparenttable();
+      
+    })
     // this._productService.editProduct(toSend).subscribe(data => {
     //   console.log(data)
     // });
@@ -131,7 +140,7 @@ export class EditProductComponent implements OnInit {
 
     // }, 3000);
 
-    this.modal.close();
+    
   }
   updateCounter() {
     console.log(this.textLength);
