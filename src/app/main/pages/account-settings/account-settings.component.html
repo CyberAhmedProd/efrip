@@ -115,7 +115,7 @@
                           </div>
                         </div>
                         <div class="col-12">
-                          <button type="submit" class="btn btn-primary mt-2 mr-1" rippleEffect>Save changes</button>
+                          <button type="submit" class="btn btn-primary mt-2 mr-1" rippleEffect (click)="updateProfilUser()">Save changes</button>
                           <button type="reset" class="btn btn-outline-secondary mt-2" rippleEffect>Cancel</button>
                         </div>
                       </div>
@@ -287,9 +287,9 @@
                               id="accountSelect"
                               name="accountSelect"
                             >
-                              <option>Tunsia</option>
-                              <option>Algeria</option>
-                              <option>Canada</option>
+                        
+                              <option *ngFor="let country of _countryList" [ngValue]="data.address.country">{{country}}</option>
+                          
                             </select>
                           </div>
                         </div>

@@ -5,8 +5,8 @@ import { takeUntil } from 'rxjs/operators';
 import { FlatpickrOptions } from 'ng2-flatpickr';
 
 import { AccountSettingsService } from 'app/main/pages/account-settings/account-settings.service';
-import { Image } from 'app/auth/models';
-import { ImageService } from 'app/auth/service';
+import { Image, Profil } from 'app/auth/models';
+import { ImageService, ProfilService } from 'app/auth/service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-account-settings',
@@ -16,8 +16,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class AccountSettingsComponent implements OnInit {
   // public
+  _countryList : any = ['Tunisia','Alegria','Marroco'];
   public contentHeader: object;
-  public data: any;
+  public data: Profil;
   public birthDateOptions: FlatpickrOptions = {
     altInput: true
   };
@@ -34,7 +35,7 @@ export class AccountSettingsComponent implements OnInit {
    * @param {AccountSettingsService} _accountSettingsService
    * @param {ImageService} _imageService
    */
-  constructor(private _accountSettingsService: AccountSettingsService , private _imageService : ImageService,private fb: FormBuilder) {
+  constructor(private _profilService : ProfilService ,private _accountSettingsService: AccountSettingsService , private _imageService : ImageService,private fb: FormBuilder) {
     this._unsubscribeAll = new Subject();
     this.form = this.fb.group({
       img: [null]
@@ -68,6 +69,11 @@ export class AccountSettingsComponent implements OnInit {
     this._imgData.title = this.form.get('img').value.type
     console.log(this._imageService.updateImage(this._imgData))
     
+  }
+
+  updateProfilUser(){
+    console.log(this.data)
+    this._profilService.updateProfil(this.data.id,this.data)
   }
 
   // Public Methods

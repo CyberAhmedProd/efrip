@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 
 import { Subject } from 'rxjs';
