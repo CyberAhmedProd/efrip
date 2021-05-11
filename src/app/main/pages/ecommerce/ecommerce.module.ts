@@ -71,7 +71,8 @@ const routes: Routes = [
     EcommerceWishlistComponent,
     EcommerceCheckoutComponent,
     EcommerceItemComponent,
-    EcommerceCheckoutItemComponent
+    EcommerceCheckoutItemComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -83,7 +84,8 @@ const routes: Routes = [
     CoreSidebarModule,
     CoreCommonModule,
     NgbModule,
-    NouisliderModule
+    NouisliderModule,
+    
   ],
   providers: [
     {
