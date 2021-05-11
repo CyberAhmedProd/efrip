@@ -1,3 +1,4 @@
+
 <div class="content-wrapper">
   <div class="content-body">
     <!-- File Uploader -->
@@ -59,7 +60,7 @@
                         />
                       </td>
                       <td>
-                        <strong>0fornow</strong>
+                        <strong>{{image.image.data.length /1024 /1024 | number :".2"}}</strong>
                       </td>
                       <td>
                         <span><i data-feather="check"></i></span>
@@ -82,7 +83,9 @@
                     <td>
                       <strong>{{ item?.file?.name }}</strong>
                     </td>
-
+                    <td>
+                      
+                    </td>
                     <td *ngIf="uploader.options.isHTML5" nowrap>
                       {{ item?.file?.size / 1024 / 1024 | number: ".2" }} MB
                     </td>

@@ -31,6 +31,7 @@ export class ProductListComponent implements OnInit {
   public temp_name:string;
   public categories:Category[];
   public spinner:boolean=true;
+  public loadingIndicator:true;
   // decorator
   @ViewChild(DatatableComponent) table: DatatableComponent;
 
@@ -116,6 +117,7 @@ export class ProductListComponent implements OnInit {
     .then((response) => {
       this.categories=response;
     })
+    console.log(this.table)
   }
 
   deleteProduct(id) {

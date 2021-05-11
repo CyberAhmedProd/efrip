@@ -49,25 +49,25 @@ export class NewProductUploaderComponent implements OnInit {
     const photo = (element) => (element = image);
     let todelete = this.currentImages2.findIndex(photo);
 
-    // var bar = new Promise((resolve, reject) => {
-    //   this._imageService.deleteImage(image.id).subscribe((data) => {
-    //     resolve(data.success);
-    //   }),
-    //     reject;
-    // }).then((data) => {
-    //   if (data === 1) {
-    //     this.currentImages.splice(todelete, 1);
-    //     console.log(this.currentImages);
-    //     if (!this.currentImages.length && !this.images.length) {
-    //       this.updatesubmitbutton(false);
-    //     }
-    //   }
-    // });
-    this.currentImages2.splice(todelete, 1);
-    //console.log(this.currentImages);
-    if (!this.currentImages2.length && !this.images.length) {
-      this.updatesubmitbutton(false);
-    }
+    var bar = new Promise((resolve, reject) => {
+      this._imageService.deleteImage(image.id).subscribe((data) => {
+        resolve(data.success);
+      }),
+        reject;
+    }).then((data) => {
+      if (data === 1) {
+        this.currentImages.splice(todelete, 1);
+        console.log(this.currentImages);
+        if (!this.currentImages.length && !this.images.length) {
+          this.updatesubmitbutton(false);
+        }
+      }
+    });
+    // this.currentImages2.splice(todelete, 1);
+    // //console.log(this.currentImages);
+    // if (!this.currentImages2.length && !this.images.length) {
+    //   this.updatesubmitbutton(false);
+    // }
   }
   updatesubmitbutton(value) {
     this.submitIsEnabled.emit(value);

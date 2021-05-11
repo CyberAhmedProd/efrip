@@ -60,6 +60,7 @@
         <ngx-datatable
           [rows]="rows"
           [rowHeight]="'auto'"
+          [loadingIndicator]="loadingIndicator"
           class="bootstrap core-bootstrap"
           [limit]="selectedOption"
           [columnMode]="ColumnMode.force"
@@ -67,7 +68,7 @@
           [footerHeight]="50"
           [scrollbarH]="true"
         >
-          <ngx-datatable-column name="ID" prop="id" width="190">
+          <ngx-datatable-column name="ID" prop="id" width="250">
             <ng-template let-id="value" ngx-datatable-cell-template>
               <a
                 routerLink="/apps/invoice/preview/{{ id }}"
@@ -76,7 +77,7 @@
               >
             </ng-template>
           </ngx-datatable-column>
-          <ngx-datatable-column name="Name" prop="name" width="130">
+          <ngx-datatable-column name="Name" prop="name" width="300">
             <ng-template
               let-row="row"
               let-name="value"
@@ -91,7 +92,7 @@
               </div>
             </ng-template>
           </ngx-datatable-column>
-          <ngx-datatable-column name="User" prop="user.username" width="130">
+          <ngx-datatable-column name="User" prop="user.username" width="200">
             <ng-template
               let-row="row"
               let-user.username="value"
@@ -106,7 +107,7 @@
               </div>
             </ng-template>
           </ngx-datatable-column>
-          <ngx-datatable-column name="Category" prop="category.name" width="80">
+          <ngx-datatable-column name="Category" prop="category.name" width="190">
             <ng-template
               let-row="row"
               let-category.name="value"
@@ -121,7 +122,7 @@
               </div>
             </ng-template>
           </ngx-datatable-column>
-          <ngx-datatable-column name="Price" prop="price" width="20">
+          <ngx-datatable-column name="Price" prop="price" width="80">
             <ng-template
               let-row="row"
               let-price="value"
@@ -136,7 +137,7 @@
               </div>
             </ng-template>
           </ngx-datatable-column>
-          <ngx-datatable-column name="Quantity" prop="quantity" width="50">
+          <ngx-datatable-column name="Quantity" prop="quantity" width="80">
             <ng-template
               let-row="row"
               let-quantity="value"
