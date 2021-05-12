@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { EcommerceService } from 'app/main/pages/ecommerce/ecommerce.service';
 import { Cart } from 'app/auth/models';
+import { CardStatisticsModule } from 'app/main/ui/card/card-statistics/card-statistics.module';
 
 @Component({
   selector: 'app-navbar-cart',
@@ -16,6 +17,7 @@ export class NavbarCartComponent implements OnInit {
   public cartList : Cart []=new Array();
   public total = 0;
   public cartListLength;
+  public test=0;
 
   // Private
   private _unsubscribeAll: Subject<any>;
@@ -45,9 +47,23 @@ export class NavbarCartComponent implements OnInit {
 
   // Lifecycle Hooks
   // -----------------------------------------------------------------------------------------------------
-  updateTotal(event){
-    console.log(event)
-    
+  updateTotal(){
+    this.total=0
+            this.cartListLength = this.cartList.length;
+            this.cartList.forEach(product => {
+        
+            this.total =this.total+ (product.product.price*product.quantity);
+    })
+  }
+  valueChanged(value){
+    console.log(value)
+  }
+  checkout(){
+    console.log(this.cartList)
+  }
+  getInput(cartItem,event){
+    cartItem.quantity = event;
+    this.updateTotal()
   }
   /**
    * On init

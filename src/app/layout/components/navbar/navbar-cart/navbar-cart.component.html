@@ -37,7 +37,7 @@
               </div>
               <div class="cart-item-qty">
                 <div class="input-group touchspin-cart">
-                  <core-touchspin  [numberValue]="cartItem.quantity" (click)="updateTotal(this)"  [stepValue]="1" [minValue]="1" [maxValue]="cartItem.product.quantity"></core-touchspin>
+                  <core-touchspin [numberValue]="cartItem.quantity" (getValue)="getInput(cartItem,$event)"  [stepValue]="1" [minValue]="1" [maxValue]="cartItem.product.quantity"></core-touchspin>
                 </div>
               </div>
               <h5 class="cart-item-price">${{ cartItem.product.price }}</h5>
@@ -54,8 +54,9 @@
         <h6 class="font-weight-bolder mb-0">Total:</h6>
         <h6 class="text-primary font-weight-bolder mb-0">{{this.total}}</h6>
       </div>
-      <a class="btn btn-primary btn-block" routerLink="/apps/e-commerce/checkout">Checkout</a>
+      <a class="btn btn-primary btn-block" (click)="checkout()" >Checkout</a>
     </li>
+    <!-- routerLink="/apps/e-commerce/checkout" -->
     <!--/ Cart footer -->
   </ul>
 </li>

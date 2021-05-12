@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
+import { getInputValues } from '@angularclass/hmr';
 
 @Component({
   selector: 'core-touchspin',
@@ -16,7 +17,11 @@ export class CoreTouchspinComponent implements OnInit {
   @Input('stepValue') stepValue: number;
   @Input('maxValue') maxValue: number = 9999;
   @Input('minValue') minValue: number = 0;
+  @Output() getValue = new EventEmitter<any>();
 
+  getInput(){
+    this.getValue.emit(this.numberValue);
+  }
   public disabledValueIncrement = false;
   public disabledValueDecrement = false;
 
@@ -54,6 +59,7 @@ export class CoreTouchspinComponent implements OnInit {
         this.disabledValueDecrement = true;
       }
     }
+    this.getInput();
   }
 
   decrement() {
@@ -75,6 +81,7 @@ export class CoreTouchspinComponent implements OnInit {
         this.disabledValueIncrement = true;
       }
     }
+    this.getInput();
   }
 
   ngOnInit(): void {
