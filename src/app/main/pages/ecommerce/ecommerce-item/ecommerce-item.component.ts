@@ -57,6 +57,6 @@ export class EcommerceItemComponent implements OnInit {
   // Lifecycle Hooks
   // -----------------------------------------------------------------------------------------------------
   ngOnInit(): void {
-    console.log(this.product.images[0].image)
+    
   }
 }

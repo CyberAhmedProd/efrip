@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.service';
 import { CoreConfigService } from '@core/services/config.service';
+import { Cart } from 'app/auth/models';
 
 import { EcommerceService } from '../ecommerce.service';
 @Component({
@@ -19,7 +20,7 @@ export class EcommerceShopComponent implements OnInit {
   public gridViewRef = true;
   public products;
   public wishlist;
-  public cartList;
+  public cartList:Cart[];
   public page = 1;
   public pageSize = 9;
   public searchText = '';
@@ -103,10 +104,21 @@ export class EcommerceShopComponent implements OnInit {
     this._ecommerceService.onCartListChange.subscribe(res => (this.cartList = res));
 
     // update product is in Wishlist & is in CartList : Boolean
-    this.products.forEach(product => {
-      product.isInWishlist = this.wishlist.findIndex(p => p.productId === product.id) > -1;
-      product.isInCart = this.cartList.findIndex(p => p.productId === product.id) > -1;
-    });
+    if(this.cartList){
+      this.products.forEach(product => {
+       // product.isInWishlist = this.wishlist.findIndex(p => p.product.id === product.id) > -1;
+       let num=this.cartList.findIndex(p => p.product.id === product.id)
+       //console.log(num)
+       if(num!=-1){
+        product.isInCart =true;
+       }else {
+        product.isInCart =false;
+       }
+       
+      });
+
+    }
+    
 
     // content header
     this.contentHeader = {

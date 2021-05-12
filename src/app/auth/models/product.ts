@@ -14,6 +14,7 @@ export class Product {
     quantity:number;
     description:string;
     featured:boolean;
+    isInCart:boolean;
     images:[Image];
     createdDate:Date;
     lastModified:Date;
