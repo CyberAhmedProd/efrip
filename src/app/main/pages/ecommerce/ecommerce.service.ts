@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { Cart } from 'app/auth/models';
+import { AuthenticationService } from 'app/auth/service';
 import { environment } from 'environments/environment';
 
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -43,12 +45,13 @@ export class EcommerceService implements Resolve<any> {
    *
    * @param {HttpClient} _httpClient
    */
-  constructor(private _httpClient: HttpClient) {
+  constructor(private _httpClient: HttpClient,private _auth:AuthenticationService) {
     this.onProductListChange = new BehaviorSubject({});
     this.onRelatedProductsChange = new BehaviorSubject({});
     this.onWishlistChange = new BehaviorSubject({});
     this.onCartListChange = new BehaviorSubject({});
     this.onSelectedProductChange = new BehaviorSubject({});
+
   }
 
   /**
@@ -97,11 +100,11 @@ export class EcommerceService implements Resolve<any> {
   /**
    * Get CartList
    */
-  getCartList(): Promise<any[]> {
+  getCartList(): Promise<Cart[]> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get('api/ecommerce-userCart').subscribe((response: any) => {
+      this._httpClient.post<Cart []>(`${environment.apiDistant}/api/cart/`+ this._auth.currentUserValue.id,{}).subscribe((response: any) => {
         this.cartList = response;
-
+        console.log(response)
         this.onCartListChange.next(this.cartList);
         resolve(this.cartList);
       }, reject);
@@ -216,7 +219,7 @@ export class EcommerceService implements Resolve<any> {
    * @param id
    */
   removeFromCart(id) {
-    const indexRef = this.cartList.findIndex(cartListRef => cartListRef.productId === id); // Get the index ref
+    const indexRef = this.cartList.findIndex(cartListRef => cartListRef.product.id === id); // Get the index ref
     const indexId = this.cartList[indexRef].id; // Get the product wishlist id from indexRef
 
     return new Promise<void>((resolve, reject) => {

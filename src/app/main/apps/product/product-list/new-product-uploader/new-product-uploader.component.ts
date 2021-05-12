@@ -46,7 +46,7 @@ export class NewProductUploaderComponent implements OnInit {
   //   table.forEach((item))
   // }
   deleteImage(image) {
-    const photo = (element) => (element = image);
+    const photo = (element) => (element.id === image.id);
     let todelete = this.currentImages2.findIndex(photo);
 
     var bar = new Promise((resolve, reject) => {
@@ -169,7 +169,10 @@ export class NewProductUploaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentImages2=[...this.currentImages]
+    if(this.currentImages){
+      this.currentImages2=[...this.currentImages]
+    }
+    
     this.contentHeader = {
       headerTitle: "File Uploader",
       actionButton: true,

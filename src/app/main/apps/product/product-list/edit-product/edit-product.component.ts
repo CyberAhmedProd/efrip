@@ -15,6 +15,7 @@ import { Category } from "app/auth/models";
 import { AuthenticationService } from "app/auth/service";
 import { ProductListService } from "../product-list.service";
 import { NewProductUploaderComponent } from "../new-product-uploader/new-product-uploader.component";
+import { EcommerceService } from "app/main/pages/ecommerce/ecommerce.service";
 @Component({
   selector: "app-edit-product",
   templateUrl: "./edit-product.component.html",
@@ -126,6 +127,7 @@ export class EditProductComponent implements OnInit {
     foo.then(() => {
       
       this._productService.getDataTableRows().then(()=>{
+        this._ecommerceService.getCartList()
         this.loading=false;
         this._ref.detectChanges();
         this.modal.close();
@@ -150,7 +152,8 @@ export class EditProductComponent implements OnInit {
     private _categroyService: InvoiceListService,
     private _ref: ChangeDetectorRef,
     private _authService: AuthenticationService,
-    private _productService: ProductListService
+    private _productService: ProductListService,
+    private _ecommerceService:EcommerceService
   ) {}
 
   ngOnInit(): void {

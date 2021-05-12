@@ -1,7 +1,7 @@
 <li ngbDropdown class="nav-item dropdown-cart mr-25">
   <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarCartDropdown"
     ><span [data-feather]="'shopping-cart'" [class]="'ficon'"></span
-    ><span class="badge badge-pill badge-primary badge-up cart-item-count">{{ cartListLength -5 }}</span></a
+    ><span class="badge badge-pill badge-primary badge-up cart-item-count">{{ cartListLength }}</span></a
   >
   <ul
     ngbDropdownMenu
@@ -20,27 +20,27 @@
     <!-- Cart content -->
     <li class="scrollable-container media-list" [perfectScrollbar]>
       <ng-container *ngIf="products.length">
-        <ng-container *ngFor="let product of products">
-          <div class="media align-items-center" *ngIf="product?.isInCart === true">
-            <img class="d-block rounded mr-1" [src]="'data:image/png;base64,'+product.images[0].image.data" alt="donuts" width="62" />
+        <ng-container *ngFor="let product of cartList">
+          <div class="media align-items-center" >
+            <img class="d-block rounded mr-1" [src]="'data:image/png;base64,'+product.product.images[0].image.data" alt="donuts" width="62" />
             <div class="media-body">
               <button class="btn p-0" (click)="removeFromCart(product)">
                 <i class="ficon cart-item-remove" data-feather="x"></i>
               </button>
               <div class="media-heading">
                 <h6 class="cart-item-title">
-                  <a class="text-body" [routerLink]="'/apps/e-commerce/ecommerce-details/' + product.id">{{
-                    product.name
+                  <a class="text-body" [routerLink]="'/apps/e-commerce/ecommerce-details/' + product.product.id">{{
+                    product.product.name
                   }}</a>
                 </h6>
-                <small class="cart-item-by">{{ product.brand }}</small>
+                
               </div>
               <div class="cart-item-qty">
                 <div class="input-group touchspin-cart">
-                  <core-touchspin [numberValue]="1" [stepValue]="1" [minValue]="1" [maxValue]="10"></core-touchspin>
+                  <core-touchspin [numberValue]="product.quantity" [stepValue]="1" [minValue]="1" [maxValue]="product.product.quantity"></core-touchspin>
                 </div>
               </div>
-              <h5 class="cart-item-price">${{ product.price }}</h5>
+              <h5 class="cart-item-price">${{ product.product.price }}</h5>
             </div>
           </div>
         </ng-container>
