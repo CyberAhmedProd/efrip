@@ -46,28 +46,28 @@ export class NewProductUploaderComponent implements OnInit {
   //   table.forEach((item))
   // }
   deleteImage(image) {
-    const photo = (element) => (element = image);
+    const photo = (element) => (element.id === image.id);
     let todelete = this.currentImages2.findIndex(photo);
 
-    // var bar = new Promise((resolve, reject) => {
-    //   this._imageService.deleteImage(image.id).subscribe((data) => {
-    //     resolve(data.success);
-    //   }),
-    //     reject;
-    // }).then((data) => {
-    //   if (data === 1) {
-    //     this.currentImages.splice(todelete, 1);
-    //     console.log(this.currentImages);
-    //     if (!this.currentImages.length && !this.images.length) {
-    //       this.updatesubmitbutton(false);
-    //     }
-    //   }
-    // });
-    this.currentImages2.splice(todelete, 1);
-    //console.log(this.currentImages);
-    if (!this.currentImages2.length && !this.images.length) {
-      this.updatesubmitbutton(false);
-    }
+    var bar = new Promise((resolve, reject) => {
+      this._imageService.deleteImage(image.id).subscribe((data) => {
+        resolve(data.success);
+      }),
+        reject;
+    }).then((data) => {
+      if (data === 1) {
+        this.currentImages.splice(todelete, 1);
+        console.log(this.currentImages);
+        if (!this.currentImages.length && !this.images.length) {
+          this.updatesubmitbutton(false);
+        }
+      }
+    });
+    // this.currentImages2.splice(todelete, 1);
+    // //console.log(this.currentImages);
+    // if (!this.currentImages2.length && !this.images.length) {
+    //   this.updatesubmitbutton(false);
+    // }
   }
   updatesubmitbutton(value) {
     this.submitIsEnabled.emit(value);
@@ -168,7 +168,10 @@ export class NewProductUploaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentImages2=[...this.currentImages]
+    if(this.currentImages){
+      this.currentImages2=[...this.currentImages]
+    }
+    
     this.contentHeader = {
       headerTitle: "File Uploader",
       actionButton: true,

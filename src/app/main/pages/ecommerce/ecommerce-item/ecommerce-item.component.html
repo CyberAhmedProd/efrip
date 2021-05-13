@@ -1,16 +1,36 @@
 <!-- Ecommerce Item -->
 <div class="item-img text-center">
-  <a [routerLink]="'/apps/e-commerce/details/' + product.id">
-    <img class="img-fluid card-img-top" [src]="'data:image/png;base64,'+product.images[0].image.data" alt="img-placeholder" />
-  </a>
+  <!-- <img class="img-fluid card-img-top" [src]="'data:image/png;base64,'+product.images[0].image.data" alt="img-placeholder" /> -->
+  <ngb-carousel *ngIf="product.images">
+    <ng-container *ngFor="let item of product.images">
+      <ng-template ngbSlide>
+        <div>
+          <img
+            [src]="'data:image/png;base64,' + item.image.data"
+            class="img-thumbnail"
+            alt="Random first slide"
+          />
+        </div>
+        <div class="carousel-caption"></div>
+      </ng-template>
+    </ng-container>
+  </ngb-carousel>
 </div>
 <div class="card-body">
   <div class="item-wrapper">
     <div class="item-rating">
       <div class="rating rating-sm">
-        <ngb-rating [rate]="product.rating" [readonly]="true" [max]="5" class="outline-none">
+        <ngb-rating
+          [rate]="product.rating"
+          [readonly]="true"
+          [max]="5"
+          class="outline-none"
+        >
           <ng-template let-fill="fill" let-index="index"
-            ><span class="fa fa-star-o mr-25" [class.fa-star]="fill === 100"></span
+            ><span
+              class="fa fa-star-o mr-25"
+              [class.fa-star]="fill === 100"
+            ></span
           ></ng-template>
         </ngb-rating>
       </div>
@@ -20,13 +40,21 @@
     </div>
   </div>
   <h6 class="item-name">
-    <a class="text-body" [routerLink]="'/apps/e-commerce/details/' + product.id"> {{ product.name }}</a>
+    <a
+      class="text-body"
+      [routerLink]="'/apps/e-commerce/details/' + product.id"
+    >
+      {{ product.name }}</a
+    >
     <span class="card-text item-company"
-      >By <a href="javascript:void(0)" class="company-name">{{ product.brand }}</a></span
+      >By
+      <a href="javascript:void(0)" class="company-name">{{
+        product.brand
+      }}</a></span
     >
   </h6>
   <p class="card-text item-description">
-    {{ product.description }}
+    {{ product.details }}
   </p>
 </div>
 <div class="item-options text-center">
@@ -55,7 +83,12 @@
     (click)="toggleWishlist(product)"
     rippleEffect
   >
-    <i class="fa mr-25" [ngClass]="product.isInWishlist === true ? 'fa-heart text-danger' : 'fa-heart-o'"></i>
+    <i
+      class="fa mr-25"
+      [ngClass]="
+        product.isInWishlist === true ? 'fa-heart text-danger' : 'fa-heart-o'
+      "
+    ></i>
     <span>Wishlist</span>
   </a>
   <a

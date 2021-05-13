@@ -1,12 +1,21 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { environment } from 'environments/environment';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import {
+  ActivatedRouteSnapshot,
+  Resolve,
+  RouterStateSnapshot,
+} from "@angular/router";
+import { Cart } from "app/auth/models";
+import { AuthenticationService } from "app/auth/service";
+import { environment } from "environments/environment";
 
-import { BehaviorSubject, Observable } from 'rxjs';
-
+import { BehaviorSubject, Observable } from "rxjs";
+interface MyData {
+  success: number;
+  message: string;
+}
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class EcommerceService implements Resolve<any> {
   // Public
@@ -25,7 +34,7 @@ export class EcommerceService implements Resolve<any> {
   // Private
   private idHandel;
 
-  private sortRef = key => (a, b) => {
+  private sortRef = (key) => (a, b) => {
     const fieldA = a[key];
     const fieldB = b[key];
 
@@ -43,7 +52,10 @@ export class EcommerceService implements Resolve<any> {
    *
    * @param {HttpClient} _httpClient
    */
-  constructor(private _httpClient: HttpClient) {
+  constructor(
+    private _httpClient: HttpClient,
+    private _auth: AuthenticationService
+  ) {
     this.onProductListChange = new BehaviorSubject({});
     this.onRelatedProductsChange = new BehaviorSubject({});
     this.onWishlistChange = new BehaviorSubject({});
@@ -58,11 +70,19 @@ export class EcommerceService implements Resolve<any> {
    * @param {RouterStateSnapshot} state
    * @returns {Observable<any> | Promise<any> | any}
    */
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<any> | Promise<any> | any {
     this.idHandel = route.params.id;
 
     return new Promise<void>((resolve, reject) => {
-      Promise.all([this.getProducts(), this.getWishlist(), this.getCartList(), this.getSelectedProduct()]).then(() => {
+      Promise.all([
+        this.getProducts(),
+        this.getWishlist(),
+        this.getCartList(),
+        this.getSelectedProduct(),
+      ]).then(() => {
         resolve();
       }, reject);
     });
@@ -73,11 +93,13 @@ export class EcommerceService implements Resolve<any> {
    */
   getProducts(): Promise<any[]> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get(`${environment.apiDistant}/api/product`).subscribe((response: any) => {
-        this.productList = response;
-        this.sortProduct('featured'); // Default shorting
-        resolve(this.productList);
-      }, reject);
+      this._httpClient
+        .get(`${environment.apiDistant}/api/product`)
+        .subscribe((response: any) => {
+          this.productList = response;
+          this.sortProduct("featured"); // Default shorting
+          resolve(this.productList);
+        }, reject);
     });
   }
 
@@ -86,25 +108,32 @@ export class EcommerceService implements Resolve<any> {
    */
   getWishlist(): Promise<any[]> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get('api/ecommerce-userWishlist').subscribe((response: any) => {
-        this.wishlist = response;
-        this.onWishlistChange.next(this.wishlist);
-        resolve(this.wishlist);
-      }, reject);
+      this._httpClient
+        .get("api/ecommerce-userWishlist")
+        .subscribe((response: any) => {
+          this.wishlist = response;
+          this.onWishlistChange.next(this.wishlist);
+          resolve(this.wishlist);
+        }, reject);
     });
   }
 
   /**
    * Get CartList
    */
-  getCartList(): Promise<any[]> {
+  getCartList(): Promise<Cart[]> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get('api/ecommerce-userCart').subscribe((response: any) => {
-        this.cartList = response;
-
-        this.onCartListChange.next(this.cartList);
-        resolve(this.cartList);
-      }, reject);
+      this._httpClient
+        .post<Cart[]>(
+          `${environment.apiDistant}/api/cart/` +
+            this._auth.currentUserValue?.id,
+          {}
+        )
+        .subscribe((response: any) => {
+          this.cartList = response;
+          this.onCartListChange.next(this.cartList);
+          resolve(this.cartList);
+        }, reject);
     });
   }
 
@@ -113,11 +142,13 @@ export class EcommerceService implements Resolve<any> {
    */
   getSelectedProduct(): Promise<any[]> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get('api/ecommerce-products?id=' + this.idHandel).subscribe((response: any) => {
-        this.selectedProduct = response;
-        this.onSelectedProductChange.next(this.selectedProduct);
-        resolve(this.selectedProduct);
-      }, reject);
+      this._httpClient
+        .get("api/ecommerce-products?id=" + this.idHandel)
+        .subscribe((response: any) => {
+          this.selectedProduct = response;
+          this.onSelectedProductChange.next(this.selectedProduct);
+          resolve(this.selectedProduct);
+        }, reject);
     });
   }
 
@@ -126,11 +157,13 @@ export class EcommerceService implements Resolve<any> {
    */
   getRelatedProducts(): Promise<any[]> {
     return new Promise((resolve, reject) => {
-      this._httpClient.get('api/ecommerce-relatedProducts').subscribe((response: any) => {
-        this.relatedProducts = response;
-        this.onRelatedProductsChange.next(this.relatedProducts);
-        resolve(this.relatedProducts);
-      }, reject);
+      this._httpClient
+        .get("api/ecommerce-relatedProducts")
+        .subscribe((response: any) => {
+          this.relatedProducts = response;
+          this.onRelatedProductsChange.next(this.relatedProducts);
+          resolve(this.relatedProducts);
+        }, reject);
     });
   }
 
@@ -143,15 +176,15 @@ export class EcommerceService implements Resolve<any> {
     let sortDesc = false;
 
     const sortByKey = (() => {
-      if (sortBy === 'price-desc') {
+      if (sortBy === "price-desc") {
         sortDesc = true;
-        return 'price';
+        return "price";
       }
-      if (sortBy === 'price-asc') {
-        return 'price';
+      if (sortBy === "price-asc") {
+        return "price";
       }
       sortDesc = true;
-      return 'id';
+      return "id";
     })();
 
     const sortedData = this.productList.sort(this.sortRef(sortByKey));
@@ -170,10 +203,12 @@ export class EcommerceService implements Resolve<any> {
       const lengthRef = this.wishlist.length + 1;
       const wishRef = { id: lengthRef, productId: id };
 
-      this._httpClient.post('api/ecommerce-userWishlist/' + lengthRef, { ...wishRef }).subscribe(response => {
-        this.getWishlist();
-        resolve();
-      }, reject);
+      this._httpClient
+        .post("api/ecommerce-userWishlist/" + lengthRef, { ...wishRef })
+        .subscribe((response) => {
+          this.getWishlist();
+          resolve();
+        }, reject);
     });
   }
 
@@ -183,13 +218,17 @@ export class EcommerceService implements Resolve<any> {
    * @param id
    */
   removeFromWishlist(id) {
-    const indexRef = this.wishlist.findIndex(wishlistRef => wishlistRef.productId === id); // Get the index ref
+    const indexRef = this.wishlist.findIndex(
+      (wishlistRef) => wishlistRef.productId === id
+    ); // Get the index ref
     const indexId = this.wishlist[indexRef].id; // Get the product wishlist id from indexRef
     return new Promise<void>((resolve, reject) => {
-      this._httpClient.delete('api/ecommerce-userWishlist/' + indexId).subscribe((response: any) => {
-        this.getWishlist();
-        resolve();
-      }, reject);
+      this._httpClient
+        .delete("api/ecommerce-userWishlist/" + indexId)
+        .subscribe((response: any) => {
+          this.getWishlist();
+          resolve();
+        }, reject);
     });
   }
 
@@ -199,14 +238,29 @@ export class EcommerceService implements Resolve<any> {
    * @param id
    */
   addToCart(id) {
-    return new Promise<void>((resolve, reject) => {
-      const lengthRef = this.cartList.length + 1;
-      const cartRef = { id: lengthRef, productId: id, qty: 1 };
+    return new Promise<MyData>((resolve, reject) => {
+      //const lengthRef = this.cartList.length + 1;
+      const cartRef = {
+        product: {
+          id:id
+        },
+        user:{
+          id:this._auth.currentUserValue.id
+        },
+        quantity: 1,
+      };
 
-      this._httpClient.post('api/ecommerce-userCart/' + lengthRef, { ...cartRef }).subscribe(response => {
-        this.getCartList();
-        resolve();
-      }, reject);
+      this._httpClient
+        .post<MyData>(`${environment.apiDistant}/api/cart/add`, { ...cartRef })
+        .subscribe((response) => {
+          if(response.success===1){
+            this.getCartList();
+            resolve(response);
+          }else {
+            reject()
+          }
+          
+        }, reject);
     });
   }
 
@@ -216,14 +270,18 @@ export class EcommerceService implements Resolve<any> {
    * @param id
    */
   removeFromCart(id) {
-    const indexRef = this.cartList.findIndex(cartListRef => cartListRef.productId === id); // Get the index ref
-    const indexId = this.cartList[indexRef].id; // Get the product wishlist id from indexRef
+    // const indexRef = this.cartList.findIndex(
+    //   (cartListRef) => cartListRef.product.id === id
+    // ); // Get the index ref
+    // const indexId = this.cartList[indexRef].id; // Get the product wishlist id from indexRef
 
     return new Promise<void>((resolve, reject) => {
-      this._httpClient.delete('api/ecommerce-userCart/' + indexId).subscribe((response: any) => {
-        this.getCartList();
-        resolve();
-      }, reject);
+      this._httpClient
+        .delete(`${environment.apiDistant}/api/cart/delete/` + id)
+        .subscribe((response: any) => {
+          this.getCartList();
+          resolve();
+        }, reject);
     });
   }
 }
