@@ -17,6 +17,8 @@ export class EcommerceCheckoutComponent implements OnInit {
   public products;
   public cartLists;
   public wishlist;
+  npr : number = 0;
+  tax : number;
 
   public address = {
     fullNameVar: '',
@@ -65,6 +67,20 @@ export class EcommerceCheckoutComponent implements OnInit {
     }
   }
 
+  calculeNpr(){
+    this.npr=0
+            this.products.forEach(product => {
+            this.npr =this.npr+ (product.product.price*product.quantity);
+    })
+  }
+  calculTax() : number{
+    return this.tax = (this.npr/100) * 18
+  }
+
+  calculeTot() : number{
+    return this.tax+this.npr
+  }
+
   // Lifecycle Hooks
   // -----------------------------------------------------------------------------------------------------
 
@@ -95,6 +111,8 @@ export class EcommerceCheckoutComponent implements OnInit {
       linear: false,
       animation: true
     });
+
+    this.calculeNpr();
 
     // content header
     this.contentHeader = {
