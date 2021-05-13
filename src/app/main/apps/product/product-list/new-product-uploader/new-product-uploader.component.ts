@@ -93,7 +93,6 @@ export class NewProductUploaderComponent implements OnInit {
     this.uploader = new FileUploader({
       url: URL1,
       isHTML5: true,
-
       itemAlias: "image",
 
       // 'DisableMultipart' must be 'true' for formatDataFunction to be called.

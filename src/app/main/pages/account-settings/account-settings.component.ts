@@ -20,7 +20,7 @@ export class AccountSettingsComponent implements OnInit {
   _countryList : any = ['Tunisia','Alegria','Marroco'];
   public contentHeader: object;
   public data: Profil;
-  img :any
+  img :any;
   _country : any;
   public birthDateOptions: FlatpickrOptions = {
     altInput: true
@@ -70,7 +70,8 @@ export class AccountSettingsComponent implements OnInit {
     this._imgData.id = this.data.avatar.id;
     this._imgData.image = this.form.get('img').value;
     this._imgData.title = this.form.get('img').value.type
-    console.log(this._imageService.updateImage(this._imgData))
+    await this._imageService.updateImage(this._imgData)
+  
     
   }
 
@@ -127,11 +128,6 @@ export class AccountSettingsComponent implements OnInit {
         links: [
           {
             name: 'Home',
-            isLink: true,
-            link: '/'
-          },
-          {
-            name: 'Pages',
             isLink: true,
             link: '/'
           },
