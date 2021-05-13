@@ -18,7 +18,7 @@ export class EcommerceCheckoutItemComponent implements OnInit {
    * @param {EcommerceService} _ecommerceService
    */
   constructor(private _ecommerceService: EcommerceService) {
-    
+      
   }
 
   /**
