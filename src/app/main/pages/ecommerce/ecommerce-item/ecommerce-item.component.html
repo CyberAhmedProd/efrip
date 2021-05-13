@@ -104,7 +104,7 @@
   </a>
   <a
     *ngIf="product.isInCart === true"
-    routerLink="/apps/e-commerce/checkout"
+    [routerLink]="'../checkout'"
     class="btn btn-primary btn-cart"
     rippleEffect
   >
