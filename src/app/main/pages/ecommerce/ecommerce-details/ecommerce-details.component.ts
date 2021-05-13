@@ -134,14 +134,9 @@ export class EcommerceDetailsComponent implements OnInit {
             link: '/'
           },
           {
-            name: 'eCommerce',
-            isLink: true,
-            link: '/'
-          },
-          {
             name: 'Shop',
             isLink: true,
-            link: '/'
+            link: '/pages/shop'
           },
           {
             name: 'Details',
