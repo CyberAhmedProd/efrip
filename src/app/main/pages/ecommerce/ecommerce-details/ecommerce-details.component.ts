@@ -118,7 +118,7 @@ export class EcommerceDetailsComponent implements OnInit {
       this.relatedProducts = response;
     });
 
-    //this.product.isInWishlist = this.wishlist.findIndex(p => p.product.id === this.product.id) > -1;
+    this.product.isInWishlist = this.wishlist.findIndex(p => p.product.id === this.product.id) > -1;
     this.product.isInCart = this.cartList.findIndex(p => p.product.id === this.product.id) > -1;
     console.log(this.product.isInCart)
     // content header

@@ -32,7 +32,7 @@ export class EcommerceItemComponent implements OnInit {
    * @param product
    */
   toggleWishlist(product) {
-    if (product.isInWishlist === true) {
+    if (product.isInWishlist === true || this.isWishlistOpen) {
       this._ecommerceService.removeFromWishlist(product.id).then(res => {
         product.isInWishlist = false;
       });

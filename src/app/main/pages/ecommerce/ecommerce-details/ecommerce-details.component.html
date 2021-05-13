@@ -40,47 +40,24 @@
                   </ngb-rating>
                 </div>
               </div>
-              <p class="card-text">Available - <span class="text-success">In stock</span></p>
+              <p *ngIf="product.quantity > 1" class="card-text">Available - <span class="text-success">In stock</span></p>
+              <p *ngIf="product.quantity <= 1" class="card-text">Available - <span class="text-danger">Out of stock</span></p>
               <p class="card-text">
                 {{ product.description }}
               </p>
               <ul class="product-features list-unstyled">
                 <li *ngIf="product.hasFreeShipping"><i data-feather="shopping-cart"></i> <span>Free Shipping</span></li>
                 <li>
-                  <i data-feather="dollar-sign"></i>
-                  <span>EMI options available</span>
+                  <div class="product-color-options">
+                    <h6>Quantity</h6>
+                    <h5>{{product.quantity}}</h5>
+                  </div>
                 </li>
               </ul>
               <hr />
               <div class="product-color-options">
-                <h6>Colors</h6>
-                <ul class="list-unstyled mb-0">
-                  <li class="d-inline-block selected">
-                    <div class="color-option b-primary">
-                      <div class="filloption bg-primary"></div>
-                    </div>
-                  </li>
-                  <li class="d-inline-block">
-                    <div class="color-option b-success">
-                      <div class="filloption bg-success"></div>
-                    </div>
-                  </li>
-                  <li class="d-inline-block">
-                    <div class="color-option b-danger">
-                      <div class="filloption bg-danger"></div>
-                    </div>
-                  </li>
-                  <li class="d-inline-block">
-                    <div class="color-option b-warning">
-                      <div class="filloption bg-warning"></div>
-                    </div>
-                  </li>
-                  <li class="d-inline-block">
-                    <div class="color-option b-info">
-                      <div class="filloption bg-info"></div>
-                    </div>
-                  </li>
-                </ul>
+                <h6>Details</h6>
+                <p>{{product.details}}</p>
               </div>
               <hr />
               <div class="d-flex flex-column flex-sm-row pt-1">

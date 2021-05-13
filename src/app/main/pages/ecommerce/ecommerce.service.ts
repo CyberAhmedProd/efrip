@@ -5,7 +5,7 @@ import {
   Resolve,
   RouterStateSnapshot,
 } from "@angular/router";
-import { Cart } from "app/auth/models";
+import { Cart, WishList } from "app/auth/models";
 import { AuthenticationService } from "app/auth/service";
 import { environment } from "environments/environment";
 
@@ -106,10 +106,14 @@ export class EcommerceService implements Resolve<any> {
   /**
    * Get Wishlist
    */
-  getWishlist(): Promise<any[]> {
+  getWishlist(): Promise<WishList[]> {
     return new Promise((resolve, reject) => {
       this._httpClient
-        .get("api/ecommerce-userWishlist")
+        .post<WishList[]>(
+          `${environment.apiDistant}/api/wishlist/` +
+            this._auth.currentUserValue?.id,
+          {}
+        )
         .subscribe((response: any) => {
           this.wishlist = response;
           this.onWishlistChange.next(this.wishlist);
@@ -199,15 +203,27 @@ export class EcommerceService implements Resolve<any> {
    * @param id
    */
   addToWishlist(id) {
-    return new Promise<void>((resolve, reject) => {
-      const lengthRef = this.wishlist.length + 1;
-      const wishRef = { id: lengthRef, productId: id };
+    return new Promise<MyData>((resolve, reject) => {
+      // const lengthRef = this.wishlist.length + 1;
+      const wishRef = { 
+         
+        product: {
+          id:id,
+        },
+        user:{
+          id:this._auth.currentUserValue.id,
+        } 
+      };
 
       this._httpClient
-        .post("api/ecommerce-userWishlist/" + lengthRef, { ...wishRef })
+        .post<MyData>(`${environment.apiDistant}/api/wishlist/add`, { ...wishRef })
         .subscribe((response) => {
-          this.getWishlist();
-          resolve();
+          if (response.success === 1) {
+            this.getWishlist();
+            resolve(response);
+          } else {
+            reject();
+          }
         }, reject);
     });
   }
@@ -219,12 +235,12 @@ export class EcommerceService implements Resolve<any> {
    */
   removeFromWishlist(id) {
     const indexRef = this.wishlist.findIndex(
-      (wishlistRef) => wishlistRef.productId === id
+      (wishlistRef) => wishlistRef.product.id === id
     ); // Get the index ref
     const indexId = this.wishlist[indexRef].id; // Get the product wishlist id from indexRef
     return new Promise<void>((resolve, reject) => {
       this._httpClient
-        .delete("api/ecommerce-userWishlist/" + indexId)
+        .delete(`${environment.apiDistant}/api/wishlist/delete/` + indexId)
         .subscribe((response: any) => {
           this.getWishlist();
           resolve();
@@ -242,10 +258,10 @@ export class EcommerceService implements Resolve<any> {
       //const lengthRef = this.cartList.length + 1;
       const cartRef = {
         product: {
-          id:id
+          id: id,
         },
-        user:{
-          id:this._auth.currentUserValue.id
+        user: {
+          id: this._auth.currentUserValue.id,
         },
         quantity: 1,
       };
@@ -253,13 +269,12 @@ export class EcommerceService implements Resolve<any> {
       this._httpClient
         .post<MyData>(`${environment.apiDistant}/api/cart/add`, { ...cartRef })
         .subscribe((response) => {
-          if(response.success===1){
+          if (response.success === 1) {
             this.getCartList();
             resolve(response);
-          }else {
-            reject()
+          } else {
+            reject();
           }
-          
         }, reject);
     });
   }
