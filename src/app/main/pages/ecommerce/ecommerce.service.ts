@@ -143,7 +143,7 @@ export class EcommerceService implements Resolve<any> {
   getSelectedProduct(): Promise<any[]> {
     return new Promise((resolve, reject) => {
       this._httpClient
-        .get("api/ecommerce-products?id=" + this.idHandel)
+        .get(`${environment.apiDistant}/api/product/` + this.idHandel)
         .subscribe((response: any) => {
           this.selectedProduct = response;
           this.onSelectedProductChange.next(this.selectedProduct);

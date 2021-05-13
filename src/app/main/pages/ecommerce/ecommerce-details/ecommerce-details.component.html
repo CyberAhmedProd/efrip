@@ -9,13 +9,26 @@
           <div class="row my-2">
             <div class="col-12 col-md-5 d-flex align-items-center justify-content-center mb-2 mb-md-0">
               <div class="d-flex align-items-center justify-content-center">
-                <img [src]="product.image" class="img-fluid product-img" alt="product image" />
+                <ngb-carousel *ngIf="product.images">
+                  <ng-container *ngFor="let item of product.images">
+                    <ng-template ngbSlide>
+                      <div>
+                        <img
+                          [src]="'data:image/png;base64,' + item.image.data"
+                          class="img-thumbnail"
+                          alt="Random first slide"
+                        />
+                      </div>
+                      <div class="carousel-caption"></div>
+                    </ng-template>
+                  </ng-container>
+                </ngb-carousel>
               </div>
             </div>
             <div class="col-12 col-md-7">
               <h4>{{ product.name }}</h4>
               <span class="card-text item-company"
-                >By <a href="javascript:void(0)" class="company-name">{{ product.brand }}</a></span
+                >By <a href="javascript:void(0)" class="company-name">{{ product.user.username }}</a></span
               >
               <div class="ecommerce-details-price d-flex flex-wrap mt-1">
                 <h4 class="item-price mr-1">${{ product.price }}</h4>

@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 
@@ -13,6 +14,7 @@ import { EcommerceService } from '../ecommerce.service';
 })
 export class EcommerceDetailsComponent implements OnInit {
   // public
+  ;
   public contentHeader: object;
   public product;
   public wishlist;
@@ -52,7 +54,8 @@ export class EcommerceDetailsComponent implements OnInit {
    *
    * @param {EcommerceService} _ecommerceService
    */
-  constructor(private _ecommerceService: EcommerceService) {}
+  constructor(private _ecommerceService: EcommerceService,
+    private route: ActivatedRoute) {}
 
   // Public Methods
   // -----------------------------------------------------------------------------------------------------
@@ -92,25 +95,32 @@ export class EcommerceDetailsComponent implements OnInit {
    * On init
    */
   ngOnInit(): void {
+    this.route.params.subscribe(data=> {
+      console.log(data.id)
+    })
+    
     // Subscribe to Selected Product change
     this._ecommerceService.onSelectedProductChange.subscribe(res => {
-      this.product = res[0];
+      this.product = res;
     });
 
     // Subscribe to Wishlist change
     this._ecommerceService.onWishlistChange.subscribe(res => (this.wishlist = res));
 
     // Subscribe to Cartlist change
-    this._ecommerceService.onCartListChange.subscribe(res => (this.cartList = res));
+    this._ecommerceService.onCartListChange.subscribe(res => {
+      this.cartList = res
+      console.log(res)
+    });
 
     // Get Related Products
     this._ecommerceService.getRelatedProducts().then(response => {
       this.relatedProducts = response;
     });
 
-    this.product.isInWishlist = this.wishlist.findIndex(p => p.productId === this.product.id) > -1;
-    this.product.isInCart = this.cartList.findIndex(p => p.productId === this.product.id) > -1;
-
+    //this.product.isInWishlist = this.wishlist.findIndex(p => p.product.id === this.product.id) > -1;
+    this.product.isInCart = this.cartList.findIndex(p => p.product.id === this.product.id) > -1;
+    console.log(this.product.isInCart)
     // content header
     this.contentHeader = {
       headerTitle: 'Product Details',
