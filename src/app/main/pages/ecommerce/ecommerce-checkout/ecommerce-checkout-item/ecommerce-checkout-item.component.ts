@@ -17,7 +17,9 @@ export class EcommerceCheckoutItemComponent implements OnInit {
    *
    * @param {EcommerceService} _ecommerceService
    */
-  constructor(private _ecommerceService: EcommerceService) {}
+  constructor(private _ecommerceService: EcommerceService) {
+    
+  }
 
   /**
    * Remove From Cart
@@ -25,11 +27,11 @@ export class EcommerceCheckoutItemComponent implements OnInit {
    * @param product
    */
   removeFromCart(product) {
-    if (product.isInCart === true) {
+    //if (product.isInCart === true) {
       this._ecommerceService.removeFromCart(product.id).then(res => {
-        product.isInCart = false;
+       // product.isInCart = false;
       });
-    }
+   // }
   }
 
   /**
@@ -38,7 +40,7 @@ export class EcommerceCheckoutItemComponent implements OnInit {
    * @param product
    */
   toggleWishlist(product) {
-    if (product.isInWishlist === true) {
+    /*if (product.isInWishlist === true) {
       this._ecommerceService.removeFromWishlist(product.id).then(res => {
         product.isInWishlist = false;
       });
@@ -46,7 +48,7 @@ export class EcommerceCheckoutItemComponent implements OnInit {
       this._ecommerceService.addToWishlist(product.id).then(res => {
         product.isInWishlist = true;
       });
-    }
+    }*/
   }
 
   // Lifecycle Hooks

@@ -1,16 +1,16 @@
 <div class="card ecommerce-card">
   <div class="item-img">
     <a [routerLink]="'/apps/e-commerce/details/' + product.id">
-      <img [src]="product.image" alt="img-placeholder" />
+      <img src='data:{{product.product.images[0].title}};base64,{{product.product.images[0].image.data}}' alt="img-placeholder" />
     </a>
   </div>
   <div class="card-body">
     <div class="item-name">
       <h6 class="mb-0">
-        <a [routerLink]="'/apps/e-commerce/details/' + product.id" class="text-body">{{ product.name }}</a>
+        <a [routerLink]="'/apps/e-commerce/details/' + product.id" class="text-body">{{ product.product.name }}</a>
       </h6>
       <span class="item-company"
-        >By <a href="javascript:void(0)" class="company-name">{{ product.brand }}</a></span
+        >By <a href="javascript:void(0)" class="company-name">{{ product.product.category.name }}</a></span
       >
       <div class="item-rating">
         <div class="rating rating-sm">
@@ -35,8 +35,8 @@
   <div class="item-options text-center">
     <div class="item-wrapper">
       <div class="item-cost">
-        <h4 class="item-price">${{ product.price }}</h4>
-        <p class="card-text shipping" *ngIf="product.hasFreeShipping">
+        <h4 class="item-price">${{ product.product.price }}</h4>
+        <p class="card-text shipping" *ngIf="true">
           <span class="badge badge-pill badge-light-success">Free Shipping</span>
         </p>
       </div>

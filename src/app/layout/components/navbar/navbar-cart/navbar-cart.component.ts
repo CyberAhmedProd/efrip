@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { EcommerceService } from 'app/main/pages/ecommerce/ecommerce.service';
 import { Cart } from 'app/auth/models';
 import { CardStatisticsModule } from 'app/main/ui/card/card-statistics/card-statistics.module';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar-cart',
@@ -26,7 +27,7 @@ export class NavbarCartComponent implements OnInit {
    *
    * @param {EcommerceService} _ecommerceService
    */
-  constructor(public _ecommerceService: EcommerceService) {
+  constructor(public _ecommerceService: EcommerceService ,private  _router : Router) {
     this._unsubscribeAll = new Subject();
   }
 
@@ -59,7 +60,7 @@ export class NavbarCartComponent implements OnInit {
     console.log(value)
   }
   checkout(){
-    console.log(this.cartList)
+    this._router.navigate(['/pages/checkout']);
   }
   getInput(cartItem,event){
     cartItem.quantity = event;

@@ -51,14 +51,16 @@
         <div id="step-cart" class="content">
           <div id="place-order" class="list-view product-checkout">
             <!-- Checkout Place Order Left starts -->
+
+            
             <div class="checkout-items">
               <ng-container *ngFor="let product of products">
                 <app-ecommerce-checkout-item
                   [product]="product"
-                  *ngIf="product.isInCart === true"
-                ></app-ecommerce-checkout-item>
-              </ng-container>
-            </div>
+                ></app-ecommerce-checkout-item> 
+              </ng-container> 
+            </div>  
+        
             <!-- Checkout Place Order Left ends -->
 
             <!-- Checkout Place Order Right starts -->

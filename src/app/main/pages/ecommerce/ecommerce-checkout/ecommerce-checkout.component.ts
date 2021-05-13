@@ -73,7 +73,7 @@ export class EcommerceCheckoutComponent implements OnInit {
    */
   ngOnInit(): void {
     // Subscribe to ProductList change
-    this._ecommerceService.onProductListChange.subscribe(res => {
+    this._ecommerceService.onCartListChange.subscribe(res => {
       this.products = res;
 
       this.products.isInWishlist = false;
@@ -86,10 +86,10 @@ export class EcommerceCheckoutComponent implements OnInit {
     this._ecommerceService.onWishlistChange.subscribe(res => (this.wishlist = res));
 
     // update product is in Wishlist & is in CartList : Boolean
-    this.products.forEach(product => {
+  /*  this.products.forEach(product => {
       product.isInWishlist = this.wishlist.findIndex(p => p.product.id === product.id) > -1;
       product.isInCart = this.cartLists.findIndex(p => p.product.id === product.id) > -1;
-    });
+    });*/
 
     this.checkoutStepper = new Stepper(document.querySelector('#checkoutStepper'), {
       linear: false,
