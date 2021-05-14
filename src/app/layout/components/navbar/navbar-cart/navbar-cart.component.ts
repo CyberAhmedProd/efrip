@@ -39,9 +39,9 @@ export class NavbarCartComponent implements OnInit {
    *
    * @param product
    */
-  removeFromCart(product) {
-    product.product.isInCart = false;
-    this._ecommerceService.removeFromCart(product.id).then(res => {
+  removeFromCart(cartItem) {
+    cartItem.product.isInCart = false;
+    this._ecommerceService.removeFromCart(cartItem.id).then(res => {
       
     });
   }

@@ -40,7 +40,7 @@ export class EcommerceCheckoutItemComponent implements OnInit {
    * @param product
    */
   toggleWishlist(product) {
-    /*if (product.isInWishlist === true) {
+    if (product.isInWishlist === true) {
       this._ecommerceService.removeFromWishlist(product.id).then(res => {
         product.isInWishlist = false;
       });
@@ -48,7 +48,7 @@ export class EcommerceCheckoutItemComponent implements OnInit {
       this._ecommerceService.addToWishlist(product.id).then(res => {
         product.isInWishlist = true;
       });
-    }*/
+    }
   }
 
   // Lifecycle Hooks

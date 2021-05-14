@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Cart } from 'app/auth/models/cart';
 
 import { EcommerceService } from 'app/main/pages/ecommerce/ecommerce.service';
 
@@ -14,6 +15,7 @@ export class EcommerceWishlistComponent implements OnInit {
   public contentHeader: object;
   public products;
   public wishlist;
+  public cartList:Cart[];
 
   /**
    *
@@ -35,10 +37,12 @@ export class EcommerceWishlistComponent implements OnInit {
 
     // Subscribe to Wishlist change
     this._ecommerceService.onWishlistChange.subscribe(res => (this.wishlist = res));
+    
 
     // update product is in Wishlist : Boolean
     this.products.forEach(product => {
-      product.isInWishlist = this.wishlist.findIndex(p => p.productId === product.id) > -1;
+      product.isInWishlist = this.wishlist.findIndex(p => p.product.id === product.id) > -1;
+      
     });
 
     // content header
@@ -54,9 +58,9 @@ export class EcommerceWishlistComponent implements OnInit {
             link: '/'
           },
           {
-            name: 'eCommerce',
+            name: 'Shop',
             isLink: true,
-            link: '/'
+            link: '/pages/shop'
           },
           {
             name: 'Wish List',
