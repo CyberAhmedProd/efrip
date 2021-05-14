@@ -1,6 +1,6 @@
 <div class="card ecommerce-card">
   <div class="item-img">
-    <a [routerLink]="'/apps/e-commerce/details/' + product.id">
+    <a [routerLink]="'/apps/e-commerce/details/' + product.product.id">
       <img src='data:{{product.product.images[0].title}};base64,{{product.product.images[0].image.data}}' alt="img-placeholder" />
     </a>
   </div>

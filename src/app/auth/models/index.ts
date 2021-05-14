@@ -6,4 +6,7 @@ export * from './profil';
 export * from './category';
 export * from './product';
 export * from './cart';
+export * from './ligneItem';
+export * from './payment';
+export * from './order';
 

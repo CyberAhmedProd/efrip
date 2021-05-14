@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Address, LigneItem, Order, Product, User } from 'app/auth/models';
 
 import Stepper from 'bs-stepper';
+
 
 import { EcommerceService } from '../ecommerce.service';
 
@@ -17,18 +19,20 @@ export class EcommerceCheckoutComponent implements OnInit {
   public products;
   public cartLists;
   public wishlist;
+  order : Order;
+  address : Address;
   npr : number = 0;
   tax : number;
-
-  public address = {
-    fullNameVar: '',
-    numberVar: '',
-    flatVar: '',
-    landmarkVar: '',
-    cityVar: '',
-    pincodeVar: '',
-    stateVar: ''
-  };
+  fullNameVar: string
+  numberVar: number
+  flatVar: string
+  landmarkVar: string
+  cityVar: string
+  pincodeVar: number
+  stateVar: string
+  currentUser : User
+  ligneItem : LigneItem
+  productData : Product
 
   // Private
   private checkoutStepper: Stepper;
@@ -81,6 +85,38 @@ export class EcommerceCheckoutComponent implements OnInit {
     return this.tax+this.npr
   }
 
+  addOrder(){
+      this.order = new Order()
+      this.order.fullName = this.fullNameVar
+      this.order.status = "Hold"
+      this.order.mobile = this.numberVar
+      var futureDate = new Date();
+      this.order.orderedDate = futureDate;
+      futureDate.setDate(futureDate.getDate() + 7);
+      this.order.shippedDate = futureDate
+      this.order.totalPrice = this.calculeTot()
+      this.address = new Address()
+      this.address.city = this.cityVar
+      this.address.codePostal = this.pincodeVar
+      this.address.country = this.stateVar
+      this.address.street = this.flatVar
+      this.order.billingAddress = this.address
+      this.order.listLigneItem = []
+      this.currentUser = new User()
+      this.currentUser.id = JSON.parse(localStorage.getItem('currentUser')).id
+      this.order.user =  this.currentUser
+      this.products.forEach(product => {
+        this.ligneItem = new LigneItem();
+        this.productData = new Product()
+        this.productData.id = product.product.id
+        this.ligneItem.product = this.productData
+        this.ligneItem.quantity = product.quantity
+        this.order.listLigneItem.push(this.ligneItem)
+      })
+      this._ecommerceService.addOrder(this.order)
+      
+  }
+
   // Lifecycle Hooks
   // -----------------------------------------------------------------------------------------------------
 
@@ -96,7 +132,9 @@ export class EcommerceCheckoutComponent implements OnInit {
     });
 
     // Subscribe to Cartlist change
-    this._ecommerceService.onCartListChange.subscribe(res => (this.cartLists = res));
+    this._ecommerceService.onCartListChange.subscribe(res => {
+      this.cartLists = res
+      this.calculeNpr();});
 
     // Subscribe to Wishlist change
     this._ecommerceService.onWishlistChange.subscribe(res => (this.wishlist = res));
@@ -112,8 +150,7 @@ export class EcommerceCheckoutComponent implements OnInit {
       animation: true
     });
 
-    this.calculeNpr();
-
+    
     // content header
     this.contentHeader = {
       headerTitle: 'Checkout',

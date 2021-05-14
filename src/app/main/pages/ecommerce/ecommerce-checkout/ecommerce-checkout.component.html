@@ -157,7 +157,7 @@
                         [class.error]="addressForm.submitted && fullNameRef.invalid"
                         name="fullname"
                         placeholder="John Doe"
-                        [(ngModel)]="address.fullNameVar"
+                        [(ngModel)]="fullNameVar"
                         #fullNameRef="ngModel"
                         required
                       />
@@ -178,7 +178,7 @@
                         [class.error]="addressForm.submitted && numberRef.invalid"
                         name="mnumber"
                         placeholder="0123456789"
-                        [(ngModel)]="address.numberVar"
+                        [(ngModel)]="numberVar"
                         #numberRef="ngModel"
                         required
                       />
@@ -199,7 +199,7 @@
                         [class.error]="addressForm.submitted && flatRef.invalid"
                         name="apt-number"
                         placeholder="9447 Glen Eagles Drive"
-                        [(ngModel)]="address.flatVar"
+                        [(ngModel)]="flatVar"
                         #flatRef="ngModel"
                         required
                       />
@@ -220,7 +220,7 @@
                         [class.error]="addressForm.submitted && landmarkRef.invalid"
                         name="landmark"
                         placeholder="Near Apollo Hospital"
-                        [(ngModel)]="address.landmarkVar"
+                        [(ngModel)]="landmarkVar"
                         #landmarkRef="ngModel"
                         required
                       />
@@ -241,7 +241,7 @@
                         [class.error]="addressForm.submitted && cityRef.invalid"
                         name="city"
                         placeholder="Tokyo"
-                        [(ngModel)]="address.cityVar"
+                        [(ngModel)]="cityVar"
                         #cityRef="ngModel"
                         required
                       />
@@ -262,7 +262,7 @@
                         [class.error]="addressForm.submitted && pincodeRef.invalid"
                         name="pincode"
                         placeholder="201301"
-                        [(ngModel)]="address.pincodeVar"
+                        [(ngModel)]="pincodeVar"
                         #pincodeRef="ngModel"
                         required
                       />
@@ -283,7 +283,7 @@
                         [class.error]="addressForm.submitted && stateRef.invalid"
                         name="state"
                         placeholder="California"
-                        [(ngModel)]="address.stateVar"
+                        [(ngModel)]="stateVar"
                         #stateRef="ngModel"
                         required
                       />
@@ -444,9 +444,16 @@
                       <div class="detail-amt font-weight-bolder">$699.30</div>
                     </li>
                   </ul>
+                  <button
+                  class="btn btn-primary btn-block btn-next delivery-address mt-2"
+                  (click)="addOrder()"
+                >
+                  Order
+                </button>
                 </div>
               </div>
             </div>
+           
           </form>
         </div>
         <!-- Checkout Payment Ends -->

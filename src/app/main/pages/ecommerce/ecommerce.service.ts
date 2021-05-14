@@ -5,7 +5,7 @@ import {
   Resolve,
   RouterStateSnapshot,
 } from "@angular/router";
-import { Cart } from "app/auth/models";
+import { Cart, Order } from "app/auth/models";
 import { AuthenticationService } from "app/auth/service";
 import { environment } from "environments/environment";
 
@@ -260,6 +260,16 @@ export class EcommerceService implements Resolve<any> {
             reject()
           }
           
+        }, reject);
+    });
+  }
+
+  addOrder(order : Order) {
+    return new Promise<any>((resolve, reject) => {
+      this._httpClient
+        .post<any>(`${environment.apiDistant}/api/order`, order)
+        .subscribe((response) => {
+            resolve(response);
         }, reject);
     });
   }
