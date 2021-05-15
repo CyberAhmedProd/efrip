@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CoreConfigService } from '@core/services/config.service';
-import { Address, LigneItem, Order, Product, User } from 'app/auth/models';
+import { Address, LigneItem, Order, Payment, Product, User } from 'app/auth/models';
 
 import Stepper from 'bs-stepper';
 
@@ -22,6 +22,7 @@ export class EcommerceCheckoutComponent implements OnInit {
   public wishlist;
   order : Order;
   address : Address;
+  payment : Payment;
   npr : number = 0;
   tax : number;
   fullNameVar: string
@@ -32,6 +33,7 @@ export class EcommerceCheckoutComponent implements OnInit {
   pincodeVar: number
   stateVar: string
   streetVar : string
+  detailvar : string
   currentUser : User
   ligneItem : LigneItem
   productData : Product
@@ -135,6 +137,11 @@ export class EcommerceCheckoutComponent implements OnInit {
         this.ligneItem.quantity = product.quantity
         this.order.listLigneItem.push(this.ligneItem)
       })
+      this.payment = new Payment()
+      this.payment.paidDate = new Date()
+      this.payment.totalPaid = this.calculeTot()+10
+      this.payment.details = this.detailvar
+      this.order.payment = this.payment
       this._ecommerceService.addOrder(this.order)
       
   }

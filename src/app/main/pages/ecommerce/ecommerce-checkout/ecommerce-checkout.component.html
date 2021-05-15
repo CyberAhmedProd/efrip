@@ -90,20 +90,12 @@
                         <div class="detail-amt">{{npr}} DT</div>
                       </li>
                       <li class="price-detail">
-                        <div class="detail-title">Bag Discount</div>
-                        <div class="detail-amt discount-amt text-success">-25$</div>
-                      </li>
-                      <li class="price-detail">
                         <div class="detail-title">Estimated Tax</div>
                         <div class="detail-amt">{{calculTax()}}</div>
                       </li>
                       <li class="price-detail">
-                        <div class="detail-title">EMI Eligibility</div>
-                        <a href="javascript:void(0)" class="detail-amt text-primary">Details</a>
-                      </li>
-                      <li class="price-detail">
                         <div class="detail-title">Delivery Charges</div>
-                        <div class="detail-amt discount-amt text-success">Free</div>
+                        <div class="detail-amt discount-amt text-success">Yes</div>
                       </li>
                     </ul>
                     <hr />
@@ -362,55 +354,29 @@
                 </div>
                 <div class="card-body">
                   <h6 class="card-holder-name my-75">{{fullNameVar}}</h6>
-                  <div class="custom-control custom-radio">
-                    <input
-                      type="radio"
-                      id="customColorRadio1"
-                      name="paymentOptions"
-                      class="custom-control-input"
-                      checked
-                    />
-                    <label class="custom-control-label" for="customColorRadio1">
-                      US Unlocked Debit Card 12XX XXXX XXXX 0000
-                    </label>
-                  </div>
-                  <div class="customer-cvv mt-1">
-                    <div class="form-inline">
-                      <label class="mb-50" for="card-holder-cvv">Enter CVV:</label>
-                      <input
-                        type="password"
-                        class="form-control ml-sm-75 ml-0 mb-50 input-cvv"
-                        name="input-cvv"
-                        id="card-holder-cvv"
-                      />
-                      <button type="button" class="btn btn-primary btn-cvv ml-0 ml-sm-1 mb-50" rippleEffect>
-                        Continue
-                      </button>
-                    </div>
-                  </div>
                   <hr class="my-2" />
                   <ul class="other-payment-options list-unstyled">
                     <li class="py-50">
                       <div class="custom-control custom-radio">
-                        <input type="radio" id="customColorRadio2" name="paymentOptions" class="custom-control-input" />
+                        <input value="Credit" [ngModel]="detailvar" type="radio" id="customColorRadio2" name="paymentOptions" class="custom-control-input" />
                         <label class="custom-control-label" for="customColorRadio2"> Credit / Debit / ATM Card </label>
                       </div>
                     </li>
                     <li class="py-50">
                       <div class="custom-control custom-radio">
-                        <input type="radio" id="customColorRadio3" name="paymentOptions" class="custom-control-input" />
+                        <input value="Net Banking" [ngModel]="detailvar" type="radio" id="customColorRadio3" name="paymentOptions" class="custom-control-input" />
                         <label class="custom-control-label" for="customColorRadio3"> Net Banking </label>
                       </div>
                     </li>
                     <li class="py-50">
                       <div class="custom-control custom-radio">
-                        <input type="radio" id="customColorRadio4" name="paymentOptions" class="custom-control-input" />
+                        <input value="EMI" [ngModel]="detailvar" type="radio" id="customColorRadio4" name="paymentOptions" class="custom-control-input" />
                         <label class="custom-control-label" for="customColorRadio4"> EMI (Easy Installment) </label>
                       </div>
                     </li>
                     <li class="py-50">
                       <div class="custom-control custom-radio">
-                        <input type="radio" id="customColorRadio5" name="paymentOptions" class="custom-control-input" />
+                        <input value="Cash" [ngModel]="detailvar" type="radio" id="customColorRadio5" name="paymentOptions" class="custom-control-input" />
                         <label class="custom-control-label" for="customColorRadio5"> Cash On Delivery </label>
                       </div>
                     </li>

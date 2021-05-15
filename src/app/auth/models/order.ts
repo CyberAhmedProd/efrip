@@ -20,5 +20,5 @@ export class Order{
     near : string;
     totalPrice : number;
     listLigneItem : LigneItem[];
-    /* payment : Payment;*/
+    payment : Payment;
 }
