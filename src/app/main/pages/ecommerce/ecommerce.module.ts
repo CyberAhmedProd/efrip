@@ -21,7 +21,9 @@ import { EcommerceSidebarComponent } from './ecommerce-shop/sidebar/sidebar.comp
 import { EcommerceWishlistComponent } from './ecommerce-wishlist/ecommerce-wishlist.component';
 import { EcommerceCheckoutComponent } from './ecommerce-checkout/ecommerce-checkout.component';
 import { EcommerceCheckoutItemComponent } from './ecommerce-checkout/ecommerce-checkout-item/ecommerce-checkout-item.component';
-
+import {EcommerceBiddingComponent} from './ecommerce-bidding/ecommerce-bidding.component'
+import { from } from 'rxjs';
+import {EcommerceBiddingItemComponent} from './ecommerce-bidding/ecommerce-bidding-item/ecommerce-bidding-item.component'
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
   observer: true
@@ -60,6 +62,10 @@ const routes: Routes = [
   {
     path: 'details',
     redirectTo: '/apps/e-commerce/details/27' //Redirection
+  },
+  {
+    path :'bidding',
+    component: EcommerceBiddingComponent
   }
 ];
 
@@ -72,6 +78,8 @@ const routes: Routes = [
     EcommerceCheckoutComponent,
     EcommerceItemComponent,
     EcommerceCheckoutItemComponent,
+    EcommerceBiddingComponent,
+    EcommerceBiddingItemComponent,
     
   ],
   imports: [

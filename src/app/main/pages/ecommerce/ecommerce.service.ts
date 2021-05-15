@@ -22,10 +22,12 @@ export class EcommerceService implements Resolve<any> {
   public productList: Array<any>;
   public wishlist: Array<any>;
   public cartList: Array<any>;
+  public auctionList: Array<any>;
   public selectedProduct;
   public relatedProducts;
 
   public onProductListChange: BehaviorSubject<any>;
+  public onAuctionListChange: BehaviorSubject<any>;
   public onRelatedProductsChange: BehaviorSubject<any>;
   public onWishlistChange: BehaviorSubject<any>;
   public onCartListChange: BehaviorSubject<any>;
@@ -57,6 +59,7 @@ export class EcommerceService implements Resolve<any> {
     private _auth: AuthenticationService
   ) {
     this.onProductListChange = new BehaviorSubject({});
+    this.onAuctionListChange = new BehaviorSubject({});
     this.onRelatedProductsChange = new BehaviorSubject({});
     this.onWishlistChange = new BehaviorSubject({});
     this.onCartListChange = new BehaviorSubject({});
@@ -98,9 +101,22 @@ export class EcommerceService implements Resolve<any> {
         .subscribe((response: any) => {
           this.productList = response;
           this.sortProduct("featured"); // Default shorting
+          resolve(this.auctionList);
+        }, reject);
+    });
+  }
+
+  getAuctions():Promise<any[]>{
+    return new Promise((resolve, reject) => {
+      this._httpClient
+        .get(`${environment.apiDistant}/api/auction`)
+        .subscribe((response: any) => {
+          this.auctionList = response;
+          this.onAuctionListChange.next(this.auctionList) // Default shorting
           resolve(this.productList);
         }, reject);
     });
+
   }
 
   /**

@@ -1,0 +1,65 @@
+<div class="item-img text-center">
+  <!-- <img class="img-fluid card-img-top" [src]="'data:image/png;base64,'+product.images[0].image.data" alt="img-placeholder" /> -->
+  <ngb-carousel *ngIf="product.images">
+    <ng-container *ngFor="let item of product.images">
+      <ng-template ngbSlide>
+        <div>
+          <img
+            [src]="'data:image/png;base64,' + item.image.data"
+            class="img-thumbnail"
+            alt="Random first slide"
+          />
+        </div>
+        <div class="carousel-caption"></div>
+      </ng-template>
+    </ng-container>
+  </ngb-carousel>
+</div>
+<div class="card-body">
+  <div class="item-wrapper">
+    <div class="item-rating">
+      <div class="rating rating-sm">
+        <h3>Starts at :</h3>
+      </div>
+    </div>
+    <div class="item-cost">
+      <h5 class="item-price">${{ auction.startingPrice }}</h5>
+    </div>
+  </div>
+  <div *ngIf="auction.bids">
+    <div class="item-wrapper">
+      <div class="item-rating">
+        <div class="rating rating-sm">
+          <h3>Currently at :</h3>
+        </div>
+      </div>
+      <div class="item-cost">
+        <h5 class="item-price">${{ auction.bids[auction.bids.length - 1].bidAmount }}</h5>
+      </div>
+    </div>
+  </div>
+  <h6 class="item-name">
+    <a class="text-body" [routerLink]="'../details/' + product.id">
+      {{ product.name }}</a
+    >
+    <span class="card-text item-company"
+      >By
+      <a href="javascript:void(0)" class="company-name">{{
+        product.brand
+      }}</a></span
+    >
+  </h6>
+  <p class="card-text item-description">
+    {{ product.details }}
+  </p>
+</div>
+<div class="item-options text-center">
+  <div class="item-wrapper">
+    <div class="item-cost">
+      <h4 class="item-price">{{ auction.startingPrice }}</h4>
+      <p class="card-text shipping" *ngIf="product.hasFreeShipping">
+        <span class="badge badge-pill badge-light-success">Free Shipping</span>
+      </p>
+    </div>
+  </div>
+</div>
