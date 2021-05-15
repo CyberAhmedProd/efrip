@@ -193,7 +193,7 @@
                     <div class="form-group mb-2">
                       <label for="checkout-apt-number">Flat, House No:</label>
                       <input
-                        type="number"
+                        type="text"
                         id="checkout-apt-number"
                         class="form-control"
                         [class.error]="addressForm.submitted && flatRef.invalid"
@@ -240,7 +240,7 @@
                         class="form-control"
                         [class.error]="addressForm.submitted && cityRef.invalid"
                         name="city"
-                        placeholder="Tokyo"
+                        placeholder="Monastir"
                         [(ngModel)]="cityVar"
                         #cityRef="ngModel"
                         required
@@ -261,7 +261,7 @@
                         class="form-control"
                         [class.error]="addressForm.submitted && pincodeRef.invalid"
                         name="pincode"
-                        placeholder="201301"
+                        placeholder="5000"
                         [(ngModel)]="pincodeVar"
                         #pincodeRef="ngModel"
                         required
@@ -275,14 +275,14 @@
                   </div>
                   <div class="col-md-6 col-sm-12">
                     <div class="form-group mb-2">
-                      <label for="checkout-state">State:</label>
+                      <label for="checkout-state">Country:</label>
                       <input
                         type="text"
                         id="checkout-state"
                         class="form-control"
                         [class.error]="addressForm.submitted && stateRef.invalid"
                         name="state"
-                        placeholder="California"
+                        placeholder="Tunsia"
                         [(ngModel)]="stateVar"
                         #stateRef="ngModel"
                         required
@@ -296,13 +296,26 @@
                   </div>
                   <div class="col-md-6 col-sm-12">
                     <div class="form-group mb-2">
-                      <label for="add-type">Address Type:</label>
-                      <select class="form-control" id="add-type">
-                        <option>Home</option>
-                        <option>Work</option>
-                      </select>
+                      <label for="checkout-street">Street:</label>
+                      <input
+                        type="text"
+                        id="checkout-street"
+                        class="form-control"
+                        [class.error]="addressForm.submitted && streetRef.invalid"
+                        name="street"
+                        placeholder="Cite nasr"
+                        [(ngModel)]="streetVar"
+                        #streetRef="ngModel"
+                        required
+                      />
+                      <span *ngIf="addressForm.submitted && stateRef.invalid" class="invalid-form">
+                        <small class="form-text text-danger" *ngIf="stateRef.errors.required"
+                          >This field is required!</small
+                        >
+                      </span>
                     </div>
                   </div>
+                 
                   <div class="col-12">
                     <button
                       type="submit"
@@ -322,21 +335,14 @@
             <div class="customer-card">
               <div class="card">
                 <div class="card-header">
-                  <h4 class="card-title">John Doe</h4>
+                  <h4 class="card-title">{{ fullNameVar || 'FullName'}}</h4>
                 </div>
                 <div class="card-body actions">
-                  <p class="card-text mb-0">9447 Glen Eagles Drive</p>
-                  <p class="card-text">Lewis Center, OH 43035</p>
-                  <p class="card-text">UTC-5: Eastern Standard Time (EST)</p>
-                  <p class="card-text">202-555-0140</p>
-                  <button
-                    type="button"
-                    class="btn btn-primary btn-block btn-next delivery-address mt-2"
-                    (click)="nextStep()"
-                    rippleEffect
-                  >
-                    Deliver To This Address
-                  </button>
+                  <p class="card-text mb-0">{{flatVar || 'flat name'}}</p>
+                  <p class="card-text">{{stateVar || 'Country name'}}</p>
+                  <p class="card-text">{{cityVar || 'Cite name'}}, {{pincodeVar || 'XXXX'}}</p>
+                  <p class="card-text">{{streetVar || 'Street name'}}</p>
+                  <p class="card-text">{{formatPhoneNumber() || 'XX-XXX-XXX'}}</p> 
                 </div>
               </div>
             </div>
@@ -355,7 +361,7 @@
                   <p class="card-text text-muted mt-25">Be sure to click on correct payment option</p>
                 </div>
                 <div class="card-body">
-                  <h6 class="card-holder-name my-75">John Doe</h6>
+                  <h6 class="card-holder-name my-75">{{fullNameVar}}</h6>
                   <div class="custom-control custom-radio">
                     <input
                       type="radio"
@@ -409,13 +415,6 @@
                       </div>
                     </li>
                   </ul>
-                  <hr class="my-2" />
-                  <div class="gift-card mb-25">
-                    <p class="card-text">
-                      <i data-feather="plus-circle" class="mr-50 font-medium-5"></i>
-                      <span class="align-middle">Add Gift Card</span>
-                    </p>
-                  </div>
                 </div>
               </div>
             </div>
@@ -427,21 +426,21 @@
                 <div class="card-body">
                   <ul class="list-unstyled price-details">
                     <li class="price-detail">
-                      <div class="details-title">Price of 3 items</div>
+                      <div class="details-title">Price of {{ countItem() }} items</div>
                       <div class="detail-amt">
-                        <strong>$699.30</strong>
+                        <strong>{{calculeTot()}} DT</strong>
                       </div>
                     </li>
                     <li class="price-detail">
                       <div class="details-title">Delivery Charges</div>
-                      <div class="detail-amt discount-amt text-success">Free</div>
+                      <div class="detail-amt discount-amt text-success">10 DT</div>
                     </li>
                   </ul>
                   <hr />
                   <ul class="list-unstyled price-details">
                     <li class="price-detail">
                       <div class="details-title">Amount Payable</div>
-                      <div class="detail-amt font-weight-bolder">$699.30</div>
+                      <div class="detail-amt font-weight-bolder">{{calculeTot()+10}} DT</div>
                     </li>
                   </ul>
                   <button

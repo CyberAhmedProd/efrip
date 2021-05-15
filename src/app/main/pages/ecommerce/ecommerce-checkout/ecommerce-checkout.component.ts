@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { CoreConfigService } from '@core/services/config.service';
 import { Address, LigneItem, Order, Product, User } from 'app/auth/models';
 
 import Stepper from 'bs-stepper';
@@ -30,6 +31,7 @@ export class EcommerceCheckoutComponent implements OnInit {
   cityVar: string
   pincodeVar: number
   stateVar: string
+  streetVar : string
   currentUser : User
   ligneItem : LigneItem
   productData : Product
@@ -42,7 +44,23 @@ export class EcommerceCheckoutComponent implements OnInit {
    *
    * @param {EcommerceService} _ecommerceService
    */
-  constructor(private _ecommerceService: EcommerceService) {}
+  constructor(private _ecommerceService: EcommerceService, private _coreConfigService : CoreConfigService) {
+    this._coreConfigService.config = {
+      layout: {
+        navbar: {
+          hidden: false
+        },
+        menu: {
+          hidden: true
+        },
+        footer: {
+          hidden: true
+        },
+        customizer: false,
+        enableLocalStorage: false
+      }
+    };
+  }
 
   // Public Methods
   // -----------------------------------------------------------------------------------------------------
@@ -70,7 +88,11 @@ export class EcommerceCheckoutComponent implements OnInit {
       this.nextStep();
     }
   }
-
+  formatPhoneNumber(){
+    if(this.numberVar)
+    return   this.numberVar.toString().slice(0, 2) + '-' + this.numberVar.toString().slice(2,5)
+    + '-' + this.numberVar.toString().slice(5) ?? '';
+  }
   calculeNpr(){
     this.npr=0
             this.products.forEach(product => {
@@ -99,7 +121,7 @@ export class EcommerceCheckoutComponent implements OnInit {
       this.address.city = this.cityVar
       this.address.codePostal = this.pincodeVar
       this.address.country = this.stateVar
-      this.address.street = this.flatVar
+      this.address.street = this.streetVar
       this.order.billingAddress = this.address
       this.order.listLigneItem = []
       this.currentUser = new User()
@@ -115,6 +137,14 @@ export class EcommerceCheckoutComponent implements OnInit {
       })
       this._ecommerceService.addOrder(this.order)
       
+  }
+
+  countItem(){
+    var count = 0
+    this.products.forEach(product => {
+    count ++  
+    })
+    return count
   }
 
   // Lifecycle Hooks
@@ -159,14 +189,9 @@ export class EcommerceCheckoutComponent implements OnInit {
         type: '',
         links: [
           {
-            name: 'Home',
-            isLink: true,
-            link: '/'
-          },
-          {
             name: 'eCommerce',
             isLink: true,
-            link: '/'
+            link: '/pages/shop'
           },
           {
             name: 'Checkout',

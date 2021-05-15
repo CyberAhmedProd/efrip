@@ -10,7 +10,7 @@
         <a [routerLink]="'/apps/e-commerce/details/' + product.id" class="text-body">{{ product.product.name }}</a>
       </h6>
       <span class="item-company"
-        >By <a href="javascript:void(0)" class="company-name">{{ product.product.category.name }}</a></span
+        >Category <a href="javascript:void(0)" class="company-name">{{ product.product.category.name }}</a></span
       >
       <div class="item-rating">
         <div class="rating rating-sm">
@@ -29,13 +29,13 @@
         <core-touchspin [numberValue]="1" [stepValue]="1" [minValue]="1" [maxValue]="10"></core-touchspin>
       </div>
     </div>
-    <span class="delivery-date text-muted">Delivery by, Wed Apr 25</span>
-    <span class="text-success">17% off 4 offers Available</span>
+      <!--<span class="delivery-date text-muted">Delivery by, Wed Apr 25</span> -->
+     <!--<span class="text-success">17% off 4 offers Available</span>-->
   </div>
   <div class="item-options text-center">
     <div class="item-wrapper">
       <div class="item-cost">
-        <h4 class="item-price">${{ product.product.price }}</h4>
+        <h4 class="item-price">{{ product.product.price }} DT</h4>
         <p class="card-text shipping" *ngIf="true">
           <span class="badge badge-pill badge-light-success">Free Shipping</span>
         </p>
@@ -45,6 +45,7 @@
       <i data-feather="x" class="align-middle mr-25"></i>
       <span>Remove</span>
     </button>
+    <!--
     <button type="button" class="btn btn-primary btn-cart move-cart" (click)="toggleWishlist(product)" rippleEffect>
       <i
         class="align-middle fa mr-25"
@@ -52,5 +53,6 @@
       ></i>
       <span class="text-truncate">Add to Wishlist</span>
     </button>
+    -->
   </div>
 </div>
