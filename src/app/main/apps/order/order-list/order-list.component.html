@@ -1,0 +1,171 @@
+<div class="content-wrapper">
+  <div class="content-body">
+    <!-- Invoice List -->
+    <section class="invoice-list-wrapper">
+      <div class="card">
+        <!-- Invoice List Header -->
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <div class="d-flex justify-content-between align-items-center m-1">
+              <div class="d-flex align-items-center">
+                <label class="d-flex align-items-center"
+                  >Show
+                  <select
+                    class="form-control mx-25"
+                    [(ngModel)]="selectedOption"
+                  >
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                </label>
+                
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-md-6 col-12 d-flex justify-content-start justify-content-md-end"
+          >
+            <div
+              class="d-flex align-items-center justify-content-end pr-1 pb-1 pb-md-0"
+            >
+              <label class="d-flex align-items-center mb-0 ml-1 ml-md-0"
+                >Search:<input
+                  type="search"
+                  class="form-control ml-50"
+                  placeholder="Search Category"
+                  (keyup)="filterUpdate($event)"
+              /></label>
+            </div>
+          </div>
+        </div>
+        <!--/ Invoice List Header -->
+
+        <!-- Invoice List Table -->
+        <ngx-datatable
+          [rows]="rows"
+          [rowHeight]="50"
+          class="bootstrap core-bootstrap"
+          [limit]="selectedOption"
+          [columnMode]="ColumnMode.force"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [scrollbarH]="true"
+        >
+         
+          <ngx-datatable-column name="name" prop="UserName" [width]="50">
+            <ng-template
+              let-row="row"
+              let-invoiceStatus="value"
+              ngx-datatable-cell-template
+            >
+              <!-- <a class="font-weight-bold">{{ invoiceStatus }}</a> -->
+              <div>
+                <span
+                  class="font-weight-bold d-block text-nowrap font-medium-1"
+                  >{{ row.user.username }}</span
+                >
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="fullname" prop="Full Name" [width]="50">
+            <ng-template
+              let-row="row"
+              let-invoiceStatus="value"
+              ngx-datatable-cell-template
+            >
+              <!-- <a class="font-weight-bold">{{ invoiceStatus }}</a> -->
+              <div>
+                <span
+                  class="font-weight-bold d-block text-nowrap font-medium-1"
+                  >{{row.fullName}}</span
+                >
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="mobile" prop="Mobile" [width]="50">
+            <ng-template
+              let-row="row"
+              let-invoiceStatus="value"
+              ngx-datatable-cell-template
+            >
+              <!-- <a class="font-weight-bold">{{ invoiceStatus }}</a> -->
+              <div>
+                <span
+                  class="font-weight-bold d-block text-nowrap font-medium-1"
+                  >{{row.mobile}}</span
+                >
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="status" prop="Status" [width]="50">
+            <ng-template
+              let-row="row"
+              let-invoiceStatus="value"
+              ngx-datatable-cell-template
+            >
+              <!-- <a class="font-weight-bold">{{ invoiceStatus }}</a> -->
+              <div>
+                <span
+                  class="font-weight-bold d-block text-nowrap font-medium-1"
+                  >{{row.status}}</span
+                >
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="totprice" prop="TotPrice (DT)" [width]="50">
+            <ng-template
+              let-row="row"
+              let-invoiceStatus="value"
+              ngx-datatable-cell-template
+            >
+              <!-- <a class="font-weight-bold">{{ invoiceStatus }}</a> -->
+              <div>
+                <span
+                  class="font-weight-bold d-block text-nowrap font-medium-1"
+                  >{{row.totalPrice}}</span
+                >
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Actions" [width]="40" [sortable]="false">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              <div class="d-flex align-items-center col-actions">
+                <div ngbDropdown container="body">
+                  <button
+                    ngbDropdownToggle
+                    type="button"
+                    class="btn icon-btn btn-sm hide-arrow px-0"
+                    rippleEffect
+                  >
+                    <i
+                      data-feather="more-vertical"
+                      size="18"
+                      class="cursor-pointer"
+                    ></i>
+                  </button>
+                  <div ngbDropdownMenu>
+                    <a ngbDropdownItem (click)="toggleSidebar2('edit-category-sidebar',row.id,row.name)"
+                      ><i
+                        
+                        data-feather="edit"
+                        class="mr-1"
+                      ></i
+                      >Edit</a
+                    ><a (click)="deleteCategory(row.id)" ngbDropdownItem
+                      ><i data-feather="trash" class="mr-1"></i>Delete</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+        <!--/ Invoice List Table -->
+      </div>
+    </section>
+    <!--/ Invoice List -->
+  </div>
