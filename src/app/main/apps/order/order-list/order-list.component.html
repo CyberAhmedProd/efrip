@@ -148,14 +148,30 @@
                     ></i>
                   </button>
                   <div ngbDropdownMenu>
-                    <a ngbDropdownItem (click)="toggleSidebar2('edit-category-sidebar',row.id,row.name)"
+                    <a ngbDropdownItem (click)="onShipping(row.id)"
                       ><i
                         
                         data-feather="edit"
                         class="mr-1"
                       ></i
-                      >Edit</a
-                    ><a (click)="deleteCategory(row.id)" ngbDropdownItem
+                      >On Shipping</a
+                    >
+                    <a ngbDropdownItem (click)="onHold(row.id)"
+                      ><i
+                        
+                        data-feather="edit"
+                        class="mr-1"
+                      ></i
+                      >On Hold</a
+                    >
+                    <a ngbDropdownItem (click)="onDelivered(row.id)"
+                      ><i
+                        
+                        data-feather="edit"
+                        class="mr-1"
+                      ></i
+                      >On Delivered</a
+                    ><a (click)="deleteOrder(row.id)" ngbDropdownItem
                       ><i data-feather="trash" class="mr-1"></i>Delete</a
                     >
                   </div>

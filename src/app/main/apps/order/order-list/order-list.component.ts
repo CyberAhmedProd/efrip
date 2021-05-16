@@ -6,6 +6,7 @@ import { ColumnMode, DatatableComponent } from "@swimlane/ngx-datatable";
 
 import { OrderListService } from "app/main/apps/order/order-list/order-list.service";
 import { CoreSidebarService } from "@core/components/core-sidebar/core-sidebar.service";
+import { Order } from "app/auth/models";
 
 @Component({
   selector: "app-order-list",
@@ -21,6 +22,7 @@ export class OrderListComponent implements OnInit {
   public ColumnMode = ColumnMode;
   public temp_id:string;
   public temp_name:string;
+  order : Order
 
   // decorator
   @ViewChild(DatatableComponent) table: DatatableComponent;
@@ -83,14 +85,38 @@ export class OrderListComponent implements OnInit {
     
   }
   
-  toggleSidebar2(name,category_id,category_name): void {
-    this._coreSidebarService.getSidebarRegistry(name).toggleOpen();
-    this.temp_id=category_id;
-    this.temp_name=category_name;
-   // console.log(this._coreSidebarService.getSidebarRegistry(name).category_id)
+  onShipping(id : string): void {
+    this.order = new Order()
+    this.order.id = id
+    this.order.status = "Shipped"
+    this._orderListService.onShipping(this.order)
+    setTimeout(() => {
+      this._orderListService.getDataTableRows();
+    }, 500);
+  
   }
-  deleteCategory(id) {
-    this._orderListService.deleteCategory(id);
+  onHold(id : string): void {
+    this.order = new Order()
+    this.order.id = id
+    this.order.status = "Shipped"
+    this._orderListService.onHold(this.order)
+    setTimeout(() => {
+      this._orderListService.getDataTableRows();
+    }, 500);
+  
+  }
+  onDelivered(id : string): void {
+    this.order = new Order()
+    this.order.id = id
+    this.order.status = "Shipped"
+    this._orderListService.onDelivered(this.order)
+    setTimeout(() => {
+      this._orderListService.getDataTableRows();
+    }, 500);
+   
+  }
+  deleteOrder(id) {
+    this._orderListService.deleteOrder(id);
     setTimeout(() => {
       this._orderListService.getDataTableRows();
     }, 500);

@@ -28,6 +28,13 @@ export const locale = {
           EDIT: 'Edit',
           ADD: 'Add'
         },
+        ORDER: {
+          COLLAPSIBLE: 'Order',
+          LIST: 'List',
+          PREVIEW: 'Preview',
+          EDIT: 'Edit',
+          ADD: 'Add'
+        },
         ECOMMERCE: {
           COLLAPSIBLE: 'eCommerce',
           SHOP: 'Shop',
