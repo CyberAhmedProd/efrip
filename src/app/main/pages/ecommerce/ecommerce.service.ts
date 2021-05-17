@@ -25,6 +25,7 @@ export class EcommerceService implements Resolve<any> {
   public auctionList: Array<any>;
   public selectedProduct;
   public relatedProducts;
+  cart : Cart;
 
   public onProductListChange: BehaviorSubject<any>;
   public onAuctionListChange: BehaviorSubject<any>;
@@ -294,7 +295,11 @@ export class EcommerceService implements Resolve<any> {
         }, reject);
     });
   }
-
+    /**
+   * Add Order
+   *
+   * @param order
+   */
   addOrder(order : Order) {
     return new Promise<any>((resolve, reject) => {
       this._httpClient
@@ -303,6 +308,21 @@ export class EcommerceService implements Resolve<any> {
             resolve(response);
         }, reject);
     });
+  }
+
+  updateQtyProductCart(id : string, qty : number){
+    this.cart = new Cart()
+    this.cart.id = id
+    this.cart.quantity = qty
+    return new Promise<any>((resolve,reject)=>{
+      this._httpClient
+      .put<any>(`${environment.apiDistant}/api/cart/update/quantity/${id}`,
+      this.cart
+       )
+       .subscribe((response)=>{
+         resolve(response);
+       },reject)
+    })
   }
 
   /**

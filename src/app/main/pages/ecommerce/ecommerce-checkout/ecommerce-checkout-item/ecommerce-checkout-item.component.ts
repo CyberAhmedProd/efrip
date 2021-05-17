@@ -11,6 +11,15 @@ import { EcommerceService } from 'app/main/pages/ecommerce/ecommerce.service';
 export class EcommerceCheckoutItemComponent implements OnInit {
   // Input Decorator
   @Input() product;
+  qtyVar : number;                                                                         
+  displayCounter(numberValue) {
+    console.log(numberValue);
+    this.qtyVar = numberValue
+    this._ecommerceService.updateQtyProductCart(this.product.id, this.qtyVar)
+  }
+  countPrice(){
+    return this.product.quantity * this.product.product.price;
+  }
 
   /**
    * Constructor
@@ -18,7 +27,7 @@ export class EcommerceCheckoutItemComponent implements OnInit {
    * @param {EcommerceService} _ecommerceService
    */
   constructor(private _ecommerceService: EcommerceService) {
-      
+    
   }
 
   /**

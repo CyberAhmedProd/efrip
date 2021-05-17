@@ -26,7 +26,7 @@
     <div class="item-quantity">
       <span class="quantity-title">Qty:</span>
       <div class="quantity-counter-wrapper">
-        <core-touchspin [numberValue]="1" [stepValue]="1" [minValue]="1" [maxValue]="10"></core-touchspin>
+        <core-touchspin (getValue)='displayCounter($event)'[numberValue]="product.quantity" [stepValue]="1" [minValue]="1" [maxValue]="10"></core-touchspin>
       </div>
     </div>
       <!--<span class="delivery-date text-muted">Delivery by, Wed Apr 25</span> -->
@@ -35,7 +35,7 @@
   <div class="item-options text-center">
     <div class="item-wrapper">
       <div class="item-cost">
-        <h4 class="item-price">{{ product.product.price }} DT</h4>
+        <h4 class="item-price">{{ countPrice() }} DT</h4>
         <p class="card-text shipping" *ngIf="true">
           <span class="badge badge-pill badge-light-success">Free Shipping</span>
         </p>
