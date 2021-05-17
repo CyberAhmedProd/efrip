@@ -151,6 +151,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(config => {
         this.currentSkin = config.layout.skin;
+        
       });
 
     // Toggle Dark skin with prevSkin skin

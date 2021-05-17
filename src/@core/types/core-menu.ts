@@ -1,10 +1,12 @@
+import { Role } from "app/auth/models";
+
 // prettier-ignore
 export interface CoreMenuItem {
     id           : string;
     title        : string;
     url?         : string;
     type         : 'section' | 'collapsible' | 'item';
-    role?        : Array<string>;
+    roles?       : Role[];
     translate?   : string;
     icon?        : string;
     disabled?    : boolean;

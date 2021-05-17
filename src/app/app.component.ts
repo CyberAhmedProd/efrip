@@ -13,11 +13,11 @@ import { CoreConfigService } from '@core/services/config.service';
 import { CoreLoadingScreenService } from '@core/services/loading-screen.service';
 import { CoreTranslationService } from '@core/services/translation.service';
 
-import { menu } from 'app/menu/menu';
+import { menu, menuAdmin } from 'app/menu/menu';
 import { locale as menuEnglish } from 'app/menu/i18n/en';
 import { locale as menuFrench } from 'app/menu/i18n/fr';
-import { locale as menuGerman } from 'app/menu/i18n/de';
-import { locale as menuPortuguese } from 'app/menu/i18n/pt';
+import { locale as menuGerman } from 'app/menu/i18n/de';  
+import { User } from './auth/models/user';
 
 @Component({
   selector: 'app-root',
@@ -29,7 +29,7 @@ export class AppComponent implements OnInit, OnDestroy {
   menu: any;
   defaultLanguage: 'en'; // This language will be used as a fallback when a translation isn't found in the current language
   appLanguage: 'en'; // Set application default language i.e fr
-
+  currentUser : User = JSON.parse(localStorage.getItem('currentUser'));
   // Private
   private _unsubscribeAll: Subject<any>;
 
@@ -59,15 +59,29 @@ export class AppComponent implements OnInit, OnDestroy {
     private _coreTranslationService: CoreTranslationService,
     private _translateService: TranslateService
   ) {
-    // Get the application main menu
-    this.menu = menu;
+    if(this.currentUser.roles[0].role == "Client"){
+       // Get the application main menu
+      this.menu = menu;
+   
+      // Register the menu to the menu service
+      this._coreMenuService.register('main', this.menu);
 
-    // Register the menu to the menu service
-    this._coreMenuService.register('main', this.menu);
+      // Set the main menu as our current menu
+      this._coreMenuService.setCurrentMenu('main');
 
-    // Set the main menu as our current menu
-    this._coreMenuService.setCurrentMenu('main');
+    }
+    if(this.currentUser.roles[0].role == "Admin"){
+      // Get the application main menu
+     this.menu = menuAdmin;
+  
+     // Register the menu to the menu service
+     this._coreMenuService.register('main', this.menu);
 
+     // Set the main menu as our current menu
+     this._coreMenuService.setCurrentMenu('main');
+
+   }
+   
     // Add languages to the translation service
     this._translateService.addLangs(['en', 'fr', 'de', 'pt']);
 
@@ -75,7 +89,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this._translateService.setDefaultLang('en');
 
     // Set the translations for the menu
-    this._coreTranslationService.translate(menuEnglish, menuFrench, menuGerman, menuPortuguese);
+    this._coreTranslationService.translate(menuEnglish, menuFrench, menuGerman);
 
     // Set application default language.
     // Change application language? Read the ngxTranslate Fix

@@ -91,6 +91,7 @@ export class AuthLoginV2Component implements OnInit {
       .subscribe(
         data => {
           this._router.navigate([this.returnUrl]);
+          window.location.reload()
         },
         error => {
           this.error = error;
@@ -107,8 +108,8 @@ export class AuthLoginV2Component implements OnInit {
    */
   ngOnInit(): void {
     this.loginForm = this._formBuilder.group({
-      email: ['admin@demo.com', [Validators.required, Validators.email]],
-      password: ['admin', Validators.required]
+      email: ['test@test.com', [Validators.required, Validators.email]],
+      password: ['test', Validators.required]
     });
 
     // get return url from route parameters or default to '/'
