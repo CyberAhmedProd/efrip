@@ -1,0 +1,98 @@
+<div class="content-wrapper">
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+    <div class="content-body">
+      <!-- app e-commerce details start -->
+      <section class="app-ecommerce-details">
+        <div class="card">
+          <!-- Product Details starts -->
+          <div class="card-body">
+            <div class="row my-2">
+              <div class="col-12 col-md-5 d-flex align-items-center justify-content-center mb-2 mb-md-0">
+                <div class="d-flex align-items-center justify-content-center">
+                  <ngb-carousel *ngIf="product.images">
+                    <ng-container *ngFor="let item of product.images">
+                      <ng-template ngbSlide>
+                        <div>
+                          <img
+                            [src]="'data:image/png;base64,' + item.image.data"
+                            class="img-thumbnail"
+                            alt="Random first slide"
+                          />
+                        </div>
+                        <div class="carousel-caption"></div>
+                      </ng-template>
+                    </ng-container>
+                  </ngb-carousel>
+                </div>
+              </div>
+              <div class="col-12 col-md-7">
+                <h4>{{ product.name }}</h4>
+                <span class="card-text item-company"
+                  >By <a href="javascript:void(0)" class="company-name">{{ product.user.username }}</a></span
+                >
+                <div class="ecommerce-details-price d-flex flex-wrap mt-1">
+                  <h4 class="item-price mr-1">${{ product.price }}</h4>
+                  
+                </div>
+                <p *ngIf="product.quantity > 1" class="card-text">Available - <span class="text-success">In stock</span></p>
+                <p *ngIf="product.quantity <= 1" class="card-text">Available - <span class="text-danger">Out of stock</span></p>
+                <p class="card-text">
+                  {{ product.description }}
+                </p>
+                <ul class="product-features list-unstyled">
+                  <li *ngIf="product.hasFreeShipping"><i data-feather="shopping-cart"></i> <span>Free Shipping</span></li>
+                  <li>
+                    <div class="product-color-options">
+                      <h6>Quantity</h6>
+                      <h5>{{product.quantity}}</h5>
+                    </div>
+                  </li>
+                </ul>
+                <hr />
+                <div class="product-color-options">
+                  <h6>Details</h6>
+                  <p>{{product.details}}</p>
+                </div>
+                <hr />
+                
+              </div>
+            </div>
+          </div>
+          <!-- Product Details ends -->
+  
+          <!-- Item features starts -->
+          <div class="item-features">
+            <div class="row text-center">
+              <div class="col-12 col-md-4 mb-4 mb-md-0">
+                <div class="w-75 mx-auto">
+                  <i data-feather="award"></i>
+                  <h4 class="mt-2 mb-1">100% Original</h4>
+                  <p class="card-text">Chocolate bar candy canes ice cream toffee. Croissant pie cookie halvah.</p>
+                </div>
+              </div>
+              <div class="col-12 col-md-4 mb-4 mb-md-0">
+                <div class="w-75 mx-auto">
+                  <i data-feather="clock"></i>
+                  <h4 class="mt-2 mb-1">10 Day Replacement</h4>
+                  <p class="card-text">Marshmallow biscuit donut dragée fruitcake. Jujubes wafer cupcake.</p>
+                </div>
+              </div>
+              <div class="col-12 col-md-4 mb-4 mb-md-0">
+                <div class="w-75 mx-auto">
+                  <i data-feather="shield"></i>
+                  <h4 class="mt-2 mb-1">1 Year Warranty</h4>
+                  <p class="card-text">Cotton candy gingerbread cake I love sugar plum I love sweet croissant.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Item features ends -->
+  
+          
+          <!-- Related Products ends -->
+        </div>
+      </section>
+      <!-- app e-commerce details end -->
+    </div>
+  </div>
+  

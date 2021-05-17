@@ -24,6 +24,7 @@ export class EcommerceService implements Resolve<any> {
   public cartList: Array<any>;
   public auctionList: Array<any>;
   public selectedProduct;
+  public selectedAuction;
   public relatedProducts;
   cart : Cart;
 
@@ -33,6 +34,7 @@ export class EcommerceService implements Resolve<any> {
   public onWishlistChange: BehaviorSubject<any>;
   public onCartListChange: BehaviorSubject<any>;
   public onSelectedProductChange: BehaviorSubject<any>;
+  public onSelectedAuctionChange:BehaviorSubject<any>;
 
   // Private
   private idHandel;
@@ -65,6 +67,7 @@ export class EcommerceService implements Resolve<any> {
     this.onWishlistChange = new BehaviorSubject({});
     this.onCartListChange = new BehaviorSubject({});
     this.onSelectedProductChange = new BehaviorSubject({});
+    this.onSelectedAuctionChange = new BehaviorSubject({});
   }
 
   /**
@@ -169,6 +172,17 @@ export class EcommerceService implements Resolve<any> {
           this.selectedProduct = response;
           this.onSelectedProductChange.next(this.selectedProduct);
           resolve(this.selectedProduct);
+        }, reject);
+    });
+  }
+  getSelectedAuction(id): Promise<any[]> {
+    return new Promise((resolve, reject) => {
+      this._httpClient
+        .get(`${environment.apiDistant}/api/auction/` + id)
+        .subscribe((response: any) => {
+          this.selectedAuction= response;
+          this.onSelectedAuctionChange.next(this.selectedAuction);
+          resolve(this.selectedAuction);
         }, reject);
     });
   }

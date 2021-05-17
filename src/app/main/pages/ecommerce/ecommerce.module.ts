@@ -24,6 +24,7 @@ import { EcommerceCheckoutItemComponent } from './ecommerce-checkout/ecommerce-c
 import {EcommerceBiddingComponent} from './ecommerce-bidding/ecommerce-bidding.component'
 import { from } from 'rxjs';
 import {EcommerceBiddingItemComponent} from './ecommerce-bidding/ecommerce-bidding-item/ecommerce-bidding-item.component'
+import {EcommerceBiddingDetailsComponent} from './ecommerce-bidding/ecommerce-bidding-details/ecommerce-bidding-details.component'
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
   observer: true
@@ -66,6 +67,10 @@ const routes: Routes = [
   {
     path :'bidding',
     component: EcommerceBiddingComponent
+  },
+  {
+    path :'bidding/details',
+    component :EcommerceBiddingDetailsComponent
   }
 ];
 
@@ -80,6 +85,7 @@ const routes: Routes = [
     EcommerceCheckoutItemComponent,
     EcommerceBiddingComponent,
     EcommerceBiddingItemComponent,
+    EcommerceBiddingDetailsComponent,
     
   ],
   imports: [
