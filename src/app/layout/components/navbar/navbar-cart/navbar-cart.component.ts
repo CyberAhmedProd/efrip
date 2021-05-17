@@ -56,6 +56,7 @@ export class NavbarCartComponent implements OnInit {
             this.total =this.total+ (product.product.price*product.quantity);
     })
   }
+ 
   valueChanged(value){
     console.log(value)
   }
@@ -64,6 +65,7 @@ export class NavbarCartComponent implements OnInit {
   }
   getInput(cartItem,event){
     cartItem.quantity = event;
+    this._ecommerceService.updateQtyProductCart(cartItem.id,cartItem.quantity)
     this.updateTotal()
   }
   /**

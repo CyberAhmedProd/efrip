@@ -40,7 +40,7 @@
                   <core-touchspin [numberValue]="cartItem.quantity" (getValue)="getInput(cartItem,$event)"  [stepValue]="1" [minValue]="1" [maxValue]="cartItem.product.quantity"></core-touchspin>
                 </div>
               </div>
-              <h5 class="cart-item-price">${{ cartItem.product.price }}</h5>
+              <h5 class="cart-item-price">${{ cartItem.product.price * cartItem.quantity}}</h5>
             </div>
           </div>
         </ng-container>
