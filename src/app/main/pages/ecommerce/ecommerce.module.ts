@@ -69,7 +69,7 @@ const routes: Routes = [
     component: EcommerceBiddingComponent
   },
   {
-    path :'bidding/details',
+    path :'bidding/details/:id',
     component :EcommerceBiddingDetailsComponent
   }
 ];
