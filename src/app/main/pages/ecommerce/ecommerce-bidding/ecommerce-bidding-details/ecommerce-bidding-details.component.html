@@ -79,13 +79,52 @@
                   <p>{{ product.details }}</p>
                 </div>
                 <hr />
+
+                <div class="form-group row">
+                  <div class="col-sm-5">
+                    <input
+                      type="text"
+                      class="form-control form-control-lg"
+                      id="colFormLabelLg"
+                      placeholder="Large Input"
+                      (keyup)="clearError()"
+                      [(ngModel)]="TDBidVar"
+                      #TDPriceRef="ngModel"
+                      required
+                      placeholder="0 DT"
+                      type="text"
+                      suffix=" $"
+                      mask="09{5}"
+                    />
+                  </div>
+                  <div class="col-sm-5" *ngIf="errorMessage">
+                    <span style="color: red"
+                      >bid must be higher than current highest bid</span
+                    >
+                  </div>
+                </div>
+                <div class="form-group row" style="padding-left: 13px">
+                  <button
+                    type="button"
+                    class="btn btn-warning"
+                    rippleEffect
+                    (click)="addBid()"
+                    [disabled]="loading"
+                  > <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    <span  [class]="'mr-25'"></span>Add
+                    Bid
+                  </button>
+                </div>
               </div>
             </div>
           </div>
           <!-- Product Details ends -->
-
+          <div class="divider divider-primary">
+            <div class="divider-text">Current Bids</div>
+          </div>
           <div class="media-list">
-            <ng-container *ngFor="let bid of auction.bids"
+            <ng-container
+              *ngFor="let bid of auction.bids.reverse(); let i = index"
               ><div class="media">
                 <a class="media-left" href="javascript:void(0)">
                   <img
@@ -96,10 +135,27 @@
                   />
                 </a>
                 <div class="media-body">
-                  <h4 class="media-heading">
-                    {{ bid.user.username }} made a bid
-                  </h4>
-                  {{ bid.bidAmount }}
+                  <div *ngIf="i == 0">
+                    <ngb-alert [type]="'success'" [dismissible]="false">
+                      <h4 class="alert-heading">
+                        {{ bid.user.username }} made a bid
+                      </h4>
+                      <div class="alert-body">
+                        <h2>${{ bid.bidAmount }}</h2>
+                      </div>
+                    </ngb-alert>
+                  </div>
+
+                  <div *ngIf="i != 0">
+                    <ngb-alert [type]="'info'" [dismissible]="false">
+                      <h4 class="alert-heading">
+                        {{ bid.user.username }} made a bid
+                      </h4>
+                      <div class="alert-body">
+                        <h2>${{ bid.bidAmount }}</h2>
+                      </div>
+                    </ngb-alert>
+                  </div>
                 </div>
               </div>
             </ng-container>

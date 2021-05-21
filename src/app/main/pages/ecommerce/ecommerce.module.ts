@@ -7,6 +7,7 @@ import { NouisliderModule } from 'ng2-nouislider';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SwiperConfigInterface, SwiperModule, SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 
+
 import { CoreCommonModule } from '@core/common.module';
 import { CoreSidebarModule } from '@core/components';
 import { CoreTouchspinModule } from '@core/components/core-touchspin/core-touchspin.module';
@@ -25,6 +26,7 @@ import {EcommerceBiddingComponent} from './ecommerce-bidding/ecommerce-bidding.c
 import { from } from 'rxjs';
 import {EcommerceBiddingItemComponent} from './ecommerce-bidding/ecommerce-bidding-item/ecommerce-bidding-item.component'
 import {EcommerceBiddingDetailsComponent} from './ecommerce-bidding/ecommerce-bidding-details/ecommerce-bidding-details.component'
+import { NgxMaskModule } from 'ngx-mask';
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
   observer: true
@@ -99,6 +101,7 @@ const routes: Routes = [
     CoreCommonModule,
     NgbModule,
     NouisliderModule,
+    NgxMaskModule.forRoot(),
     
   ],
   providers: [

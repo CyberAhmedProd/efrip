@@ -19,6 +19,10 @@ export class EcommerceBiddingDetailsComponent implements OnInit {
   public product;
   public id;
   public relatedProducts;
+  public TDBidVar;
+  public errorMessage=false;
+  public minBid;
+  public loading=false;
 
   // Swiper
   public swiperResponsive: SwiperConfigInterface = {
@@ -47,7 +51,22 @@ export class EcommerceBiddingDetailsComponent implements OnInit {
       },
     },
   };
-
+  clearError(){
+    this.errorMessage=false;
+  }
+  addBid(){
+    this.loading=true;
+    if(!this.TDBidVar || this.TDBidVar <= this.minBid){
+      this.errorMessage=true;
+      this.loading=false;
+    }else {
+      this._ecommerceService.addBid(this.id,this.TDBidVar).then((response)=>{
+        this._ecommerceService.getSelectedAuction(this.id).then(()=>this.loading=false);
+        
+      })
+    }
+    
+  }
   /**
    * Constructor
    *
@@ -75,6 +94,8 @@ export class EcommerceBiddingDetailsComponent implements OnInit {
       this._ecommerceService.onSelectedAuctionChange.subscribe((res) => {
         this.auction = res;
         this.product = this.auction.product;
+        this.minBid=this.auction.bids[this.auction.bids.length - 1].bidAmount
+        this.TDBidVar=this.auction.bids[this.auction.bids.length - 1].bidAmount;
       });
     });
     // Subscribe to Selected Product change

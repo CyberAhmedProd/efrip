@@ -186,6 +186,20 @@ export class EcommerceService implements Resolve<any> {
         }, reject);
     });
   }
+  addBid(auction_id,bidAmount){
+    let user_id=this._auth.currentUserValue.id;
+    return new Promise((resolve,reject)=> {
+      this._httpClient.post(`${environment.apiDistant}/api/auction/bid/add/` + auction_id, 
+      {
+        user:{
+          id:user_id
+        },
+        bidAmount:bidAmount
+      }).subscribe((response)=>{
+        resolve(response)
+      },reject)
+    })
+  }
 
   /**
    * Get Related Products
