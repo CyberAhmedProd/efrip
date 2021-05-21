@@ -59,28 +59,40 @@ export class AppComponent implements OnInit, OnDestroy {
     private _coreTranslationService: CoreTranslationService,
     private _translateService: TranslateService
   ) {
-    if(this.currentUser.roles[0].role == "Client"){
+    if(this.currentUser){
+      if(this.currentUser.roles[0].role == "Client"){
+        // Get the application main menu
+       this.menu = menu;
+    
+       // Register the menu to the menu service
+       this._coreMenuService.register('main', this.menu);
+ 
+       // Set the main menu as our current menu
+       this._coreMenuService.setCurrentMenu('main');
+ 
+     }
+     if(this.currentUser.roles[0].role == "Admin"){
        // Get the application main menu
-      this.menu = menu;
+      this.menu = menuAdmin;
    
       // Register the menu to the menu service
       this._coreMenuService.register('main', this.menu);
-
+ 
       // Set the main menu as our current menu
       this._coreMenuService.setCurrentMenu('main');
-
+ 
     }
-    if(this.currentUser.roles[0].role == "Admin"){
-      // Get the application main menu
-     this.menu = menuAdmin;
-  
-     // Register the menu to the menu service
-     this._coreMenuService.register('main', this.menu);
-
-     // Set the main menu as our current menu
-     this._coreMenuService.setCurrentMenu('main');
-
-   }
+    }
+    else{
+      this.menu = menu;
+    
+       // Register the menu to the menu service
+       this._coreMenuService.register('main', this.menu);
+ 
+       // Set the main menu as our current menu
+       this._coreMenuService.setCurrentMenu('main');
+    }
+    
    
     // Add languages to the translation service
     this._translateService.addLangs(['en', 'fr', 'de', 'pt']);
