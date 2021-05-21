@@ -4,6 +4,7 @@ import { ActivatedRoute } from "@angular/router";
 import { SwiperConfigInterface } from "ngx-swiper-wrapper";
 
 import { EcommerceService } from "../../ecommerce.service";
+import * as moment from 'moment';
 
 @Component({
   selector: "app-ecommerce-bidding-details",
@@ -23,6 +24,8 @@ export class EcommerceBiddingDetailsComponent implements OnInit {
   public errorMessage=false;
   public minBid;
   public loading=false;
+  public page = 1;
+  public pageSize = 5;
 
   // Swiper
   public swiperResponsive: SwiperConfigInterface = {
@@ -96,6 +99,10 @@ export class EcommerceBiddingDetailsComponent implements OnInit {
         this.product = this.auction.product;
         this.minBid=this.auction.bids[this.auction.bids.length - 1].bidAmount
         this.TDBidVar=this.auction.bids[this.auction.bids.length - 1].bidAmount;
+        this.auction.bids.forEach(bid => {
+          let date = new Date(bid.createdDate)
+          bid.ago=moment(date).fromNow()
+        })
       });
     });
     // Subscribe to Selected Product change

@@ -110,9 +110,12 @@
                     rippleEffect
                     (click)="addBid()"
                     [disabled]="loading"
-                  > <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                    <span  [class]="'mr-25'"></span>Add
-                    Bid
+                  >
+                    <span
+                      *ngIf="loading"
+                      class="spinner-border spinner-border-sm mr-1"
+                    ></span>
+                    <span [class]="'mr-25'"></span>Add Bid
                   </button>
                 </div>
               </div>
@@ -123,36 +126,96 @@
             <div class="divider-text">Current Bids</div>
           </div>
           <div class="media-list">
+            <!-- <ng-container
+              ><ul class="timeline">
+                <li
+                  class="timeline-item"
+                  *ngFor="let bid of auction.bids.reverse()"
+                >
+                  <span
+                    class="
+                      timeline-point
+                      timeline-point-secondary
+                      timeline-point-indicator
+                    "
+                  ></span>
+                  <div class="timeline-event">
+                    <div
+                      class="
+                        d-flex
+                        justify-content-between
+                        flex-sm-row flex-column
+                        mb-sm-0 mb-1
+                      "
+                    >
+                      <div
+                        class="media"
+                        style="position: relative; top: -25px; left: -20px"
+                      >
+                        <div class="avatar">
+                          <img
+                            src="assets/images/avatars/12-small.png"
+                            alt="avatar"
+                            height="38"
+                            width="38"
+                          />
+                        </div>
+                        <div class="media-body ml-50">
+                          <h6>{{ bid.user.username }}</h6>
+                        </div>
+                      </div>
+                      <span class="timeline-event-time">{{ bid.ago }}</span>
+                    </div>
+                    <span
+                      >Amount :
+                      <span class="font-weight-bold"
+                        >${{ bid.bidAmount }}</span
+                      ></span
+                    >
+                  </div>
+                </li>
+              </ul></ng-container
+            > -->
             <ng-container
-              *ngFor="let bid of auction.bids.reverse(); let i = index"
-              ><div class="media">
+              *ngFor="
+                let bid of auction.bids.reverse()
+                  | slice
+                    : (page - 1) * pageSize
+                    : (page - 1) * pageSize + pageSize;
+                let i = index
+              "
+            >
+              <div class="media">
                 <a class="media-left" href="javascript:void(0)">
                   <img
+                    class="avatar"
                     src="assets/images/portrait/small/avatar-s-3.jpg"
                     alt="Generic placeholder image"
                     height="64"
                     width="64"
                   />
                 </a>
-                <div class="media-body">
+                <div class="media-body pt-1">
                   <div *ngIf="i == 0">
                     <ngb-alert [type]="'success'" [dismissible]="false">
-                      <h4 class="alert-heading">
-                        {{ bid.user.username }} made a bid
-                      </h4>
-                      <div class="alert-body">
-                        <h2>${{ bid.bidAmount }}</h2>
+                      <div class="d-flex justify-content-between ">
+                        <div class="d-flex justify-content-start">
+                          <h1 style="color: rgb(20, 224, 31);">{{bid.user.username}}</h1>
+                        </div>
+                        <h1 style="color: rgb(20, 224, 31);">${{bid.bidAmount}}</h1>
+                        <h1 style="color: rgb(20, 224, 31);">{{bid.ago}}</h1>
                       </div>
                     </ngb-alert>
                   </div>
 
                   <div *ngIf="i != 0">
                     <ngb-alert [type]="'info'" [dismissible]="false">
-                      <h4 class="alert-heading">
-                        {{ bid.user.username }} made a bid
-                      </h4>
-                      <div class="alert-body">
-                        <h2>${{ bid.bidAmount }}</h2>
+                      <div class="d-flex justify-content-between ">
+                        <div class="d-flex justify-content-start">
+                          <h1 style="color: rgb(23, 129, 216);">{{bid.user.username}}</h1>
+                        </div>
+                        <h1 style="color:  rgb(23, 129, 216);">${{bid.bidAmount}}</h1>
+                        <h1 style="color:  rgb(23, 129, 216);">{{bid.ago}}</h1>
                       </div>
                     </ngb-alert>
                   </div>
@@ -162,6 +225,49 @@
           </div>
 
           <!-- Related Products ends -->
+        </div>
+      </section>
+      <section id="ecommerce-pagination">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="d-flex justify-content-center">
+              <ngb-pagination
+                [collectionSize]="auction.bids.length"
+                [(page)]="page"
+                [maxSize]="5"
+                [rotate]="true"
+                [ellipses]="false"
+                [boundaryLinks]="true"
+              >
+                <!-- Custom pagination icons -->
+                <ng-template ngbPaginationPrevious
+                  ><span
+                    [data-feather]="'chevron-left'"
+                    [class]="'font-weight-bolder'"
+                  >
+                  </span>
+                </ng-template>
+                <ng-template ngbPaginationFirst
+                  ><span
+                    [data-feather]="'chevrons-left'"
+                    [class]="'font-weight-bolder'"
+                  ></span>
+                </ng-template>
+                <ng-template ngbPaginationNext
+                  ><span
+                    [data-feather]="'chevron-right'"
+                    [class]="'font-weight-bolder'"
+                  ></span
+                ></ng-template>
+                <ng-template ngbPaginationLast
+                  ><span
+                    [data-feather]="'chevrons-right'"
+                    [class]="'font-weight-bolder'"
+                  ></span>
+                </ng-template>
+              </ngb-pagination>
+            </div>
+          </div>
         </div>
       </section>
       <!-- app e-commerce details end -->
