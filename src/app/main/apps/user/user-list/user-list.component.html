@@ -2,49 +2,18 @@
   <div class="content-body">
     <!-- User List -->
     <section class="users-list-wrapper">
-      <!-- users filter start -->
-      <div class="card">
-        <h5 class="card-header">Search Filter</h5>
-        <div class="card-body">
-          <div class="users-list-filter">
-            <form>
-              <div class="row">
-                <div class="col-12 col-md-4">
-                  <fieldset class="form-group">
-                    <select class="form-control" id="users-list-role">
-                      <option value="">All</option>
-                      <option value="user">User</option>
-                      <option value="staff">Staff</option>
-                    </select>
-                  </fieldset>
-                </div>
-                <div class="col-12 col-md-4">
-                  <fieldset class="form-group">
-                    <select class="form-control" id="users-list-status">
-                      <option value="">All</option>
-                      <option value="Active">Active</option>
-                      <option value="Blocked">Blocked</option>
-                      <option value="deactivated">Deactivated</option>
-                    </select>
-                  </fieldset>
-                </div>
-                <div class="col-12 col-md-4">
-                  <fieldset class="form-group">
-                    <select class="form-control" id="users-list-verified">
-                      <option value="">All</option>
-                      <option value="true">Yes</option>
-                      <option value="false">No</option>
-                    </select>
-                  </fieldset>
-                </div>
-              </div>
-            </form>
-          </div>
+      <div *ngIf="spinner">
+        <div class="loading">
+          <div class="effect-1 effects"></div>
+          <div class="effect-2 effects"></div>
+          <div class="effect-3 effects"></div>
         </div>
       </div>
+      <!-- users filter start -->
+     
       <!-- users filter end -->
 
-      <div class="card">
+      <div class="card" *ngIf="!spinner">
         <div class="row">
           <div class="col-md-6 col-12">
             <div class="d-flex justify-content-between align-items-center m-1">
@@ -73,14 +42,15 @@
           </div>
         </div>
         <ngx-datatable
-          [rows]="rows"
-          [rowHeight]="50"
-          class="bootstrap core-bootstrap"
-          [limit]="selectedOption"
-          [columnMode]="ColumnMode.force"
-          [headerHeight]="50"
-          [footerHeight]="50"
-          [scrollbarH]="true"
+        [rows]="rows"
+        [rowHeight]="'auto'"
+        [loadingIndicator]="loadingIndicator"
+        class="bootstrap core-bootstrap"
+        [limit]="selectedOption"
+        [columnMode]="ColumnMode.force"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [scrollbarH]="true"
         >
           <ngx-datatable-column name="User" prop="row.user" [width]="200">
             <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>

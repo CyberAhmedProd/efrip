@@ -24,6 +24,7 @@ export class EcommerceShopComponent implements OnInit {
   public page = 1;
   public pageSize = 9;
   public searchText = '';
+  public spinner:boolean=true;
 
   /**
    *
@@ -91,6 +92,8 @@ export class EcommerceShopComponent implements OnInit {
    */
   ngOnInit(): void {
     // Subscribe to ProductList change
+    this.spinner=true;
+    this.loadData();
 
     this._ecommerceService.onProductListChange.subscribe(res => {
       this.products = res;
@@ -135,5 +138,15 @@ export class EcommerceShopComponent implements OnInit {
         ]
       }
     };
+  }
+  loadData(){
+    this.spinner = true;
+    this._ecommerceService.getProducts()
+    
+    .then((response) => {
+   
+      this.spinner=false;
+      
+    });
   }
 }

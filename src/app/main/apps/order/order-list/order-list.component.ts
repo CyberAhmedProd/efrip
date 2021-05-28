@@ -23,6 +23,8 @@ export class OrderListComponent implements OnInit {
   public temp_id:string;
   public temp_name:string;
   order : Order
+  public spinner:boolean=true;
+  public loadingIndicator:true;
 
   // decorator
   @ViewChild(DatatableComponent) table: DatatableComponent;
@@ -72,6 +74,8 @@ export class OrderListComponent implements OnInit {
    * On init
    */
   ngOnInit(): void {
+    this.spinner=true;
+    this.loadData();
     this._orderListService.onDatatablessChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((response) => {
@@ -120,6 +124,18 @@ export class OrderListComponent implements OnInit {
     setTimeout(() => {
       this._orderListService.getDataTableRows();
     }, 500);
+  }
+  loadData(){
+    this.spinner = true;
+    this._orderListService.getDataTableRows()
+    
+    .then((response) => {
+      this.data = response;
+      this.rows = this.data;
+      this.tempData = this.rows;
+      this.spinner=false;
+      
+    });
   }
   
 }

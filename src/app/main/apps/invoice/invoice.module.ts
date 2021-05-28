@@ -44,7 +44,7 @@ const routes: Routes = [
     path: 'list',
     component: InvoiceListComponent,
     resolve: {
-      uls: InvoiceListService
+      //uls: InvoiceListService
     }
   },
   {

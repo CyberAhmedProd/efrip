@@ -19,6 +19,11 @@ export class UserListComponent implements OnInit {
   public rows;
   public selectedOption = 10;
   public ColumnMode = ColumnMode;
+  public data: any;
+  public spinner:boolean = true;
+  public loadingIndicator:true;
+  
+  
 
   // Decorator
   @ViewChild(DatatableComponent) table: DatatableComponent;
@@ -33,7 +38,10 @@ export class UserListComponent implements OnInit {
    * @param {UserListService} _userListService
    * @param {CoreSidebarService} _coreSidebarService
    */
-  constructor(private _userListService: UserListService, private _coreSidebarService: CoreSidebarService, private _userService : UserService) {
+  constructor(private _userListService: UserListService,
+     private _coreSidebarService: CoreSidebarService,
+      private _userService : UserService,
+      ) {
     this._unsubscribeAll = new Subject();
     this.tempData = this.rows;
   }
@@ -54,7 +62,7 @@ export class UserListComponent implements OnInit {
 
     // Filter Our Data
     const temp = this.tempData.filter(function (d) {
-      return d.fullName.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.user.username.toLowerCase().indexOf(val) !== -1 || !val;
     });
 
     // Update The Rows
@@ -78,9 +86,26 @@ export class UserListComponent implements OnInit {
    * On init
    */
   ngOnInit(): void {
-    this._userListService.onDatatablessChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe(response => {
-      this.rows = response;
+    this.spinner=true;
+    this.loadData();
+    this._userListService.onDatatablessChanged
+    .pipe(takeUntil(this._unsubscribeAll))
+    .subscribe(response => {
+      this.data = response;
+      this.rows = this.data;
       this.tempData = this.rows;
+    });
+  }
+  loadData(){
+    this.spinner = true;
+    this._userListService.getDataTableRows()
+    
+    .then((response) => {
+      this.data = response;
+      this.rows = this.data;
+      this.tempData = this.rows;
+      this.spinner=false;
+      
     });
   }
 }

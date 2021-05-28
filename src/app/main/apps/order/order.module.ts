@@ -29,7 +29,8 @@ const routes: Routes = [
     path: 'list',
     component: OrderListComponent,
     resolve: {
-      uls: OrderListService
+     // uls: OrderListService
+     
     }
   },
   {

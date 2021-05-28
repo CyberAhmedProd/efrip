@@ -34,7 +34,7 @@ const routes: Routes = [
     path: 'user-list',
     component: UserListComponent,
     resolve: {
-      uls: UserListService
+     // uls: UserListService
     }
   },
   {
