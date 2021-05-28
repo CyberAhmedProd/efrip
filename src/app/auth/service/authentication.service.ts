@@ -82,7 +82,7 @@ export class AuthenticationService {
               this._toastrService.success(
                 "You have successfully logged in as an " +
                   user.roles[0].role +
-                  " user to Vuexy. Now you can start to explore. Enjoy! 🎉",
+                  " user to EFrep. Now you can start to explore. Enjoy! 🎉",
                 "👋 Welcome, " + user.username + "!",
                 { toastClass: "toast ngx-toastr", closeButton: true }
               );

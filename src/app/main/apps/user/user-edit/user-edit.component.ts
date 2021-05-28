@@ -6,6 +6,8 @@ import { takeUntil } from 'rxjs/operators';
 import { FlatpickrOptions } from 'ng2-flatpickr';
 
 import { UserEditService } from 'app/main/apps/user/user-edit/user-edit.service';
+import { profile } from 'node:console';
+import { Product, Profil } from 'app/auth/models';
 
 @Component({
   selector: 'app-user-edit',
@@ -18,6 +20,7 @@ export class UserEditComponent implements OnInit {
   public url = this.router.url;
   public urlLastValue;
   public rows;
+  profil : Profil;
 
   public birthDateOptions: FlatpickrOptions = {
     altInput: true
@@ -38,6 +41,23 @@ export class UserEditComponent implements OnInit {
   constructor(private router: Router, private _userEditService: UserEditService) {
     this._unsubscribeAll = new Subject();
     this.urlLastValue = this.url.substr(this.url.lastIndexOf('/') + 1);
+  }
+
+  updateUser(){
+    this.rows.forEach(row => {
+      if(row.id == this.urlLastValue){
+        this.profil = new Profil()
+        this.profil.id = row.id
+        this.profil.firstName = row.firstName
+        this.profil.lastName = row.lastName
+        this.profil.user.status = row.user.status ?? ""
+        this.profil.user.roles = [{"role":row.user.roles[0].role}]
+        this.profil.user.email = row.user.email
+        this._userEditService.UpdateUser(row.id,this.profil)
+
+      }
+    });
+    
   }
 
   // Lifecycle Hooks

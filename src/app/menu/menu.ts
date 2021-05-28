@@ -126,18 +126,18 @@ export const menuAdmin: CoreMenu[] =
     translate: 'MENU.APPS.SECTION',
     icon: 'package',
     children: [
-      {
+      /*{
         id: 'calendar',
         title: 'Calendar',
         translate: 'MENU.APPS.CALENDAR',
         type: 'item',
         icon: 'calendar',
         url: 'apps/calendar'
-      },
+      },*/
       
       {
         id: 'invoice',
-        title: 'Invoice',
+        title: 'Category',
         translate: 'MENU.APPS.INVOICE.COLLAPSIBLE',
         type: 'collapsible',
         icon: 'file-text',
@@ -149,30 +149,6 @@ export const menuAdmin: CoreMenu[] =
             type: 'item',
             icon: 'circle',
             url: 'apps/invoice/list'
-          },
-          {
-            id: 'invoicePreview',
-            title: 'Preview',
-            translate: 'MENU.APPS.INVOICE.PREVIEW',
-            type: 'item',
-            icon: 'circle',
-            url: 'apps/invoice/preview'
-          },
-          {
-            id: 'invoiceEdit',
-            title: 'Edit',
-            translate: 'MENU.APPS.INVOICE.EDIT',
-            type: 'item',
-            icon: 'circle',
-            url: 'apps/invoice/edit'
-          },
-          {
-            id: 'invoiceAdd',
-            title: 'Add',
-            translate: 'MENU.APPS.INVOICE.ADD',
-            type: 'item',
-            icon: 'circle',
-            url: 'apps/invoice/add'
           }
         ]
       },
@@ -246,7 +222,7 @@ export const menuAdmin: CoreMenu[] =
     ]
   },
   // User Interface
-  {
+  /*{
     id: 'user-interface',
     type: 'section',
     title: 'User Interface',
@@ -705,5 +681,5 @@ export const menuAdmin: CoreMenu[] =
         url: 'tables/datatables'
       }
     ]
-  }
+  }*/
 ];

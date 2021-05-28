@@ -27,6 +27,7 @@ import { UserViewComponent } from 'app/main/apps/user/user-view/user-view.compon
 import { UserViewService } from 'app/main/apps/user/user-view/user-view.service';
 import { NewUserSidebarComponent } from 'app/main/apps/user/user-list/new-user-sidebar/new-user-sidebar.component';
 
+
 // routing
 const routes: Routes = [
   {

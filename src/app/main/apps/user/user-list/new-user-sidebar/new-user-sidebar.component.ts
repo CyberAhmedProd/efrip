@@ -70,6 +70,7 @@ export class NewUserSidebarComponent implements OnInit {
     this._user.roles = [{"role":this.role}]
     this._user.status = this.status
     this._userService.addUser(this._user);
+    
     console.log(this._user)
 
   }
