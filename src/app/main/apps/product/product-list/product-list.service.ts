@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Product } from 'app/auth/models/product';
+import { AuthenticationService } from 'app/auth/service';
 
 
 import { environment } from 'environments/environment';
@@ -21,7 +22,7 @@ export class ProductListService implements Resolve<any> {
    *
    * @param {HttpClient} _httpClient
    */
-  constructor(private _httpClient: HttpClient) {
+  constructor(private _httpClient: HttpClient,private _auth: AuthenticationService) {
     // Set the defaults
     this.onDatatablessChanged = new BehaviorSubject({});
   }
@@ -45,8 +46,9 @@ export class ProductListService implements Resolve<any> {
    * Get rows
    */
   getDataTableRows(): Promise<any[]> {
+    let user_id = this._auth.currentUserValue.id;
     return new Promise((resolve, reject) => {
-      this._httpClient.get(`${environment.apiDistant}/api/product`).subscribe((response: any) => {
+      this._httpClient.post(`${environment.apiDistant}/api/product/`+user_id,{}).subscribe((response: any) => {
         this.rows = response;
         this.onDatatablessChanged.next(this.rows);
         resolve(this.rows.reverse());
