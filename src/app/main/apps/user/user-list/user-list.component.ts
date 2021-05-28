@@ -50,7 +50,10 @@ export class UserListComponent implements OnInit {
   // -----------------------------------------------------------------------------------------------------
   deleteUser(id :String){
     this._userService.deleteUser(id)
-    this.table.offset = 0;
+    setTimeout(() => {
+      this._userListService.getDataTableRows();
+     
+    }, 500);
   }
   /**
    * filterUpdate

@@ -33,6 +33,7 @@ export class OrderListComponent implements OnInit {
   private tempData = [];
   private _unsubscribeAll: Subject<any>;
   public rows;
+ 
 
   /**
    * Constructor
@@ -59,7 +60,7 @@ export class OrderListComponent implements OnInit {
 
     // filter our data
     const temp = this.tempData.filter(function (d) {
-      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.user.username.toLowerCase().indexOf(val) !== -1 || !val;
     });
 
     // update the rows
