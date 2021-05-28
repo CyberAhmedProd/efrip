@@ -30,9 +30,12 @@
     <!--/ Menu Toggler -->
 
     <!-- Bookmark -->
-    <button type="button" class="btn btn-outline-primary" rippleEffect (click)="goToShop()">
-      <span [data-feather]="'home'" [class]="'mr-25'"></span>Shop</button
-    >
+    <div *ngIf="currentUser" >
+      <button type="button" class="btn btn-outline-primary" rippleEffect (click)="goToShop()">
+        <span [data-feather]="'home'" [class]="'mr-25'"></span>Shop</button
+      >
+    </div>
+    
     <!--/ Bookmark -->
   </div>
   <ul class="nav navbar-nav align-items-center ml-auto">

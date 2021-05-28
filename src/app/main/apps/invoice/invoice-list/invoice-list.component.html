@@ -2,7 +2,14 @@
   <div class="content-body">
     <!-- Invoice List -->
     <section class="invoice-list-wrapper">
-      <div class="card">
+      <div *ngIf="spinner">
+        <div class="loading">
+          <div class="effect-1 effects"></div>
+          <div class="effect-2 effects"></div>
+          <div class="effect-3 effects"></div>
+        </div>
+      </div>
+      <div class="card" *ngIf="!spinner">
         <!-- Invoice List Header -->
         <div class="row">
           <div class="col-md-6 col-12">

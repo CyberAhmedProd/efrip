@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.service';
 import { User } from 'app/auth/models';
 import { UserService } from 'app/auth/service';
+import { UserListService } from '../user-list.service';
 
 @Component({
   selector: 'app-new-user-sidebar',
@@ -12,14 +13,20 @@ export class NewUserSidebarComponent implements OnInit {
   _user : User
   _passwordTextType: boolean;
   _userForm : FormGroup;
+  public submitIsEnabled = false;
   _statusList : any = ['active','inactive','pending'];
   _roleList : any = ['Client','Admin','Shipping'];
+ 
   /**
    * Constructor
    *
    * @param {CoreSidebarService} _coreSidebarService
    */
-  constructor(private _coreSidebarService: CoreSidebarService, private _fb : FormBuilder, private _userService : UserService) {}
+  constructor(private _coreSidebarService: CoreSidebarService,
+     private _fb : FormBuilder,
+      private _userService : UserService,
+      private _ref: ChangeDetectorRef,
+      private _userListService:UserListService) {}
 
 
   get username(){
@@ -37,7 +44,10 @@ export class NewUserSidebarComponent implements OnInit {
   get status(){
     return this._userForm.get('status').value
   }
-
+  updatesubmitbutton(value) {
+    this.submitIsEnabled = value;
+    this._ref.detectChanges();
+  }
   togglePasswordTextType() {
     this._passwordTextType = !this._passwordTextType;
   }
@@ -58,7 +68,12 @@ export class NewUserSidebarComponent implements OnInit {
   submit(form) {
     if (form.valid) {
       this.addUser()
-      this.toggleSidebar('new-user-sidebar');
+      setTimeout(() => {
+        this._userListService.getDataTableRows();
+        this.toggleSidebar('new-user-sidebar');
+      }, 500);
+     
+      
     }
   }
 
@@ -71,8 +86,10 @@ export class NewUserSidebarComponent implements OnInit {
     this._user.status = this.status
     this._userService.addUser(this._user);
     console.log(this._user)
+   
 
   }
+
 
   ngOnInit(): void {
     this._userForm = this._fb.group({

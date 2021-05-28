@@ -38,7 +38,7 @@ const routes: Routes = [
     path: 'shop',
     component: EcommerceShopComponent,
     resolve: {
-      ecommerce: EcommerceService
+     // ecommerce: EcommerceService
     }
   },
   {

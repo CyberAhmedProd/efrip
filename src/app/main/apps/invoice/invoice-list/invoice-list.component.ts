@@ -21,6 +21,8 @@ export class InvoiceListComponent implements OnInit {
   public ColumnMode = ColumnMode;
   public temp_id:string;
   public temp_name:string;
+  public spinner:boolean=true;
+  public loadingIndicator:true;
 
   // decorator
   @ViewChild(DatatableComponent) table: DatatableComponent;
@@ -70,6 +72,8 @@ export class InvoiceListComponent implements OnInit {
    * On init
    */
   ngOnInit(): void {
+    this.spinner=true;
+    this.loadData();
     this._invoiceListService.onDatatablessChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((response) => {
@@ -94,6 +98,18 @@ export class InvoiceListComponent implements OnInit {
     setTimeout(() => {
       this._invoiceListService.getDataTableRows();
     }, 500);
+  }
+  loadData(){
+    this.spinner = true;
+    this._invoiceListService.getDataTableRows()
+    
+    .then((response) => {
+      this.data = response;
+      this.rows = this.data;
+      this.tempData = this.rows;
+      this.spinner=false;
+      
+    });
   }
   
 }

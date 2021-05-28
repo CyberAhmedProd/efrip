@@ -1,6 +1,7 @@
 <div class="content-wrapper">
   <app-content-header [contentHeader]="contentHeader"></app-content-header>
   <!-- Sidebar filters  -->
+  
   <div class="sidebar-detached sidebar-left">
     <div class="sidebar">
       <core-sidebar
@@ -17,7 +18,14 @@
   <!--/ Sidebar filters -->
 
   <div class="content-detached content-right">
-    <div class="content-body">
+    <div *ngIf="spinner">
+      <div class="loading">
+        <div class="effect-1 effects"></div>
+        <div class="effect-2 effects"></div>
+        <div class="effect-3 effects"></div>
+      </div>
+    </div>
+    <div class="content-body" *ngIf="!spinner">
       <!-- E-commerce Head Section Starts -->
       <section id="ecommerce-header">
         <div class="row">
@@ -99,6 +107,7 @@
 
       <!-- E-commerce Products Starts -->
       <section id="ecommerce-products" [ngClass]="gridViewRef === true ? 'grid-view' : 'list-view'">
+        
         <app-ecommerce-item
           class="card ecommerce-card"
           [product]="product"
