@@ -98,7 +98,7 @@ export class NavbarCartComponent implements OnInit {
               // update product is in CartList : Boolean
               if(this.cartList){
                 this.products.forEach(product => {
-                 // product.isInWishlist = this.wishlist.findIndex(p => p.product.id === product.id) > -1;
+                 //product.isInWishlist = this.wishlist.findIndex(p => p.product.id === product.id) > -1;
                  let num=this.cartList.findIndex(p => p.product.id === product.id)
                  //console.log(num)
                  if(num!=-1){

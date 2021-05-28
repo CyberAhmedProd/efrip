@@ -93,12 +93,25 @@ export class EcommerceShopComponent implements OnInit {
   ngOnInit(): void {
     // Subscribe to ProductList change
     this.spinner=true;
-    this.loadData();
-
-    this._ecommerceService.onProductListChange.subscribe(res => {
-      this.products = res;
-      this.products.isInWishlist = false;
+    this.loadData().then(()=> {
+      this.spinner=false;
+      if(this.cartList){
+        this.products.forEach(product => {
+         product.isInWishlist = this.wishlist.findIndex(p => p.product.id === product.id) > -1;
+         let num=this.cartList.findIndex(p => p.product.id === product.id)
+         //console.log(num)
+         if(num!=-1){
+          product.isInCart =true;
+         }else {
+          product.isInCart =false;
+         }
+         
+        });
+  
+      }
     });
+    
+    
 
     // Subscribe to Wishlist change
     this._ecommerceService.onWishlistChange.subscribe(res => (this.wishlist = res));
@@ -107,20 +120,7 @@ export class EcommerceShopComponent implements OnInit {
     this._ecommerceService.onCartListChange.subscribe(res => (this.cartList = res));
 
     // update product is in Wishlist & is in CartList : Boolean
-    if(this.cartList){
-      this.products.forEach(product => {
-        product.isInWishlist = this.wishlist.findIndex(p => p.product.id === product.id) > -1;
-       let num=this.cartList.findIndex(p => p.product.id === product.id)
-       //console.log(num)
-       if(num!=-1){
-        product.isInCart =true;
-       }else {
-        product.isInCart =false;
-       }
-       
-      });
-
-    }
+    
     
 
     // content header
@@ -141,12 +141,19 @@ export class EcommerceShopComponent implements OnInit {
   }
   loadData(){
     this.spinner = true;
-    this._ecommerceService.getProducts()
-    
-    .then((response) => {
-   
-      this.spinner=false;
-      
+    return new Promise<void>((resolve, reject) => {
+      Promise.all([
+        this._ecommerceService.getProducts(),
+        this._ecommerceService.getWishlist(),
+        this._ecommerceService.getCartList(),
+        this._ecommerceService.onProductListChange.subscribe(res => {
+          this.products = res;
+          this.products.isInWishlist = false;
+        })
+        
+      ]).then(() => {
+        resolve();
+      }, reject);
     });
   }
 }

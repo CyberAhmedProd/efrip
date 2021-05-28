@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import {
   ActivatedRouteSnapshot,
   Resolve,
+  Router,
   RouterStateSnapshot,
 } from "@angular/router";
 import { Cart, Order, WishList } from "app/auth/models";
@@ -59,7 +60,8 @@ export class EcommerceService implements Resolve<any> {
    */
   constructor(
     private _httpClient: HttpClient,
-    private _auth: AuthenticationService
+    private _auth: AuthenticationService,
+    private _router: Router
   ) {
     this.onProductListChange = new BehaviorSubject({});
     this.onAuctionListChange = new BehaviorSubject({});
@@ -105,7 +107,7 @@ export class EcommerceService implements Resolve<any> {
         .subscribe((response: any) => {
           this.productList = response;
           this.sortProduct("featured"); // Default shorting
-          resolve(this.auctionList);
+          resolve(this.productList);
         }, reject);
     });
   }
@@ -117,7 +119,7 @@ export class EcommerceService implements Resolve<any> {
         .subscribe((response: any) => {
           this.auctionList = response;
           this.onAuctionListChange.next(this.auctionList) // Default shorting
-          resolve(this.productList);
+          resolve(this.auctionList);
         }, reject);
     });
 
@@ -250,6 +252,9 @@ export class EcommerceService implements Resolve<any> {
   addToWishlist(id) {
     return new Promise<MyData>((resolve, reject) => {
       // const lengthRef = this.wishlist.length + 1;
+      if(! this._auth.currentUserValue){
+        this._router.navigate(['pages/authentication/login-v2'])
+      }
       const wishRef = { 
          
         product: {
@@ -299,6 +304,9 @@ export class EcommerceService implements Resolve<any> {
    * @param id
    */
   addToCart(id) {
+    if(! this._auth.currentUserValue){
+      this._router.navigate(['pages/authentication/login-v2'])
+    }
     return new Promise<MyData>((resolve, reject) => {
       //const lengthRef = this.cartList.length + 1;
       const cartRef = {
