@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.service';
 import { User } from 'app/auth/models';
 import { UserService } from 'app/auth/service';
+import { ToastrService } from 'ngx-toastr';
 import { UserListService } from '../user-list.service';
 
 @Component({
@@ -20,13 +21,15 @@ export class NewUserSidebarComponent implements OnInit {
   /**
    * Constructor
    *
+   * @param {ToastrService} _toastrService
    * @param {CoreSidebarService} _coreSidebarService
    */
   constructor(private _coreSidebarService: CoreSidebarService,
      private _fb : FormBuilder,
       private _userService : UserService,
       private _ref: ChangeDetectorRef,
-      private _userListService:UserListService) {}
+      private _userListService:UserListService,
+      private _toastrService: ToastrService) {}
 
 
   get username(){
@@ -67,12 +70,13 @@ export class NewUserSidebarComponent implements OnInit {
    */
   submit(form) {
     if (form.valid) {
+
       this.addUser()
       setTimeout(() => {
         this._userListService.getDataTableRows();
         this.toggleSidebar('new-user-sidebar');
+        
       }, 500);
-     
       
     }
   }

@@ -46,7 +46,8 @@ export class EcommerceCheckoutComponent implements OnInit {
    *
    * @param {EcommerceService} _ecommerceService
    */
-  constructor(private _ecommerceService: EcommerceService, private _coreConfigService : CoreConfigService) {
+  constructor(private _ecommerceService: EcommerceService,
+     private _coreConfigService : CoreConfigService) {
     this._coreConfigService.config = {
       layout: {
         navbar: {

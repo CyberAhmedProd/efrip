@@ -16,6 +16,10 @@ export class EcommerceCheckoutItemComponent implements OnInit {
     console.log(numberValue);
     this.qtyVar = numberValue
     this._ecommerceService.updateQtyProductCart(this.product.id, this.qtyVar)
+    setTimeout(() => {
+      this._ecommerceService.getCartList();
+    }, 200);
+  
   }
   countPrice(){
     return this.product.quantity * this.product.product.price;
