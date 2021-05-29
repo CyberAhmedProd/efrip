@@ -21,4 +21,6 @@ export class Order{
     totalPrice : number;
     listLigneItem : LigneItem[];
     payment : Payment;
+    createdDate:Date;
+    lastModified:Date;
 }

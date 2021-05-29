@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { environment } from 'environments/environment';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -39,7 +40,7 @@ export class InvoicePreviewService implements Resolve<any> {
    * Get API Data
    */
   getApiData(id: number): Promise<any[]> {
-    const url = `api/invoice-data/${id}`;
+    const url = `${environment.apiDistant}/api/order/${id}`;
 
     return new Promise((resolve, reject) => {
       this._httpClient.get(url).subscribe((response: any) => {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { CoreConfigService } from '@core/services/config.service';
 import { Address, LigneItem, Order, Payment, Product, User } from 'app/auth/models';
 
@@ -144,6 +144,7 @@ export class EcommerceCheckoutComponent implements OnInit {
       this.payment.details = this.detailvar
       this.order.payment = this.payment
       this._ecommerceService.addOrder(this.order)
+      console.log(this.order)
       
   }
 
