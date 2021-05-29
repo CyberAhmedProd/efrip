@@ -1,0 +1,115 @@
+<div class="content-wrapper">
+    <div class="content-body">
+      <!-- Horizontal Wizard -->
+      <section class="horizontal-wizard">
+        <div id="stepper1" class="bs-stepper horizontal-wizard-example">
+          <div class="bs-stepper-header">
+            <div class="step" data-target="#account-details">
+              <button class="step-trigger">
+                <span class="bs-stepper-box">1</span>
+                <span class="bs-stepper-label">
+                  <span class="bs-stepper-title">Product Details</span>
+                  <span class="bs-stepper-subtitle">Setup Product Details</span>
+                </span>
+              </button>
+            </div>
+            
+            
+            
+            
+          </div>
+          <div class="bs-stepper-content">
+            <form (ngSubmit)="(HWForm.form.valid)" #HWForm="ngForm">
+              <div id="account-details" class="content">
+                <form #accountDetailsForm="ngForm">
+                  <div class="content-header">
+                    <h5 class="mb-0">Product Details</h5>
+                    <small class="text-muted">Enter Your Product Details.</small>
+                  </div>
+  
+                  <div class="row">
+                    <div class="form-group col-md-6">
+                      <label class="form-label" for="name">Name</label>
+                      <input
+                      [(ngModel)]="TDPriceVar"
+                      #TDPriceRef="ngModel"
+                      required
+                      name="first-name"
+                      id="first-name"
+                      class="form-control"
+                      placeholder="0 DT"
+                      type="text"
+                      suffix=" DT"
+                      mask="09{5}"
+                      [class.error]="
+                      accountDetailsForm.submitted && TDPriceRef.invalid
+                      "
+                    />
+                      <span
+                        *ngIf="accountDetailsForm.submitted && TDPriceRef.invalid"
+                        class="invalid-form"
+                      >
+                        <small
+                          class="form-text text-danger"
+                          *ngIf="TDPriceRef.errors.required"
+                          >This field is required!</small
+                        >
+                      </span>
+                    </div>
+                    <!-- <div class="form-group col-md-6">
+                      <label class="form-label" for="email">Email</label>
+                      <input
+                        [(ngModel)]="TDEmailVar"
+                        #TDEmailRef="ngModel"
+                        required
+                        email
+                        type="email"
+                        name="email"
+                        id="email"
+                        class="form-control"
+                        [class.error]="!TDEmailRef.valid && accountDetailsForm.submitted"
+                        placeholder="john.doe@email.com"
+                        aria-label="john.doe"
+                      />
+                      <span *ngIf="accountDetailsForm.submitted" class="invalid-form">
+                        <small class="form-text text-danger" *ngIf="!TDEmailRef.valid">Email must be valid!</small>
+                      </span>
+                    </div> -->
+  
+                    <div class="form-group col-md-6">
+                      <label class="form-label" for="country">Category</label>
+                      <ng-select
+                        [items]="categories"
+                        bindLabel="name"
+                        [(ngModel)]="selectedItem"
+                        (change)="changeFn(selectedItem)"
+                        [ngModelOptions]="{ standalone: true }"
+                      >
+                      </ng-select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-md-12">
+                      <label class="form-label" for="country">Details</label>
+                      <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd" name="Min-Max Date Picker" [(ngModel)]="MinMaxDPdata"
+                          ngbDatepicker #MinMaxDP="ngbDatepicker" [minDate]="{year: 2019, month: 1, day: 1}"
+                          [maxDate]="{year: 2020, month: 2, day: 15}">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary feather icon-calendar" (click)="MinMaxDP.toggle()"
+                            type="button" rippleEffect></button>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </form>
+              </div>  
+            </form>
+          </div>
+        </div>
+      </section>
+      <!--/ Horizontal Wizard -->
+    </div>
+  </div>
+  
