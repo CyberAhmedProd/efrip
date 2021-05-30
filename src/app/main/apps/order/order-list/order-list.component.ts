@@ -33,7 +33,7 @@ export class OrderListComponent implements OnInit {
   private tempData = [];
   private _unsubscribeAll: Subject<any>;
   public rows;
- 
+  currentUser : any
 
   /**
    * Constructor
@@ -80,6 +80,8 @@ export class OrderListComponent implements OnInit {
     this._orderListService.onDatatablessChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((response) => {
+    
+
         this.data = response;
         this.rows = this.data;
         this.tempData = this.rows;

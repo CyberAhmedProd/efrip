@@ -14,6 +14,7 @@ interface MyData {
 export class OrderListService implements Resolve<any> {
   rows: any;
   onDatatablessChanged: BehaviorSubject<any>;
+  currentUser : any
 
   /**
    * Constructor
@@ -47,7 +48,13 @@ export class OrderListService implements Resolve<any> {
     return new Promise((resolve, reject) => {
       this._httpClient.get(`${environment.apiDistant}/api/order/getting`).subscribe((response: any) => {
         this.rows = response;
-        
+        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if(this.currentUser.roles[0].role == "Client")
+        {
+          this.rows = this.rows.filter((row) => row.user.id === this.currentUser.id)
+        }else{
+          this.rows = response;
+        }
         this.onDatatablessChanged.next(this.rows);
         resolve(this.rows);
       }, reject);

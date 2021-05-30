@@ -59,7 +59,6 @@ export class UserEditComponent implements OnInit {
         this.profil.user = this.user
         this._userEditService.updateUserAdd(row.id,this.profil)
         console.log(this.profil)
-
       }
     });
     

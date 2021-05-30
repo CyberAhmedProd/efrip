@@ -201,22 +201,7 @@ export const menuAdmin: CoreMenu[] =
             icon: 'circle',
             url: 'apps/user/user-list'
           },
-          {
-            id: 'view',
-            title: 'View',
-            translate: 'MENU.APPS.USER.VIEW',
-            type: 'item',
-            icon: 'circle',
-            url: 'apps/user/user-view'
-          },
-          {
-            id: 'edit',
-            title: 'Edit',
-            translate: 'MENU.APPS.USER.EDIT',
-            type: 'item',
-            icon: 'circle',
-            url: 'apps/user/user-edit'
-          }
+         
         ]
       }
     ]
