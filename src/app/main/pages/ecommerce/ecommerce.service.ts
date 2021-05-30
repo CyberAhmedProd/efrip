@@ -117,7 +117,7 @@ export class EcommerceService implements Resolve<any> {
       this._httpClient
         .get(`${environment.apiDistant}/api/auction`)
         .subscribe((response: any) => {
-          this.auctionList = response;
+          this.auctionList = response.reverse();
           this.onAuctionListChange.next(this.auctionList) // Default shorting
           resolve(this.auctionList);
         }, reject);
@@ -187,6 +187,29 @@ export class EcommerceService implements Resolve<any> {
           resolve(this.selectedAuction);
         }, reject);
     });
+  }
+  addAuction(startingPrice,product_id,startDate,endDate){
+    let user_id=this._auth.currentUserValue.id;
+    let form ={
+      product:{
+        id:product_id,
+      },
+      user:{
+        id:user_id,
+      },
+      startingPrice:startingPrice,
+      startDate:startDate.toString(),
+      endDate:endDate,
+      bids:[]
+
+    }
+    return new Promise((resolve, reject) => {
+      this._httpClient.post<any>(`${environment.apiDistant}/api/auction/add/`,form)
+      .subscribe((response)=> {
+        resolve(response)
+      },reject)
+    } )
+
   }
   addBid(auction_id,bidAmount){
     let user_id=this._auth.currentUserValue.id;

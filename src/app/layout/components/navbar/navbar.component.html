@@ -35,6 +35,11 @@
         <span [data-feather]="'home'" [class]="'mr-25'"></span>Shop</button
       >
     </div>
+    <div *ngIf="currentUser" >
+      <button type="button" class="btn btn-outline-primary" rippleEffect (click)="goToAuction()">
+        <span [data-feather]="'home'" [class]="'mr-25'"></span>Auction</button
+      >
+    </div>
     
     <!--/ Bookmark -->
   </div>

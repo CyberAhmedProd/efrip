@@ -181,6 +181,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   goToShop(){
     this._router.navigate(['/pages/shop']);
   }
+  goToAuction(){
+    this._router.navigate(['/pages/bidding']);
+  }
 
   // Lifecycle Hooks
   // -----------------------------------------------------------------------------------------------------
