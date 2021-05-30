@@ -155,7 +155,7 @@
                     ></i>
                   </button>
                   <div ngbDropdownMenu>
-                    <a ngbDropdownItem (click)="onShipping(row.id)"
+                    <a *ngIf="currentUser.roles[0].role == 'Admin'" ngbDropdownItem (click)="onShipping(row.id)"
                       ><i
                         
                         data-feather="edit"
@@ -163,7 +163,7 @@
                       ></i
                       >On Shipping</a
                     >
-                    <a ngbDropdownItem (click)="onHold(row.id)"
+                    <a *ngIf="currentUser.roles[0].role == 'Admin'" ngbDropdownItem (click)="onHold(row.id)"
                       ><i
                         
                         data-feather="edit"
@@ -171,7 +171,7 @@
                       ></i
                       >On Hold</a
                     >
-                    <a ngbDropdownItem (click)="onDelivered(row.id)"
+                    <a *ngIf="currentUser.roles[0].role == 'Admin'" ngbDropdownItem (click)="onDelivered(row.id)"
                       ><i
                         
                         data-feather="edit"

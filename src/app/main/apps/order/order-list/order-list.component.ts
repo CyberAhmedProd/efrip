@@ -33,7 +33,7 @@ export class OrderListComponent implements OnInit {
   private tempData = [];
   private _unsubscribeAll: Subject<any>;
   public rows;
-  currentUser : any
+  currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   /**
    * Constructor
