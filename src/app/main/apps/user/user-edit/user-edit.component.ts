@@ -7,7 +7,7 @@ import { FlatpickrOptions } from 'ng2-flatpickr';
 
 import { UserEditService } from 'app/main/apps/user/user-edit/user-edit.service';
 import { profile } from 'node:console';
-import { Product, Profil } from 'app/auth/models';
+import { Product, Profil, User } from 'app/auth/models';
 
 @Component({
   selector: 'app-user-edit',
@@ -21,6 +21,7 @@ export class UserEditComponent implements OnInit {
   public urlLastValue;
   public rows;
   profil : Profil;
+  user : User
 
   public birthDateOptions: FlatpickrOptions = {
     altInput: true
@@ -50,10 +51,14 @@ export class UserEditComponent implements OnInit {
         this.profil.id = row.id
         this.profil.firstName = row.firstName
         this.profil.lastName = row.lastName
-        this.profil.user.status = row.user.status ?? ""
-        this.profil.user.roles = [{"role":row.user.roles[0].role}]
-        this.profil.user.email = row.user.email
-        this._userEditService.UpdateUser(row.id,this.profil)
+        this.user = new User()
+        this.user.id = row.user.id
+        this.user.status = row.user.status
+        this.user.roles = [{"role":row.user.roles[0].role}]
+        this.user.email = row.user.email
+        this.profil.user = this.user
+        this._userEditService.updateUserAdd(row.id,this.profil)
+        console.log(this.profil)
 
       }
     });

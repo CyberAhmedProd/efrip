@@ -53,4 +53,12 @@ export class UserEditService implements Resolve<any> {
       }, reject);
     });
   }
+
+  updateUserAdd(id : string, profil : Profil): Promise<any[]>{
+    return new Promise((resolve, reject) => {
+      this._httpClient.put(`${environment.apiDistant}/api/profilad/${id}`,profil).subscribe((response: any) => {
+        resolve(response);
+      }, reject);
+    });
+  }
 }

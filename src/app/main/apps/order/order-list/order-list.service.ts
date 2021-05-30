@@ -47,6 +47,7 @@ export class OrderListService implements Resolve<any> {
     return new Promise((resolve, reject) => {
       this._httpClient.get(`${environment.apiDistant}/api/order/getting`).subscribe((response: any) => {
         this.rows = response;
+        
         this.onDatatablessChanged.next(this.rows);
         resolve(this.rows);
       }, reject);
