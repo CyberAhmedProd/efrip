@@ -19,11 +19,13 @@ export class EcommerceBiddingDetailsComponent implements OnInit {
   public contentHeader: object;
   public auction;
   public product;
+  public isFinished=false;
   public id;
   public relatedProducts;
   public TDBidVar;
   public errorMessage = false;
   public minBid;
+  public finishingDate;
   public loading = false;
   public page = 1;
   public pageSize = 5;
@@ -95,6 +97,7 @@ export class EcommerceBiddingDetailsComponent implements OnInit {
    * On init
    */
   ngOnInit(): void {
+    let currentDate=new Date();
     this.route.params.subscribe((data) => {
       this.id = data.id;
     });
@@ -102,7 +105,9 @@ export class EcommerceBiddingDetailsComponent implements OnInit {
       this._ecommerceService.onSelectedAuctionChange.subscribe((res) => {
         this.auction = res;
         this.product = this.auction.product;
-        if(this.auction.bids.length > 1){
+        this.isFinished= currentDate >= new Date(this.auction.endDate);
+        this.finishingDate=(moment(this.auction.endDate)).format('DD-MM-YYYY HH:mm:ss')
+        if(this.auction.bids.length > 0){
           this.minBid = this.auction.bids[this.auction.bids.length - 1].bidAmount;
           this.TDBidVar =
           this.auction.bids[this.auction.bids.length - 1].bidAmount;

@@ -62,9 +62,9 @@
                   {{ product.description }}
                 </p>
                 <ul class="product-features list-unstyled">
-                  <li *ngIf="product.hasFreeShipping">
-                    <i data-feather="shopping-cart"></i>
-                    <span>Free Shipping</span>
+                  <li>
+                    
+                    <span>Ends On :{{finishingDate}}</span>
                   </li>
                   <li>
                     <div class="product-color-options">
@@ -79,44 +79,49 @@
                   <p>{{ product.details }}</p>
                 </div>
                 <hr />
-
-                <div class="form-group row">
-                  <div class="col-sm-5">
-                    <input
-                      type="text"
-                      class="form-control form-control-lg"
-                      id="colFormLabelLg"
-                      placeholder="Large Input"
-                      (keyup)="clearError()"
-                      [(ngModel)]="TDBidVar"
-                      #TDPriceRef="ngModel"
-                      required
-                      placeholder="0 DT"
-                      type="text"
-                      suffix=" $"
-                      mask="09{5}"
-                    />
-                  </div>
-                  <div class="col-sm-5" *ngIf="errorMessage">
-                    <span style="color: red"
-                      >bid must be higher than current highest bid and statingPrice</span
-                    >
-                  </div>
+                <div *ngIf="isFinished"  class="card-text">
+                  WINNNER: <h4 class="text-success">{{auction.bids[auction.bids.length - 1].user.username}}</h4>
                 </div>
-                <div class="form-group row" style="padding-left: 13px">
-                  <button
-                    type="button"
-                    class="btn btn-warning"
-                    rippleEffect
-                    (click)="addBid()"
-                    [disabled]="loading"
-                  >
-                    <span
-                      *ngIf="loading"
-                      class="spinner-border spinner-border-sm mr-1"
-                    ></span>
-                    <span [class]="'mr-25'"></span>Add Bid
-                  </button>
+                <div *ngIf="!isFinished">
+                  <div class="form-group row">
+                    <div class="col-sm-5">
+                      <input
+                        type="text"
+                        class="form-control form-control-lg"
+                        id="colFormLabelLg"
+                        placeholder="Large Input"
+                        (keyup)="clearError()"
+                        [(ngModel)]="TDBidVar"
+                        #TDPriceRef="ngModel"
+                        required
+                        placeholder="0 DT"
+                        type="text"
+                        suffix=" $"
+                        mask="09{5}"
+                      />
+                    </div>
+                    <div class="col-sm-5" *ngIf="errorMessage">
+                      <span style="color: red"
+                        >bid must be higher than current highest bid and
+                        statingPrice</span
+                      >
+                    </div>
+                  </div>
+                  <div class="form-group row" style="padding-left: 13px">
+                    <button
+                      type="button"
+                      class="btn btn-warning"
+                      rippleEffect
+                      (click)="addBid()"
+                      [disabled]="loading"
+                    >
+                      <span
+                        *ngIf="loading"
+                        class="spinner-border spinner-border-sm mr-1"
+                      ></span>
+                      <span [class]="'mr-25'"></span>Add Bid
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -198,24 +203,32 @@
                 <div class="media-body pt-1">
                   <div *ngIf="i == 0">
                     <ngb-alert [type]="'success'" [dismissible]="false">
-                      <div class="d-flex justify-content-between ">
+                      <div class="d-flex justify-content-between">
                         <div class="d-flex justify-content-start">
-                          <h1 style="color: rgb(20, 224, 31);">{{bid.user.username}}</h1>
+                          <h1 style="color: rgb(20, 224, 31)">
+                            {{ bid.user.username }}
+                          </h1>
                         </div>
-                        <h1 style="color: rgb(20, 224, 31);">${{bid.bidAmount}}</h1>
-                        <h1 style="color: rgb(20, 224, 31);">{{bid.ago}}</h1>
+                        <h1 style="color: rgb(20, 224, 31)">
+                          ${{ bid.bidAmount }}
+                        </h1>
+                        <h1 style="color: rgb(20, 224, 31)">{{ bid.ago }}</h1>
                       </div>
                     </ngb-alert>
                   </div>
 
                   <div *ngIf="i != 0">
                     <ngb-alert [type]="'info'" [dismissible]="false">
-                      <div class="d-flex justify-content-between ">
+                      <div class="d-flex justify-content-between">
                         <div class="d-flex justify-content-start">
-                          <h1 style="color: rgb(23, 129, 216);">{{bid.user.username}}</h1>
+                          <h1 style="color: rgb(23, 129, 216)">
+                            {{ bid.user.username }}
+                          </h1>
                         </div>
-                        <h1 style="color:  rgb(23, 129, 216);">${{bid.bidAmount}}</h1>
-                        <h1 style="color:  rgb(23, 129, 216);">{{bid.ago}}</h1>
+                        <h1 style="color: rgb(23, 129, 216)">
+                          ${{ bid.bidAmount }}
+                        </h1>
+                        <h1 style="color: rgb(23, 129, 216)">{{ bid.ago }}</h1>
                       </div>
                     </ngb-alert>
                   </div>
