@@ -15,7 +15,7 @@ import { AuthenticationService } from "app/auth/service";
 import { ProductListService } from "app/main/apps/product/product-list/product-list.service";
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import { EcommerceService } from "../../ecommerce.service";
-import * as moment from 'moment';
+import * as moment from "moment";
 @Component({
   selector: "app-new-auction",
   templateUrl: "./ecommerce-bidding-add.component.html",
@@ -27,8 +27,8 @@ export class EcommerceBiddingAddComponent implements OnInit {
   public spinner = false;
   public TDQuantityVar;
   public TDPriceVar;
-  public loading=false;
-  public currentDate:Date;
+  public loading = false;
+  public currentDate: Date;
   public MinMaxDPdata: NgbDateStruct;
   @Input()
   public modal;
@@ -63,21 +63,30 @@ export class EcommerceBiddingAddComponent implements OnInit {
     console.log(selectedItem);
   }
   // private
-  submit(){
-    this.loading=true;
-    let endDate=this.MinMaxDPdata.year+"-"+this.MinMaxDPdata.month+"-"+this.MinMaxDPdata.day
-    let formattedDate = (moment(this.currentDate)).format('DD-mmm-YYYY HH:mm:ss')
-    let seconddate=new Date(endDate)
-    console.log(formattedDate)
-    console.log(seconddate)
-    
-    this._ecommerceService.addAuction(this.TDPriceVar,this.selectedItem.id,this.currentDate.toISOString(),seconddate.toISOString())
-    .then(data => {
-      this.loading=false;
-      console.log(data)
-      this.modal.dismiss();
-      this._ecommerceService.getAuctions()
-    })
+  submit() {
+    this.loading = true;
+    let endDate =
+      this.MinMaxDPdata.year +
+      "-" +
+      this.MinMaxDPdata.month +
+      "-" +
+      this.MinMaxDPdata.day;
+
+    let seconddate = new Date(endDate);
+
+    this._ecommerceService
+      .addAuction(
+        this.TDPriceVar,
+        this.selectedItem.id,
+        this.currentDate.toISOString(),
+        seconddate.toISOString()
+      )
+      .then((data) => {
+        this.loading = false;
+        console.log(data);
+        this.modal.dismiss();
+        this._ecommerceService.getAuctions();
+      });
   }
   private horizontalWizardStepper: Stepper;
   private bsStepper;
@@ -142,22 +151,22 @@ export class EcommerceBiddingAddComponent implements OnInit {
     private _ref: ChangeDetectorRef,
     private _authService: AuthenticationService,
     private _productService: ProductListService,
-    private _ecommerceService : EcommerceService
+    private _ecommerceService: EcommerceService
   ) {}
 
   ngOnInit(): void {
-    this.currentDate=new Date()
-      this.spinner=true;
-      this._productService.getDataTableRows().then(data => {
-          this.categories=data
-          this.selectedItem = this.categories[0];
-          this.spinner=false;
-      })
+    this.currentDate = new Date();
+    this.spinner = true;
+    this._productService.getDataTableRows().then((data) => {
+      this.categories = data;
+      this.selectedItem = this.categories[0];
+      this.spinner = false;
+    });
     this.horizontalWizardStepper = new Stepper(
       document.querySelector("#stepper1"),
       {}
     );
-    
+
     this.bsStepper = document.querySelectorAll(".bs-stepper");
 
     // content header
