@@ -189,6 +189,9 @@ export class EcommerceService implements Resolve<any> {
     });
   }
   addAuction(startingPrice,product_id,startDate,endDate){
+    if(! this._auth.currentUserValue){
+      this._router.navigate(['pages/authentication/login-v2'])
+    }
     let user_id=this._auth.currentUserValue.id;
     let form ={
       product:{
@@ -212,6 +215,9 @@ export class EcommerceService implements Resolve<any> {
 
   }
   addBid(auction_id,bidAmount){
+    if(! this._auth.currentUserValue){
+      this._router.navigate(['pages/authentication/login-v2'])
+    }
     let user_id=this._auth.currentUserValue.id;
     return new Promise((resolve,reject)=> {
       this._httpClient.post(`${environment.apiDistant}/api/auction/bid/add/` + auction_id, 
