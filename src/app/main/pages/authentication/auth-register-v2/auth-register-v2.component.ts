@@ -141,6 +141,7 @@ export class AuthRegisterV2Component implements OnInit {
             .subscribe(
               data => {
                 this._router.navigate([this.returnUrl]);
+                window.location.reload()
               },
               error => {
                 this.error = error;
