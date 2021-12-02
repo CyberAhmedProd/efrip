@@ -2,14 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { environment } from 'environments/environment';
-
 import { BehaviorSubject, Observable } from 'rxjs';
-
 @Injectable()
 export class InvoicePreviewService implements Resolve<any> {
   apiData: any;
   onDataChanged: BehaviorSubject<any>;
-
   /**
    * Constructor
    *
@@ -19,7 +16,6 @@ export class InvoicePreviewService implements Resolve<any> {
     // Set the defaults
     this.onDataChanged = new BehaviorSubject({});
   }
-
   /**
    * Resolver
    *
@@ -35,13 +31,11 @@ export class InvoicePreviewService implements Resolve<any> {
       }, reject);
     });
   }
-
   /**
-   * Get API Data
+   * Get API Order Data
    */
   getApiData(id: number): Promise<any[]> {
     const url = `${environment.apiDistant}/api/order/${id}`;
-
     return new Promise((resolve, reject) => {
       this._httpClient.get(url).subscribe((response: any) => {
         this.apiData = response;
